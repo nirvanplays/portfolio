@@ -26,7 +26,9 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ highlightedSkills 
         (h.startsWith('react') && target.startsWith('react')) ||
         (h.startsWith('node') && target.startsWith('node')) ||
         (h.startsWith('express') && target.startsWith('express')) ||
-        (h.startsWith('firebase') && target.startsWith('firebase'))
+        (h.startsWith('firebase') && target.startsWith('firebase')) ||
+        (h === 'html' && target.startsWith('html')) ||
+        (h === 'css' && target.startsWith('css'))
       );
     });
   };
@@ -49,7 +51,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ highlightedSkills 
   };
 
   return (
-    <section id="skills" className="py-20 sm:py-32 border-t border-white/[0.08] space-y-16" aria-label="Technical Stack">
+    <section id="skills" className="py-24 sm:py-36 border-t border-white/[0.08] space-y-16" aria-label="Technical Stack">
       {/* Section Header */}
       <div className="space-y-4 max-w-3xl">
         <span className="font-mono text-xs sm:text-sm text-blue-400 font-semibold uppercase tracking-widest block">

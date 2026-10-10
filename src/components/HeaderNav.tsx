@@ -83,21 +83,29 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
         }`}
       >
         <div className="w-full max-w-[1360px] mx-auto px-6 sm:px-10 lg:px-16 flex items-center justify-between">
-          {/* Left: NR Monogram + Name */}
+          {/* Left: NR Square Monogram + Name */}
           <a
             href="#hero"
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="flex items-center gap-3 group cursor-pointer"
+            className="flex items-center gap-3.5 group cursor-pointer"
           >
-            <span className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.12] group-hover:border-blue-500/50 flex items-center justify-center font-mono text-xs font-bold text-white group-hover:text-blue-400 transition-colors">
-              NR
-            </span>
-            <span className="font-bold text-base tracking-tight text-white group-hover:text-blue-400 transition-colors">
-              {PERSONAL_INFO.name}
-            </span>
+            <div className="relative w-8 h-8 rounded-md bg-[#12151B] border border-white/[0.14] group-hover:border-blue-500/80 transition-all duration-200 flex items-center justify-center overflow-hidden shadow-sm">
+              <div className="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+              <span className="font-mono text-xs font-bold text-white tracking-wider group-hover:text-blue-400 transition-colors">
+                NR
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-extrabold text-sm sm:text-base tracking-tight text-white group-hover:text-blue-400 transition-colors leading-none">
+                NIRVAN REDDY
+              </span>
+              <span className="text-[10px] font-mono text-slate-500 tracking-wider uppercase pt-0.5">
+                SOFTWARE ENGINEER
+              </span>
+            </div>
           </a>
 
           {/* Center: Desktop Nav Links */}

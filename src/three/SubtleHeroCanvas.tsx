@@ -9,22 +9,17 @@ export const SubtleHeroCanvas: React.FC = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Check mobile or reduced motion preference
+    // Mobile / reduced motion check
     const isMobile = window.innerWidth < 768;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isMobile) return;
 
-    // If mobile or reduced motion, render minimal lightweight fallback
-    if (isMobile) {
-      return;
-    }
-
-    // Setup Three.js Scene
-    const scene = new THREE.Scene();
     const width = container.clientWidth || 400;
     const height = container.clientHeight || 400;
 
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    camera.position.set(0, 0, 7.5);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+    camera.position.set(0, 0, 7.2);
 
     let renderer: THREE.WebGLRenderer | null = null;
     try {
@@ -34,7 +29,7 @@ export const SubtleHeroCanvas: React.FC = () => {
         powerPreference: 'low-power',
       });
     } catch {
-      return; // WebGL unavailable fallback
+      return;
     }
 
     renderer.setSize(width, height);
@@ -42,112 +37,161 @@ export const SubtleHeroCanvas: React.FC = () => {
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
-    // Engineering Architecture System Group
+    // Root Group
     const systemGroup = new THREE.Group();
     scene.add(systemGroup);
 
-    // 1. Central Core Node
-    const centerGeo = new THREE.BufferGeometry();
-    centerGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
-    const centerMat = new THREE.PointsMaterial({
+    // ── 1. Central "System Core" Structure ──
+    const coreGeo = new THREE.OctahedronGeometry(0.38, 0);
+    const coreEdges = new THREE.EdgesGeometry(coreGeo);
+    const coreMat = new THREE.LineBasicMaterial({
       color: 0x3b82f6,
-      size: 0.18,
-      transparent: true,
-      opacity: 0.95,
-    });
-    const centerNode = new THREE.Points(centerGeo, centerMat);
-    systemGroup.add(centerNode);
-
-    // 2. 5 Distributed Satellite Architecture Nodes
-    const baseNodePositions = [
-      new THREE.Vector3(1.7, 0.8, 0.4),
-      new THREE.Vector3(-1.6, 0.9, -0.4),
-      new THREE.Vector3(-1.2, -1.3, 0.5),
-      new THREE.Vector3(1.3, -1.2, -0.5),
-      new THREE.Vector3(0.2, 1.8, -0.3),
-    ];
-
-    const satelliteGeo = new THREE.BufferGeometry();
-    const satellitePosArray = new Float32Array(baseNodePositions.length * 3);
-    baseNodePositions.forEach((pos, idx) => {
-      satellitePosArray[idx * 3] = pos.x;
-      satellitePosArray[idx * 3 + 1] = pos.y;
-      satellitePosArray[idx * 3 + 2] = pos.z;
-    });
-    satelliteGeo.setAttribute('position', new THREE.BufferAttribute(satellitePosArray, 3));
-    const satelliteMat = new THREE.PointsMaterial({
-      color: 0x60a5fa,
-      size: 0.11,
       transparent: true,
       opacity: 0.85,
     });
-    const satelliteNodes = new THREE.Points(satelliteGeo, satelliteMat);
-    systemGroup.add(satelliteNodes);
+    const coreMesh = new THREE.LineSegments(coreEdges, coreMat);
+    systemGroup.add(coreMesh);
 
-    // 3. Network Architecture Lines (Center to satellites + inter-satellite connections)
-    const connectionPoints: number[] = [];
-
-    baseNodePositions.forEach((pos) => {
-      // Line from center to satellite
-      connectionPoints.push(0, 0, 0);
-      connectionPoints.push(pos.x, pos.y, pos.z);
+    // Tiny inner kernel
+    const kernelGeo = new THREE.BufferGeometry();
+    kernelGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
+    const kernelMat = new THREE.PointsMaterial({
+      color: 0x60a5fa,
+      size: 0.14,
+      transparent: true,
+      opacity: 0.9,
     });
+    const kernel = new THREE.Points(kernelGeo, kernelMat);
+    systemGroup.add(kernel);
 
-    // Cross-connections between adjacent components
-    const crossPairs = [
-      [0, 1],
-      [1, 2],
-      [2, 3],
-      [3, 0],
-      [4, 0],
-      [4, 1],
+    // ── 2. 6 Distributed Architecture Nodes (Grouped & Clustered) ──
+    // Group A (Services cluster: 0 & 1), Group B (Storage cluster: 2 & 3), Node 4 (Pipeline), Node 5 (Gateway)
+    const baseNodePositions = [
+      new THREE.Vector3(1.35, 0.75, 0.25),   // Node 0 (Group A)
+      new THREE.Vector3(1.65, 0.35, -0.2),   // Node 1 (Group A)
+      new THREE.Vector3(-1.25, -0.65, 0.35), // Node 2 (Group B)
+      new THREE.Vector3(-0.95, -1.15, -0.1), // Node 3 (Group B)
+      new THREE.Vector3(-0.85, 1.15, -0.2),  // Node 4 (Pipeline)
+      new THREE.Vector3(0.65, -1.25, 0.3),   // Node 5 (Gateway)
     ];
 
-    crossPairs.forEach(([i, j]) => {
-      connectionPoints.push(baseNodePositions[i].x, baseNodePositions[i].y, baseNodePositions[i].z);
-      connectionPoints.push(baseNodePositions[j].x, baseNodePositions[j].y, baseNodePositions[j].z);
+    const nodeMeshes: THREE.LineSegments[] = [];
+    const nodePoints: THREE.Points[] = [];
+    const nodeGeo = new THREE.IcosahedronGeometry(0.09, 0);
+    const nodeEdges = new THREE.EdgesGeometry(nodeGeo);
+
+    baseNodePositions.forEach((pos) => {
+      const nMat = new THREE.LineBasicMaterial({
+        color: 0x60a5fa,
+        transparent: true,
+        opacity: 0.75,
+      });
+      const nMesh = new THREE.LineSegments(nodeEdges, nMat);
+      nMesh.position.copy(pos);
+      systemGroup.add(nMesh);
+      nodeMeshes.push(nMesh);
+
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
+      const pMat = new THREE.PointsMaterial({
+        color: 0x93c5fd,
+        size: 0.08,
+        transparent: true,
+        opacity: 0.85,
+      });
+      const pMesh = new THREE.Points(pGeo, pMat);
+      pMesh.position.copy(pos);
+      systemGroup.add(pMesh);
+      nodePoints.push(pMesh);
     });
 
-    const linesGeo = new THREE.BufferGeometry();
-    linesGeo.setAttribute('position', new THREE.Float32BufferAttribute(connectionPoints, 3));
-    const linesMat = new THREE.LineBasicMaterial({
+    // ── 3. Thin Connections (Core to nodes + Intra-cluster) ──
+    const staticLines: number[] = [];
+    baseNodePositions.forEach((pos) => {
+      // Core to Node
+      staticLines.push(0, 0, 0);
+      staticLines.push(pos.x, pos.y, pos.z);
+    });
+    // Cluster A connection
+    staticLines.push(baseNodePositions[0].x, baseNodePositions[0].y, baseNodePositions[0].z);
+    staticLines.push(baseNodePositions[1].x, baseNodePositions[1].y, baseNodePositions[1].z);
+    // Cluster B connection
+    staticLines.push(baseNodePositions[2].x, baseNodePositions[2].y, baseNodePositions[2].z);
+    staticLines.push(baseNodePositions[3].x, baseNodePositions[3].y, baseNodePositions[3].z);
+
+    const staticLinesGeo = new THREE.BufferGeometry();
+    staticLinesGeo.setAttribute('position', new THREE.Float32BufferAttribute(staticLines, 3));
+    const staticLinesMat = new THREE.LineBasicMaterial({
       color: 0x3b82f6,
       transparent: true,
-      opacity: 0.25,
-      linewidth: 1,
+      opacity: 0.22,
     });
-    const networkLines = new THREE.LineSegments(linesGeo, linesMat);
-    systemGroup.add(networkLines);
+    const staticNetwork = new THREE.LineSegments(staticLinesGeo, staticLinesMat);
+    systemGroup.add(staticNetwork);
 
-    // 4. Subtle Concentric Orbit Paths
-    const createOrbit = (radiusX: number, radiusY: number, rotX: number, rotY: number, opacity: number) => {
-      const segs = 64;
-      const pts = new Float32Array((segs + 1) * 3);
-      for (let i = 0; i <= segs; i++) {
-        const theta = (i / segs) * Math.PI * 2;
-        pts[i * 3] = Math.cos(theta) * radiusX;
-        pts[i * 3 + 1] = Math.sin(theta) * radiusY;
-        pts[i * 3 + 2] = 0;
-      }
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(pts, 3));
-      const mat = new THREE.LineBasicMaterial({
-        color: 0x94a3b8,
-        transparent: true,
-        opacity,
-      });
-      const orbitLine = new THREE.Line(geo, mat);
-      orbitLine.rotation.x = rotX;
-      orbitLine.rotation.y = rotY;
-      return { line: orbitLine, geo, mat };
-    };
+    // Dynamic Connections (Subtly appear / disappear)
+    const dynamicLinesGeo = new THREE.BufferGeometry();
+    const dynamicPoints = [
+      // From Cluster A to Pipeline Node
+      baseNodePositions[0].x, baseNodePositions[0].y, baseNodePositions[0].z,
+      baseNodePositions[4].x, baseNodePositions[4].y, baseNodePositions[4].z,
+      // From Cluster B to Gateway Node
+      baseNodePositions[2].x, baseNodePositions[2].y, baseNodePositions[2].z,
+      baseNodePositions[5].x, baseNodePositions[5].y, baseNodePositions[5].z,
+    ];
+    dynamicLinesGeo.setAttribute('position', new THREE.Float32BufferAttribute(dynamicPoints, 3));
+    const dynamicLinesMat = new THREE.LineBasicMaterial({
+      color: 0x60a5fa,
+      transparent: true,
+      opacity: 0.15,
+    });
+    const dynamicNetwork = new THREE.LineSegments(dynamicLinesGeo, dynamicLinesMat);
+    systemGroup.add(dynamicNetwork);
 
-    const orbit1 = createOrbit(2.2, 2.2, Math.PI / 3.4, Math.PI / 6, 0.14);
-    const orbit2 = createOrbit(2.5, 2.1, -Math.PI / 4, Math.PI / 5, 0.09);
-    systemGroup.add(orbit1.line);
-    systemGroup.add(orbit2.line);
+    // ── 4. Subtle Orbiting Line ──
+    const orbitSegs = 64;
+    const orbitPts = new Float32Array((orbitSegs + 1) * 3);
+    for (let i = 0; i <= orbitSegs; i++) {
+      const theta = (i / orbitSegs) * Math.PI * 2;
+      orbitPts[i * 3] = Math.cos(theta) * 2.2;
+      orbitPts[i * 3 + 1] = Math.sin(theta) * 1.85;
+      orbitPts[i * 3 + 2] = 0;
+    }
+    const orbitGeo = new THREE.BufferGeometry();
+    orbitGeo.setAttribute('position', new THREE.BufferAttribute(orbitPts, 3));
+    const orbitMat = new THREE.LineBasicMaterial({
+      color: 0x94a3b8,
+      transparent: true,
+      opacity: 0.10,
+    });
+    const orbitLine = new THREE.Line(orbitGeo, orbitMat);
+    orbitLine.rotation.x = Math.PI / 3.2;
+    orbitLine.rotation.y = Math.PI / 6;
+    systemGroup.add(orbitLine);
 
-    // Subtle Cursor Parallax (Capped at 5-8px)
+    // ── 5. Ambient Atmosphere Points ──
+    const atmoCount = 18;
+    const atmoPts = new Float32Array(atmoCount * 3);
+    for (let i = 0; i < atmoCount; i++) {
+      const r = 2.2 + (i % 4) * 0.2;
+      const angle = (i / atmoCount) * Math.PI * 2;
+      atmoPts[i * 3] = Math.cos(angle) * r;
+      atmoPts[i * 3 + 1] = Math.sin(angle) * (r * 0.8) + ((i % 3) - 1) * 0.3;
+      atmoPts[i * 3 + 2] = ((i % 5) - 2) * 0.35;
+    }
+    const atmoGeo = new THREE.BufferGeometry();
+    atmoGeo.setAttribute('position', new THREE.BufferAttribute(atmoPts, 3));
+    const atmoMat = new THREE.PointsMaterial({
+      color: 0x64748b,
+      size: 0.04,
+      transparent: true,
+      opacity: 0.2,
+    });
+    const atmosphere = new THREE.Points(atmoGeo, atmoMat);
+    systemGroup.add(atmosphere);
+
+    // ── Interactions ──
+    // 1. Mouse Parallax
     let targetX = 0;
     let targetY = 0;
     const handleMouseMove = (e: MouseEvent) => {
@@ -159,7 +203,30 @@ export const SubtleHeroCanvas: React.FC = () => {
     };
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // Handle Resize
+    // 2. Hover Brightness
+    let isHovered = false;
+    let currentBrightness = 0.75;
+    const handlePointerEnter = () => {
+      isHovered = true;
+    };
+    const handlePointerLeave = () => {
+      isHovered = false;
+    };
+    container.addEventListener('pointerenter', handlePointerEnter);
+    container.addEventListener('pointerleave', handlePointerLeave);
+
+    // 3. Scroll Rotation (10-15 degrees)
+    let scrollAngle = 0;
+    const handleScroll = () => {
+      const maxScroll = 600;
+      const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+      // 12.5 degrees in radians = 0.218 rad
+      scrollAngle = progress * (13 * (Math.PI / 180));
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    // 4. Resize
     const handleResize = () => {
       if (!container || !renderer) return;
       const newWidth = container.clientWidth || 400;
@@ -170,7 +237,7 @@ export const SubtleHeroCanvas: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // Pause when out of view
+    // 5. Visibility Observer
     let isVisible = true;
     const observer = new IntersectionObserver(
       (entries) => {
@@ -182,7 +249,7 @@ export const SubtleHeroCanvas: React.FC = () => {
 
     // Animation Loop
     let animId: number;
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const render = () => {
       if (!isVisible || document.hidden) {
@@ -194,22 +261,25 @@ export const SubtleHeroCanvas: React.FC = () => {
       const time = clock.getElapsedTime();
 
       if (!prefersReducedMotion) {
-        // Very slow, calm motion
-        systemGroup.rotation.y += delta * 0.06;
-        systemGroup.rotation.x += delta * 0.02;
-        orbit1.line.rotation.z += delta * 0.03;
-        orbit2.line.rotation.z -= delta * 0.02;
+        // Idle Motion
+        systemGroup.rotation.y += delta * 0.05;
+        coreMesh.rotation.y -= delta * 0.08;
+        coreMesh.rotation.x += delta * 0.04;
+        orbitLine.rotation.z += delta * 0.02;
 
-        // Subtle node drift
-        const posAttr = satelliteGeo.attributes.position;
-        baseNodePositions.forEach((pos, idx) => {
-          const drift = Math.sin(time * 0.8 + idx) * 0.04;
-          posAttr.setY(idx, pos.y + drift);
+        // Dynamic Connections Pulse
+        const pulse = (Math.sin(time * 1.4) + 1) * 0.5; // 0 to 1
+        dynamicLinesMat.opacity = pulse > 0.35 ? (pulse - 0.35) * 0.4 : 0.02;
+
+        // Hover Brightness Smooth Lerp
+        const targetBrightness = isHovered ? 1.0 : 0.75;
+        currentBrightness += (targetBrightness - currentBrightness) * 0.08;
+        nodeMeshes.forEach((mesh) => {
+          (mesh.material as THREE.LineBasicMaterial).opacity = currentBrightness;
         });
-        posAttr.needsUpdate = true;
 
-        // Smooth mouse parallax lerp
-        systemGroup.rotation.y += (targetX - systemGroup.rotation.y * 0.04) * 0.03;
+        // Parallax + Scroll Angle Lerp
+        systemGroup.rotation.y += (targetX + scrollAngle - systemGroup.rotation.y * 0.04) * 0.03;
         systemGroup.rotation.x += (-targetY - systemGroup.rotation.x * 0.04) * 0.03;
       }
 
@@ -219,11 +289,14 @@ export const SubtleHeroCanvas: React.FC = () => {
 
     animId = requestAnimationFrame(render);
 
-    // Cleanup resources
+    // Cleanup
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
+      container.removeEventListener('pointerenter', handlePointerEnter);
+      container.removeEventListener('pointerleave', handlePointerLeave);
       observer.disconnect();
 
       if (renderer) {
@@ -233,23 +306,28 @@ export const SubtleHeroCanvas: React.FC = () => {
         renderer.dispose();
       }
 
-      centerGeo.dispose();
-      centerMat.dispose();
-      satelliteGeo.dispose();
-      satelliteMat.dispose();
-      linesGeo.dispose();
-      linesMat.dispose();
-      orbit1.geo.dispose();
-      orbit1.mat.dispose();
-      orbit2.geo.dispose();
-      orbit2.mat.dispose();
+      coreGeo.dispose();
+      coreEdges.dispose();
+      coreMat.dispose();
+      kernelGeo.dispose();
+      kernelMat.dispose();
+      nodeGeo.dispose();
+      nodeEdges.dispose();
+      staticLinesGeo.dispose();
+      staticLinesMat.dispose();
+      dynamicLinesGeo.dispose();
+      dynamicLinesMat.dispose();
+      orbitGeo.dispose();
+      orbitMat.dispose();
+      atmoGeo.dispose();
+      atmoMat.dispose();
     };
   }, []);
 
   return (
     <div
       ref={containerRef}
-      className="w-full h-full min-h-[320px] sm:min-h-[400px] flex items-center justify-center pointer-events-none select-none"
+      className="w-full h-full min-h-[350px] max-h-[450px] flex items-center justify-center cursor-pointer select-none"
       aria-hidden="true"
     />
   );

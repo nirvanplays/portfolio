@@ -249,7 +249,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     category: 'BACKEND',
-    skills: ['Node.js', 'Express.js', 'Flask', 'FastAPI', 'REST APIs'],
+    skills: ['Node.js', 'Express.js', 'Flask', 'FastAPI', 'JWT', 'REST APIs'],
   },
   {
     category: 'DATABASES',
@@ -257,7 +257,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     category: 'AI / ML',
-    skills: ['Machine Learning', 'OpenCV', 'MediaPipe', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'NumPy', 'Pandas'],
+    skills: ['Machine Learning', 'OpenCV', 'MediaPipe', 'TensorFlow', 'PyTorch', 'EfficientNet', 'Scikit-learn', 'NumPy', 'Pandas'],
   },
   {
     category: 'TOOLS',

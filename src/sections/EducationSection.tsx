@@ -4,14 +4,14 @@ import { CERTIFICATIONS } from '../data/portfolioData';
 
 export const EducationSection: React.FC = () => {
   return (
-    <section id="education" className="py-20 sm:py-32 border-t border-white/[0.08] space-y-16" aria-label="Education and Certifications">
+    <section id="education" className="py-24 sm:py-36 border-t border-white/[0.08] space-y-16" aria-label="Education and Certifications">
       {/* Section Header */}
       <div className="space-y-4 max-w-3xl">
         <span className="font-mono text-xs sm:text-sm text-blue-400 font-semibold uppercase tracking-widest block">
-          EDUCATION & CERTIFICATIONS
+          EDUCATION & CREDENTIALS
         </span>
         <h2 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold text-white tracking-tight leading-[1.08]">
-          Academic Background & Credentials.
+          Academic Background.
         </h2>
       </div>
 
