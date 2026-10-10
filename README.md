@@ -168,10 +168,10 @@ c:/portfolio/
 ### 2. Clone & Install
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/space-portfolio.git
+git clone https://github.com/nirvanplays/portfolio.git
 
 # Navigate into the project directory
-cd space-portfolio
+cd portfolio
 
 # Install dependencies
 npm install
