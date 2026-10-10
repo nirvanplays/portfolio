@@ -7,14 +7,18 @@
 ![React](https://img.shields.io/badge/React%2019-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Three.js](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+<br />
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnirvanplays%2Fportfolio)
 
 <br />
 
 **A high-performance, immersive 3D Space Portfolio engineered with Three.js, Next.js, and TypeScript.**  
 Built for software engineering and applied AI/ML placement drives, internships, and technical evaluations.
 
-[Live Demo](http://localhost:4173) • [Explore Missions](#-featured-missions-projects) • [Academic Credentials](#-academic-trajectory--credentials) • [Quick Start](#-quick-start)
+[Explore Missions](#-featured-missions-projects) • [Academic Credentials](#-academic-trajectory--credentials) • [Quick Start](#-quick-start)
 
 </div>
 
