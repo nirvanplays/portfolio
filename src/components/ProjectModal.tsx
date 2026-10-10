@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import type React from 'react';
-import { X, Terminal, Layers, ArrowRight, ShieldCheck, Activity } from 'lucide-react';
+import { X, Layers, ArrowRight, ShieldCheck, Activity } from 'lucide-react';
 import type { Project } from '../types';
-import { TechBadge } from './UI/TechBadge';
-import { ProjectVisualizer } from '../three/ProjectVisualizer';
+import { ProjectDiagram } from './ProjectDiagram';
 import { soundManager } from '../audio/soundEffects';
 import gsap from 'gsap';
 
@@ -29,12 +28,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
     };
     window.addEventListener('keydown', handleKeyDown);
 
-    // GSAP entrance animation
+    // Subtle GSAP modal scale-in
     if (contentRef.current) {
       gsap.fromTo(
         contentRef.current,
-        { opacity: 0, scale: 0.95, y: 30 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: 'power3.out' }
+        { opacity: 0, scale: 0.98, y: 15 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
     }
 
@@ -51,9 +50,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
     if (contentRef.current) {
       gsap.to(contentRef.current, {
         opacity: 0,
-        scale: 0.96,
-        y: 20,
-        duration: 0.25,
+        scale: 0.98,
+        y: 10,
+        duration: 0.2,
         ease: 'power2.in',
         onComplete: onClose,
       });
@@ -68,35 +67,29 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-xl overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto"
       onClick={(e) => {
         if (e.target === modalRef.current) handleClose();
       }}
     >
       <div
         ref={contentRef}
-        className="relative w-full max-w-4xl hud-panel bg-[#090d16]/95 border border-cyan-500/40 rounded-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.9)] my-8"
+        className="relative w-full max-w-4xl bg-[#0c0e14] border border-white/[0.12] rounded-xl overflow-hidden shadow-2xl my-8 font-sans-clean"
       >
-        {/* Corner Accents */}
-        <span className="corner-bracket corner-tl !w-3 !h-3" />
-        <span className="corner-bracket corner-tr !w-3 !h-3" />
-        <span className="corner-bracket corner-bl !w-3 !h-3" />
-        <span className="corner-bracket corner-br !w-3 !h-3" />
-
         {/* Top Header Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-cyan-500/20 bg-slate-900/60">
-          <div className="flex items-center gap-3">
-            <span className="font-mono-tech text-xs text-cyan-400 font-bold tracking-widest px-2 py-0.5 rounded border border-cyan-500/30 bg-cyan-950/40">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.08] bg-white/[0.02]">
+          <div className="flex items-center gap-3 font-mono-tech text-xs">
+            <span className="text-[--accent-cyan] font-semibold tracking-widest px-2.5 py-0.5 rounded border border-[--accent-cyan]/30 bg-[--accent-cyan]/10">
               MODULE // {project.number}
             </span>
-            <span className="text-xs text-slate-400 font-mono-tech uppercase hidden sm:inline">
+            <span className="text-slate-400 uppercase hidden sm:inline">
               {project.status}
             </span>
           </div>
 
           <button
             onClick={handleClose}
-            className="p-1.5 rounded-lg border border-slate-700 bg-slate-800/60 text-slate-300 hover:text-white hover:border-cyan-400 transition-colors cursor-pointer"
+            className="p-1.5 rounded-md border border-white/[0.1] bg-white/[0.03] text-slate-300 hover:text-white hover:border-white/[0.3] transition-colors cursor-pointer"
             aria-label="Close Project Detail Modal"
           >
             <X className="w-5 h-5" />
@@ -104,81 +97,79 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         </div>
 
         {/* Modal Scrollable Body */}
-        <div className="p-6 sm:p-8 space-y-8 max-h-[80vh] overflow-y-auto">
-          {/* Main Title & Category */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div className="p-6 sm:p-8 space-y-8 max-h-[82vh] overflow-y-auto">
+          {/* Main Title & Diagram Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-7 space-y-3">
-              <span className="inline-block text-xs font-mono-tech uppercase tracking-widest text-cyan-400">
+              <span className="inline-block text-xs font-mono-tech uppercase tracking-widest text-[--accent-cyan]">
                 {project.category}
               </span>
-              <h2 id="project-modal-title" className="text-2xl sm:text-3xl font-display font-extrabold text-white uppercase tracking-tight">
+              <h2 id="project-modal-title" className="text-2xl sm:text-3xl font-sans-clean font-bold text-white uppercase tracking-tight">
                 {project.title}
               </h2>
-              <p className="text-sm text-slate-300 font-sans-clean leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed">
                 {project.description}
               </p>
             </div>
 
-            {/* Embedded 3D Kinematic Visualizer */}
-            <div className="lg:col-span-5 h-56 rounded-lg border border-cyan-500/20 bg-[#06080e] relative overflow-hidden flex items-center justify-center">
-              <div className="absolute top-2 left-2 text-[10px] font-mono-tech text-cyan-500/80 uppercase">
-                TELEMETRY VIEWPORT
-              </div>
-              <ProjectVisualizer type={project.visualType} />
-              <div className="absolute bottom-2 right-2 text-[9px] font-mono-tech text-slate-500">
-                {project.visualMetaphor}
-              </div>
+            {/* Custom Vector Diagram */}
+            <div className="lg:col-span-5 h-56 rounded-lg border border-white/[0.08] bg-[#08090d] relative overflow-hidden flex items-center justify-center">
+              <ProjectDiagram type={project.visualType} />
             </div>
           </div>
 
           {/* Tech Stack Matrix */}
-          <div className="space-y-2 pt-2 border-t border-slate-800/80">
+          <div className="space-y-3 pt-2 border-t border-white/[0.08]">
             <div className="text-xs font-mono-tech text-slate-400 uppercase tracking-wider flex items-center gap-2">
-              <Layers className="w-3.5 h-3.5 text-cyan-400" />
+              <Layers className="w-3.5 h-3.5 text-[--accent-cyan]" />
               <span>Technology Stack & Modules</span>
             </div>
             <div className="flex flex-wrap gap-2 pt-1">
               {project.techStack.map((tech) => (
-                <TechBadge key={tech} label={tech} variant="cyan" />
+                <span
+                  key={tech}
+                  className="font-mono-tech text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/[0.08] text-slate-300"
+                >
+                  {tech}
+                </span>
               ))}
             </div>
           </div>
 
-          {/* Architectural Breakdown (Problem -> Solution -> Implementation) */}
+          {/* Architectural Breakdown (Problem -> Solution) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Problem Statement */}
-            <div className="p-4 rounded-lg border border-rose-500/20 bg-rose-950/10 space-y-2">
-              <div className="flex items-center gap-2 text-rose-400 font-mono-tech text-xs uppercase font-bold tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-rose-400" />
+            <div className="p-5 rounded-lg border border-white/[0.08] bg-white/[0.02] space-y-2">
+              <div className="flex items-center gap-2 text-rose-400 font-mono-tech text-xs uppercase font-semibold tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
                 Problem Statement
               </div>
-              <p className="text-xs sm:text-sm text-slate-300 font-sans-clean leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
                 {project.problem}
               </p>
             </div>
 
             {/* Solution Architecture */}
-            <div className="p-4 rounded-lg border border-cyan-500/20 bg-cyan-950/10 space-y-2">
-              <div className="flex items-center gap-2 text-cyan-400 font-mono-tech text-xs uppercase font-bold tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
+            <div className="p-5 rounded-lg border border-white/[0.08] bg-white/[0.02] space-y-2">
+              <div className="flex items-center gap-2 text-[--accent-cyan] font-mono-tech text-xs uppercase font-semibold tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-[--accent-cyan]" />
                 Engineering Solution
               </div>
-              <p className="text-xs sm:text-sm text-slate-300 font-sans-clean leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
                 {project.solution}
               </p>
             </div>
           </div>
 
           {/* Implementation Highlights */}
-          <div className="space-y-3 p-4 rounded-lg border border-slate-800 bg-slate-900/40">
-            <div className="text-xs font-mono-tech text-cyan-400 uppercase tracking-wider flex items-center gap-2">
-              <Terminal className="w-3.5 h-3.5" />
-              <span>Implementation Architecture & Workflow</span>
+          <div className="space-y-3 p-5 rounded-lg border border-white/[0.08] bg-white/[0.02]">
+            <div className="text-xs font-mono-tech text-[--accent-cyan] uppercase tracking-wider">
+              // IMPLEMENTATION SPECIFICATION & WORKFLOW
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               {project.implementation.map((step, idx) => (
                 <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                  <ArrowRight className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[--accent-cyan] flex-shrink-0 mt-0.5" />
                   <span>{step}</span>
                 </div>
               ))}
@@ -187,10 +178,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* Additional Analytics Note if present */}
           {project.analyticsNote && (
-            <div className="p-3 rounded border border-blue-500/30 bg-blue-950/20 flex items-start gap-3">
-              <Activity className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
-              <div className="text-xs text-blue-200">
-                <span className="font-bold uppercase tracking-wider block font-mono-tech text-[11px]">
+            <div className="p-4 rounded-lg border border-[--accent-cyan]/25 bg-[--accent-cyan]/5 flex items-start gap-3">
+              <Activity className="w-4 h-4 text-[--accent-cyan] flex-shrink-0 mt-0.5" />
+              <div className="text-xs text-slate-200">
+                <span className="font-bold uppercase tracking-wider block font-mono-tech text-[10px] text-[--accent-cyan] mb-0.5">
                   DATA ANALYTICS EXTENSION:
                 </span>
                 {project.analyticsNote}
@@ -199,15 +190,15 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           )}
 
           {/* Bottom Action Footer */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-cyan-500/20">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/[0.08]">
             <div className="flex items-center gap-2 text-[11px] font-mono-tech text-slate-400">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>DOCUMENTED & VERIFIED RESUME SPECIFICATION</span>
+              <span>100% VERIFIED RESUME SPECIFICATION</span>
             </div>
 
             <button
               onClick={handleClose}
-              className="w-full sm:w-auto px-5 py-2 text-xs font-mono-tech uppercase tracking-wider text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 rounded bg-slate-800/40 transition-colors cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2 text-xs font-mono-tech uppercase tracking-wider text-slate-300 hover:text-white border border-white/[0.15] hover:border-white/[0.3] rounded-md bg-white/[0.02] transition-colors cursor-pointer"
             >
               CLOSE MODULE
             </button>

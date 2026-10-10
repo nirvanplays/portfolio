@@ -2,19 +2,16 @@
 
 @layer base {
   :root {
-    --bg-void: #03050a;
-    --bg-dark: #05070b;
-    --bg-surface: #080c14;
-    --bg-panel: rgba(8, 12, 22, 0.85);
+    --bg-void: #090a0d;
+    --bg-surface: #0e1015;
+    --bg-card: rgba(14, 16, 22, 0.7);
     --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-cyan: rgba(0, 212, 255, 0.25);
-    --border-violet: rgba(124, 58, 237, 0.28);
-    --accent-cyan: #00d4ff;
-    --accent-blue: #2563eb;
-    --accent-violet: #7c3aed;
-    --accent-indigo: #4f46e5;
-    --accent-magenta: #c026d3;
-    --text-primary: #f0f4f8;
+    --border-hover: rgba(255, 255, 255, 0.2);
+    --border-cyan: rgba(0, 229, 255, 0.25);
+    --accent-cyan: #00e5ff;
+    --accent-blue: #3b82f6;
+    --accent-violet: #6366f1;
+    --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
   }
@@ -30,11 +27,6 @@
     color: var(--text-primary);
     scroll-behavior: auto; /* Lenis owns smooth scrolling */
     overflow-x: hidden;
-    cursor: none;
-  }
-
-  @media (hover: none) and (pointer: coarse) {
-    html { cursor: auto; }
   }
 
   body {
@@ -43,24 +35,17 @@
     color: var(--text-primary);
     position: relative;
     min-height: 100vh;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  button, a, input, textarea {
-    cursor: none;
-  }
-
-  @media (hover: none) and (pointer: coarse) {
-    button, a, input, textarea { cursor: auto; }
-  }
-
   ::selection {
-    background-color: rgba(0, 212, 255, 0.3);
+    background-color: rgba(0, 229, 255, 0.25);
     color: #ffffff;
   }
 
-  /* Accessible high-contrast focus rings for keyboard users */
+  /* Accessible focus indicators for keyboard navigation */
   :focus-visible {
     outline: 2px solid var(--accent-cyan);
     outline-offset: 3px;
@@ -69,12 +54,21 @@
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg-void); }
   ::-webkit-scrollbar-thumb {
-    background: rgba(0, 212, 255, 0.22);
-    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 212, 255, 0.50);
+    background: rgba(255, 255, 255, 0.25);
   }
+}
+
+/* ─── TYPOGRAPHY CLASSES ─────────────────────────────────────────── */
+.font-mono-tech {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-sans-clean {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* ─── ACCESSIBILITY UTILITIES ────────────────────────────────────── */
@@ -98,170 +92,71 @@
   width: auto;
   height: auto;
   padding: 0.75rem 1.25rem;
-  background-color: #03050a;
-  border: 2px solid #00d4ff;
-  border-radius: 0.5rem;
-  color: #00d4ff;
+  background-color: #090a0d;
+  border: 1px solid var(--accent-cyan);
+  border-radius: 0.375rem;
+  color: var(--accent-cyan);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
-  font-weight: 700;
-  text-transform: uppercase;
+  font-weight: 600;
   clip: auto;
   white-space: normal;
-  box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.3);
 }
 
-/* ─── TYPOGRAPHY ─────────────────────────────────────────────────── */
-.font-mono-tech {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+/* ─── RESTRAINED CARD & PANEL SYSTEM ─────────────────────────────── */
+.editorial-panel {
+  background: rgba(14, 16, 22, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+.editorial-panel:hover {
+  border-color: var(--border-hover);
+  background: rgba(18, 20, 28, 0.6);
 }
 
-.font-display {
-  font-family: 'Orbitron', 'Space Grotesk', sans-serif;
-  letter-spacing: -0.02em;
-}
-
-.font-sans-clean {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-}
-
-/* ─── HUD DESIGN SYSTEM ──────────────────────────────────────────── */
-.hud-panel {
-  background: var(--bg-panel);
-  backdrop-filter: blur(20px) saturate(120%);
-  -webkit-backdrop-filter: blur(20px) saturate(120%);
-  border: 1px solid var(--border-cyan);
-  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.55),
-              inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  position: relative;
-}
-
-.glass-card {
-  background: rgba(10, 15, 25, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  position: relative;
-}
-
-/* ─── TECH GRID BACKGROUND ───────────────────────────────────────── */
-.bg-tech-grid {
-  background-size: 44px 44px;
-  background-image:
-    linear-gradient(to right, rgba(0, 212, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 212, 255, 0.025) 1px, transparent 1px);
-}
-
-/* ─── GLOWS ──────────────────────────────────────────────────────── */
-.glow-text-cyan {
-  text-shadow:
-    0 0 20px rgba(0, 212, 255, 0.5),
-    0 0 60px rgba(0, 212, 255, 0.15);
-}
-
-.glow-text-white {
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-}
-
-.glow-box-cyan {
-  box-shadow: 0 0 25px rgba(0, 212, 255, 0.2), inset 0 0 12px rgba(0, 212, 255, 0.05);
-}
-
-/* ─── HUD CORNER BRACKETS ────────────────────────────────────────── */
-.corner-bracket {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-color: rgba(0, 212, 255, 0.65);
-  pointer-events: none;
-  transition: border-color 0.3s ease;
-}
-.group:hover .corner-bracket,
-.hud-panel:hover .corner-bracket {
-  border-color: rgba(0, 212, 255, 0.95);
-}
-.corner-tl { top: -1px; left: -1px;   border-top: 1.5px solid; border-left: 1.5px solid; }
-.corner-tr { top: -1px; right: -1px;  border-top: 1.5px solid; border-right: 1.5px solid; }
-.corner-bl { bottom: -1px; left: -1px;  border-bottom: 1.5px solid; border-left: 1.5px solid; }
-.corner-br { bottom: -1px; right: -1px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
-
-/* ─── SCAN LINE OVERLAY ──────────────────────────────────────────── */
-.scanline-overlay {
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 3px,
-    rgba(0, 212, 255, 0.012) 3px,
-    rgba(0, 212, 255, 0.012) 4px
-  );
-  pointer-events: none;
-}
-
-/* ─── HORIZONTAL DIVIDER ─────────────────────────────────────────── */
-.divider-draw {
-  display: block;
-  height: 1px;
-  background: linear-gradient(to right, var(--accent-cyan), var(--accent-violet), transparent);
-  transform-origin: left center;
-}
-
-/* ─── SECTION LAYOUT ─────────────────────────────────────────────── */
-.section-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 80px 20px;
-}
-
-@media (min-width: 640px) {
-  .section-container { padding: 96px 32px; }
-}
-
-@media (min-width: 1024px) {
-  .section-container { padding: 112px 48px; }
-}
-
-/* ─── ANIMATIONS ─────────────────────────────────────────────────── */
-@keyframes float-y {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes shimmer {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(100%); }
-}
-
-.animate-float { animation: float-y 6s ease-in-out infinite; }
-.animate-shimmer { animation: shimmer 2.2s ease-in-out infinite; }
-
-/* ─── BUTTON SHIMMER HOVER ───────────────────────────────────────── */
-.btn-shimmer::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
-  transform: translateX(-100%);
-  transition: none;
-}
-.btn-shimmer:hover::after {
-  animation: shimmer 0.7s ease-out forwards;
-}
-
-/* ─── NOISE GRAIN OVERLAY ────────────────────────────────────────── */
+/* ─── FINE NOISE GRAIN OVERLAY ───────────────────────────────────── */
 .grain-overlay::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.018;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 128px 128px;
-  z-index: 9998;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  z-index: 9990;
+}
+
+/* ─── FAINT EDITORIAL GRID BACKGROUND ────────────────────────────── */
+.bg-grid-faint {
+  background-size: 64px 64px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+}
+
+/* ─── EDITORIAL SECTION CONTAINER ────────────────────────────────── */
+.section-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 100px 24px;
+}
+
+@media (min-width: 640px) {
+  .section-container { padding: 128px 36px; }
+}
+
+@media (min-width: 1024px) {
+  .section-container { padding: 144px 48px; }
+}
+
+/* ─── ACCENT HIGHLIGHTS ──────────────────────────────────────────── */
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #00e5ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ─── REDUCED MOTION PREFERENCE ──────────────────────────────────── */
