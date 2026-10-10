@@ -54,7 +54,7 @@ const PLAYLIST: Track[] = [
   },
 ];
 
-export const TransparentMusicPlayer: React.FC = () => {
+export const MusicPlayer: React.FC = () => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -378,3 +378,6 @@ export const TransparentMusicPlayer: React.FC = () => {
     </div>
   );
 };
+
+export const TransparentMusicPlayer = MusicPlayer;
+export default MusicPlayer;

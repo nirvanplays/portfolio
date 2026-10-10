@@ -8,7 +8,7 @@ import { ProjectMockup } from '../components/ProjectMockup';
 import { ProjectCaseStudyModal } from '../components/ProjectCaseStudyModal';
 import type { Project } from '../types';
 
-export const SpaceProjectsSection: React.FC = () => {
+export const ProjectsSection: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
@@ -123,3 +123,6 @@ export const SpaceProjectsSection: React.FC = () => {
     </section>
   );
 };
+
+export const SpaceProjectsSection = ProjectsSection;
+export default ProjectsSection;

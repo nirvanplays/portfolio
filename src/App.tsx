@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import { StarBackgroundCanvas } from './three/StarBackgroundCanvas';
 import { CursorParticles } from './components/CursorParticles';
-import { TransparentMusicPlayer } from './components/TransparentMusicPlayer';
-import { SpaceNavbar } from './components/SpaceNavbar';
-import { SpaceHeroSection } from './sections/SpaceHeroSection';
-import { SpaceProjectsSection } from './sections/SpaceProjectsSection';
-import { SpaceSkillsSection } from './sections/SpaceSkillsSection';
-import { SpaceEducationSection } from './sections/SpaceEducationSection';
-import { SpaceContactSection } from './sections/SpaceContactSection';
-import { SpaceFooter } from './components/SpaceFooter';
+import { MusicPlayer } from './components/MusicPlayer';
+import { Navbar } from './components/Navbar';
+import { HeroSection } from './sections/HeroSection';
+import { ProjectsSection } from './sections/ProjectsSection';
+import { SkillsSection } from './sections/SkillsSection';
+import { EducationSection } from './sections/EducationSection';
+import { ContactSection } from './sections/ContactSection';
+import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
 
 export function App() {
@@ -25,7 +25,7 @@ export function App() {
       <CursorParticles />
 
       {/* Transparent Glass Floating Music Player */}
-      <TransparentMusicPlayer />
+      <MusicPlayer />
 
       {/* Accessible skip link */}
       <a href="#main-content" className="sr-only sr-only-focusable">
@@ -33,7 +33,7 @@ export function App() {
       </a>
 
       {/* Cosmic Glass Navigation Bar */}
-      <SpaceNavbar onOpenResume={() => setIsResumeOpen(true)} />
+      <Navbar onOpenResume={() => setIsResumeOpen(true)} />
 
       {/* Centered Space Content Container */}
       <main
@@ -41,12 +41,12 @@ export function App() {
         tabIndex={-1}
         className="w-full max-w-[1360px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-20 pb-16 focus:outline-none relative z-10"
       >
-        <SpaceHeroSection onOpenResume={() => setIsResumeOpen(true)} />
-        <SpaceProjectsSection />
-        <SpaceSkillsSection />
-        <SpaceEducationSection />
-        <SpaceContactSection onOpenResume={() => setIsResumeOpen(true)} />
-        <SpaceFooter />
+        <HeroSection onOpenResume={() => setIsResumeOpen(true)} />
+        <ProjectsSection />
+        <SkillsSection />
+        <EducationSection />
+        <ContactSection onOpenResume={() => setIsResumeOpen(true)} />
+        <Footer />
       </main>
 
       {/* Verified Printable / Downloadable Placement Resume Modal */}

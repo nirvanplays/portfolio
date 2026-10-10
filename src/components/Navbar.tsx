@@ -5,7 +5,7 @@ import type React from 'react';
 import { ArrowUpRight, Menu, X, Sparkles, FileText, Compass } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
-interface SpaceNavbarProps {
+interface NavbarProps {
   onOpenResume: () => void;
 }
 
@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { id: 'contact', label: 'MISSION CONTROL' },
 ];
 
-export const SpaceNavbar: React.FC<SpaceNavbarProps> = ({ onOpenResume }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
@@ -210,3 +210,6 @@ export const SpaceNavbar: React.FC<SpaceNavbarProps> = ({ onOpenResume }) => {
     </>
   );
 };
+
+export const SpaceNavbar = Navbar;
+export default Navbar;
