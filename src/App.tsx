@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { StarBackgroundCanvas } from './three/StarBackgroundCanvas';
+import { CursorParticles } from './components/CursorParticles';
+import { TransparentMusicPlayer } from './components/TransparentMusicPlayer';
 import { SpaceNavbar } from './components/SpaceNavbar';
 import { SpaceHeroSection } from './sections/SpaceHeroSection';
 import { SpaceProjectsSection } from './sections/SpaceProjectsSection';
@@ -18,6 +20,12 @@ export function App() {
     <div className="relative min-h-screen bg-[#030014] text-[#f8fafc] font-sans antialiased selection:bg-purple-600/40 selection:text-white overflow-x-hidden">
       {/* Three.js Global 3D Starfield & Space Atmosphere */}
       <StarBackgroundCanvas />
+
+      {/* Interactive Cursor Particle Trail & Burst Effects */}
+      <CursorParticles />
+
+      {/* Transparent Glass Floating Music Player */}
+      <TransparentMusicPlayer />
 
       {/* Accessible skip link */}
       <a href="#main-content" className="sr-only sr-only-focusable">

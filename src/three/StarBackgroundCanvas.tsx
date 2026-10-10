@@ -11,7 +11,6 @@ export const StarBackgroundCanvas: React.FC = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Check reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const width = window.innerWidth;
@@ -19,7 +18,7 @@ export const StarBackgroundCanvas: React.FC = () => {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-    camera.position.z = 1;
+    camera.position.z = 1.2;
 
     let renderer: THREE.WebGLRenderer | null = null;
     try {
@@ -37,25 +36,23 @@ export const StarBackgroundCanvas: React.FC = () => {
     renderer.setClearColor(0x030014, 1);
     container.appendChild(renderer.domElement);
 
-    // Group for all celestial objects
     const starsGroup = new THREE.Group();
     scene.add(starsGroup);
 
-    // 1. Deep Field Stars (3,500 particles in spherical shell)
+    // 1. Deep Field Stars (3,600 particles in spherical shell)
     const starCount = window.innerWidth < 768 ? 1600 : 3600;
     const positions = new Float32Array(starCount * 3);
     const colors = new Float32Array(starCount * 3);
 
     const colorPalette = [
-      new THREE.Color('#ffffff'), // White starlight
-      new THREE.Color('#93c5fd'), // Soft blue
-      new THREE.Color('#38bdf8'), // Cyan starlight
+      new THREE.Color('#ffffff'), // Starlight white
+      new THREE.Color('#38bdf8'), // Cyan
+      new THREE.Color('#00ff99'), // SparkX neon green
       new THREE.Color('#c084fc'), // Violet
       new THREE.Color('#818cf8'), // Indigo
     ];
 
     for (let i = 0; i < starCount; i++) {
-      // Sphere distribution with radius between 1.2 and 4.0
       const radius = 1.2 + Math.random() * 2.8;
       const theta = 2 * Math.PI * Math.random();
       const phi = Math.acos(2 * Math.random() - 1);
@@ -75,7 +72,7 @@ export const StarBackgroundCanvas: React.FC = () => {
     starGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const starMat = new THREE.PointsMaterial({
-      size: 0.007,
+      size: 0.008,
       vertexColors: true,
       transparent: true,
       opacity: 0.85,
@@ -86,27 +83,50 @@ export const StarBackgroundCanvas: React.FC = () => {
     const starField = new THREE.Points(starGeo, starMat);
     starsGroup.add(starField);
 
-    // 2. Bright Hero Star Clusters (Twinkling foreground sparkles)
-    const clusterCount = 180;
-    const clusterPos = new Float32Array(clusterCount * 3);
-    for (let i = 0; i < clusterCount; i++) {
-      clusterPos[i * 3] = (Math.random() - 0.5) * 3;
-      clusterPos[i * 3 + 1] = (Math.random() - 0.5) * 3;
-      clusterPos[i * 3 + 2] = (Math.random() - 0.5) * 1.5;
+    // 2. Interactive Constellation Network (Floating interconnected nodes)
+    const nodeCount = window.innerWidth < 768 ? 40 : 85;
+    const nodePositions = new Float32Array(nodeCount * 3);
+    const nodeVelocities: { x: number; y: number; z: number }[] = [];
+
+    for (let i = 0; i < nodeCount; i++) {
+      nodePositions[i * 3] = (Math.random() - 0.5) * 3.2;
+      nodePositions[i * 3 + 1] = (Math.random() - 0.5) * 3.2;
+      nodePositions[i * 3 + 2] = (Math.random() - 0.5) * 1.5;
+
+      nodeVelocities.push({
+        x: (Math.random() - 0.5) * 0.002,
+        y: (Math.random() - 0.5) * 0.002,
+        z: (Math.random() - 0.5) * 0.001,
+      });
     }
-    const clusterGeo = new THREE.BufferGeometry();
-    clusterGeo.setAttribute('position', new THREE.BufferAttribute(clusterPos, 3));
-    const clusterMat = new THREE.PointsMaterial({
-      size: 0.015,
-      color: 0x38bdf8,
+
+    const nodeGeo = new THREE.BufferGeometry();
+    nodeGeo.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
+    const nodeMat = new THREE.PointsMaterial({
+      size: 0.016,
+      color: 0x00f3ff,
       transparent: true,
       opacity: 0.9,
       blending: THREE.AdditiveBlending,
     });
-    const clusterField = new THREE.Points(clusterGeo, clusterMat);
-    starsGroup.add(clusterField);
+    const nodePoints = new THREE.Points(nodeGeo, nodeMat);
+    starsGroup.add(nodePoints);
 
-    // 3. Subtle Cosmic Dust / Distant Nebula Rings
+    // Dynamic Line Segments connecting close nodes
+    const maxLineSegments = nodeCount * (nodeCount - 1);
+    const linePositions = new Float32Array(maxLineSegments * 3);
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x7042f8,
+      transparent: true,
+      opacity: 0.18,
+      blending: THREE.AdditiveBlending,
+    });
+    const lineSegments = new THREE.LineSegments(lineGeo, lineMat);
+    starsGroup.add(lineSegments);
+
+    // 3. Subtle Cosmic Dust Ring
     const ringGeo = new THREE.BufferGeometry();
     const ringPts = 64;
     const ringPositions = new Float32Array((ringPts + 1) * 3);
@@ -114,7 +134,7 @@ export const StarBackgroundCanvas: React.FC = () => {
       const angle = (i / ringPts) * Math.PI * 2;
       ringPositions[i * 3] = Math.cos(angle) * 2.5;
       ringPositions[i * 3 + 1] = Math.sin(angle) * 2.2;
-      ringPositions[i * 3 + 2] = -0.5;
+      ringPositions[i * 3 + 2] = -0.4;
     }
     ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPositions, 3));
     const ringMat = new THREE.LineBasicMaterial({
@@ -127,25 +147,25 @@ export const StarBackgroundCanvas: React.FC = () => {
     cosmicRing.rotation.y = Math.PI / 6;
     starsGroup.add(cosmicRing);
 
-    // Mouse Parallax
+    // Mouse Tracking Parallax
     let targetX = 0;
     let targetY = 0;
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 0.12;
-      const y = (e.clientY / window.innerHeight - 0.5) * 0.12;
+      const x = (e.clientX / window.innerWidth - 0.5) * 0.18;
+      const y = (e.clientY / window.innerHeight - 0.5) * 0.18;
       targetX = x;
       targetY = y;
     };
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // Scroll Rotation
+    // Scroll Integration
     let scrollRotationY = 0;
     const handleScroll = () => {
-      scrollRotationY = (window.scrollY / 1000) * 0.3;
+      scrollRotationY = (window.scrollY / 1000) * 0.35;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Window Resize
+    // Resize
     const handleResize = () => {
       if (!renderer) return;
       const w = window.innerWidth;
@@ -170,17 +190,58 @@ export const StarBackgroundCanvas: React.FC = () => {
       const time = clock.getElapsedTime();
 
       if (!prefersReducedMotion) {
-        // Slow natural cosmic rotation
-        starField.rotation.y += delta * 0.03;
-        starField.rotation.x -= delta * 0.015;
+        // Starfield slow rotation
+        starField.rotation.y += delta * 0.025;
+        starField.rotation.x -= delta * 0.012;
 
-        // Subtle cluster twinkle pulsation
-        clusterMat.size = 0.014 + Math.sin(time * 2) * 0.004;
+        // Animate constellation nodes
+        const posAttr = nodeGeo.attributes.position as THREE.BufferAttribute;
+        const lineAttr = lineGeo.attributes.position as THREE.BufferAttribute;
+        let lineVertexCount = 0;
+        const connectionDist = 0.48;
 
-        // Mouse Parallax & Scroll Integration
+        for (let i = 0; i < nodeCount; i++) {
+          const vx = nodeVelocities[i].x;
+          const vy = nodeVelocities[i].y;
+          const vz = nodeVelocities[i].z;
+
+          let px = posAttr.getX(i) + vx;
+          let py = posAttr.getY(i) + vy;
+          let pz = posAttr.getZ(i) + vz;
+
+          // Boundary bounce
+          if (px > 1.6 || px < -1.6) nodeVelocities[i].x *= -1;
+          if (py > 1.6 || py < -1.6) nodeVelocities[i].y *= -1;
+          if (pz > 0.8 || pz < -0.8) nodeVelocities[i].z *= -1;
+
+          posAttr.setXYZ(i, px, py, pz);
+
+          // Connect near neighbors
+          for (let j = i + 1; j < nodeCount; j++) {
+            const dx = px - posAttr.getX(j);
+            const dy = py - posAttr.getY(j);
+            const dz = pz - posAttr.getZ(j);
+            const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (dist < connectionDist) {
+              lineAttr.setXYZ(lineVertexCount, px, py, pz);
+              lineVertexCount++;
+              lineAttr.setXYZ(lineVertexCount, posAttr.getX(j), posAttr.getY(j), posAttr.getZ(j));
+              lineVertexCount++;
+            }
+          }
+        }
+
+        posAttr.needsUpdate = true;
+        lineGeo.setDrawRange(0, lineVertexCount);
+        lineAttr.needsUpdate = true;
+
+        // Smooth mouse parallax lerp
         starsGroup.rotation.y += (targetX + scrollRotationY - starsGroup.rotation.y) * 0.04;
         starsGroup.rotation.x += (-targetY - starsGroup.rotation.x) * 0.04;
 
+        // Subtle node twinkle
+        nodeMat.size = 0.014 + Math.sin(time * 2.5) * 0.004;
         cosmicRing.rotation.z += delta * 0.02;
       }
 
@@ -206,8 +267,10 @@ export const StarBackgroundCanvas: React.FC = () => {
 
       starGeo.dispose();
       starMat.dispose();
-      clusterGeo.dispose();
-      clusterMat.dispose();
+      nodeGeo.dispose();
+      nodeMat.dispose();
+      lineGeo.dispose();
+      lineMat.dispose();
       ringGeo.dispose();
       ringMat.dispose();
     };
