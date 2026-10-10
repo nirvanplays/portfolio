@@ -133,6 +133,17 @@ export const Realistic3DPhotoCanvas: React.FC<Realistic3DPhotoCanvasProps> = ({
       undefined,
       (err) => {
         console.warn('Fallback texture loading:', err);
+        const photoWidth = 2.4;
+        const photoHeight = 3.1;
+        const photoGeo = new THREE.BoxGeometry(photoWidth, photoHeight, 0.06);
+        const fallbackMat = new THREE.MeshStandardMaterial({
+          color: 0x1e1b4b,
+          metalness: 0.8,
+          roughness: 0.2,
+        });
+        photoMesh = new THREE.Mesh(photoGeo, fallbackMat);
+        portraitGroup.add(photoMesh);
+        setIsLoaded(true);
       }
     );
 
