@@ -44,11 +44,13 @@
     color: #ffffff;
   }
 
+  /* Accessible focus indicators */
   :focus-visible {
     outline: 2px solid var(--accent-cyan);
     outline-offset: 2px;
   }
 
+  /* Cosmic scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -63,4 +65,45 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #7042f8;
   }
+}
+
+/* ─── TYPOGRAPHY & COSMIC UTILITIES ───────────────────────────────── */
+.font-mono-tech {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-sans-clean {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ─── ACCESSIBILITY UTILITIES ────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only-focusable:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background-color: #7042f8;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 25px rgba(112, 66, 248, 0.6);
 }
