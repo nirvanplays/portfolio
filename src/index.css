@@ -2,16 +2,16 @@
 
 @layer base {
   :root {
-    --bg-main: #0B0D10;
-    --bg-card: #11141a;
-    --bg-surface: #171b22;
+    --bg-main: #0A0C0F;
+    --bg-card: #12151B;
+    --bg-surface: #181C24;
     --border-subtle: rgba(255, 255, 255, 0.08);
     --border-hover: rgba(255, 255, 255, 0.2);
-    --accent-blue: #3b82f6;
-    --accent-blue-hover: #2563eb;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --accent-blue: #2563EB;
+    --accent-blue-hover: #1D4ED8;
+    --text-primary: #F5F7FA;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
   }
 
   * {
@@ -39,7 +39,7 @@
   }
 
   ::selection {
-    background-color: rgba(59, 130, 246, 0.3);
+    background-color: rgba(37, 99, 235, 0.35);
     color: #ffffff;
   }
 
@@ -53,10 +53,10 @@
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0c0e12;
+    background: #0A0C0F;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e2430;
+    background: #1C212B;
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {

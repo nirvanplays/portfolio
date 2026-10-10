@@ -3,77 +3,72 @@ import { PERSONAL_INFO } from '../data/portfolioData';
 
 export const AboutSection: React.FC = () => {
   return (
-    <section id="about" className="py-16 sm:py-24 border-t border-white/[0.08] space-y-12" aria-label="About">
-      {/* Small Section Label */}
-      <div className="text-xs font-mono font-semibold text-blue-400 uppercase tracking-widest">
-        ABOUT
-      </div>
-
-      {/* Large Statement & Narrative */}
-      <div className="space-y-6 max-w-4xl">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
+    <section id="about" className="py-20 sm:py-32 border-t border-white/[0.08] space-y-16" aria-label="About">
+      {/* Eyebrow & Large Editorial Statement */}
+      <div className="space-y-6 max-w-5xl">
+        <span className="font-mono text-xs sm:text-sm text-blue-400 font-semibold uppercase tracking-widest block">
+          ABOUT
+        </span>
+        <h2 className="text-3xl sm:text-5xl lg:text-[52px] font-extrabold text-white tracking-tight leading-[1.12]">
           I enjoy building software systems across the full stack and exploring practical applications of AI and computer vision.
         </h2>
-        <p className="text-base sm:text-lg text-slate-400 font-light leading-relaxed">
-          I'm an undergraduate Computer Science Engineering student focused on building practical, full-stack platforms and applied machine learning pipelines. Whether developing decoupled client-server web apps with React and Express, or computing joint articulation angles with OpenCV and MediaPipe, I prioritize clean architectural boundaries and dependable performance.
-        </p>
       </div>
 
-      {/* Information Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 border-t border-white/[0.06]">
-        {/* Column 1: Education */}
-        <div className="space-y-2">
-          <div className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider">
+      {/* Three Elegant Columns (Typography & Spacing Driven) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12 pt-8 border-t border-white/[0.08]">
+        {/* Column 1: EDUCATION */}
+        <div className="space-y-4">
+          <h3 className="font-mono text-xs sm:text-sm font-semibold text-slate-400 uppercase tracking-wider">
             EDUCATION
-          </div>
-          <div className="space-y-1 text-sm">
-            <div className="font-semibold text-white">
+          </h3>
+          <div className="space-y-2 text-base text-slate-300">
+            <div className="font-semibold text-white text-lg">
               {PERSONAL_INFO.education.institution}
             </div>
             <div className="text-slate-300">
-              {PERSONAL_INFO.education.degree} in Computer Science and Engineering
+              B.Tech in Computer Science and Engineering
             </div>
-            <div className="text-slate-400 font-mono text-xs pt-1 flex items-center justify-between">
+            <div className="font-mono text-sm text-slate-400 pt-1 flex items-center justify-between">
               <span>{PERSONAL_INFO.education.period}</span>
               <span className="text-blue-400 font-semibold">CGPA: {PERSONAL_INFO.education.cgpa}</span>
             </div>
           </div>
         </div>
 
-        {/* Column 2: Focus */}
-        <div className="space-y-2">
-          <div className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider">
+        {/* Column 2: FOCUS */}
+        <div className="space-y-4">
+          <h3 className="font-mono text-xs sm:text-sm font-semibold text-slate-400 uppercase tracking-wider">
             FOCUS
-          </div>
-          <ul className="space-y-1.5 text-sm text-slate-300">
-            <li className="flex items-center gap-2">
+          </h3>
+          <ul className="space-y-2.5 text-base text-slate-300">
+            <li className="flex items-center gap-2.5">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
               <span>Full Stack Development</span>
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-2.5">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
               <span>AI / Machine Learning</span>
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-2.5">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
               <span>Computer Vision</span>
             </li>
           </ul>
         </div>
 
-        {/* Column 3: Location */}
-        <div className="space-y-2">
-          <div className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider">
-            LOCATION
-          </div>
-          <div className="space-y-1 text-sm">
-            <div className="font-semibold text-white">
-              Hyderabad, Telangana, India
-            </div>
-            <div className="text-slate-400 text-xs leading-relaxed pt-1">
-              Open to on-site in Hyderabad and remote software engineering internships.
-            </div>
-          </div>
+        {/* Column 3: INTERESTS */}
+        <div className="space-y-4">
+          <h3 className="font-mono text-xs sm:text-sm font-semibold text-slate-400 uppercase tracking-wider">
+            INTERESTS
+          </h3>
+          <ul className="space-y-2.5 text-base text-slate-300">
+            {PERSONAL_INFO.interests.map((interest, idx) => (
+              <li key={idx} className="flex items-center gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-600" />
+                <span>{interest}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

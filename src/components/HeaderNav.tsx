@@ -22,9 +22,9 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 20);
 
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + 250;
       for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
         const item = NAV_LINKS[i];
         const el = document.getElementById(item.id);
@@ -70,31 +70,31 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 select-none ${
+        className={`fixed top-0 left-0 right-0 z-50 h-16 sm:h-[68px] transition-all duration-200 select-none flex items-center ${
           isScrolled
-            ? 'bg-[#0B0D10]/95 backdrop-blur-md border-b border-white/[0.08] py-3.5 shadow-sm'
-            : 'bg-[#0B0D10]/60 backdrop-blur-sm py-5 border-b border-white/[0.04]'
+            ? 'bg-[#0A0C0F]/90 backdrop-blur-md border-b border-white/[0.08] shadow-sm'
+            : 'bg-transparent border-b border-transparent'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 flex items-center justify-between">
-          {/* Left: Candidate Name */}
-          <div className="flex items-center gap-3">
-            <a
-              href="#hero"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="font-bold text-sm sm:text-base tracking-tight text-white hover:text-blue-400 transition-colors"
-            >
-              {PERSONAL_INFO.name}
-            </a>
-            <span className="hidden sm:inline-block text-xs text-slate-400 pl-3 border-l border-white/[0.1] font-normal tracking-wide">
-              SOFTWARE ENGINEER
+        <div className="w-full max-w-[1360px] mx-auto px-6 sm:px-10 lg:px-16 flex items-center justify-between">
+          {/* Left: NR Monogram + Name */}
+          <a
+            href="#hero"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-center gap-3 group cursor-pointer"
+          >
+            <span className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.12] group-hover:border-blue-500/50 flex items-center justify-center font-mono text-xs font-bold text-white group-hover:text-blue-400 transition-colors">
+              NR
             </span>
-          </div>
+            <span className="font-bold text-base tracking-tight text-white group-hover:text-blue-400 transition-colors">
+              {PERSONAL_INFO.name}
+            </span>
+          </a>
 
-          {/* Desktop Nav Items */}
+          {/* Center: Desktop Nav Links */}
           <nav className="hidden md:flex items-center gap-1 sm:gap-2" aria-label="Main Navigation">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
@@ -103,10 +103,10 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
                   key={link.id}
                   href={`#${link.id}`}
                   onClick={(e) => handleNavClick(e, link.id)}
-                  className={`px-3 py-1.5 rounded-md text-xs font-medium tracking-wider transition-colors uppercase ${
+                  className={`px-3 py-1.5 rounded-md text-xs font-semibold tracking-wider uppercase transition-colors ${
                     isActive
-                      ? 'text-white bg-white/[0.06] font-semibold'
-                      : 'text-slate-300 hover:text-white hover:bg-white/[0.03]'
+                      ? 'text-white bg-white/[0.08]'
+                      : 'text-slate-300 hover:text-white hover:bg-white/[0.04]'
                   }`}
                 >
                   {link.label}
@@ -115,11 +115,11 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
             })}
           </nav>
 
-          {/* Desktop Actions */}
+          {/* Right: Actions */}
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={onOpenResume}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-200 hover:text-white border border-white/[0.14] hover:border-white/[0.28] rounded-md bg-white/[0.02] hover:bg-white/[0.06] transition-all cursor-pointer"
+              className="inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-semibold text-white border border-white/[0.15] hover:border-white/[0.3] rounded-lg bg-white/[0.02] hover:bg-white/[0.06] transition-all cursor-pointer"
             >
               <span>RESUME</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -129,7 +129,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
               href={PERSONAL_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white transition-colors"
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
             >
               <span>LINKEDIN</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -140,7 +140,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={onOpenResume}
-              className="px-2.5 py-1 text-xs font-medium text-slate-200 border border-white/[0.15] rounded bg-white/[0.04]"
+              className="px-2.5 py-1 text-xs font-semibold text-white border border-white/[0.15] rounded bg-white/[0.04]"
             >
               RESUME ↗
             </button>
@@ -150,7 +150,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -158,23 +158,23 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
 
       {/* Mobile Drawer Menu */}
       <div
-        className={`fixed inset-0 z-30 bg-[#0B0D10]/98 backdrop-blur-xl md:hidden transition-all duration-300 flex flex-col justify-between px-6 py-24 ${
+        className={`fixed inset-0 z-40 bg-[#0A0C0F]/98 backdrop-blur-2xl md:hidden transition-all duration-300 flex flex-col justify-between px-8 py-24 ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         role="dialog"
         aria-modal="true"
       >
         <nav className="space-y-4 pt-4">
-          <div className="text-xs font-medium text-slate-400 tracking-wider uppercase mb-2">
+          <div className="text-xs font-mono font-semibold text-slate-400 tracking-widest uppercase mb-4">
             NAVIGATION
           </div>
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-4">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.id}
                 href={`#${link.id}`}
                 onClick={(e) => handleNavClick(e, link.id)}
-                className={`text-xl font-bold tracking-tight py-1 transition-colors ${
+                className={`text-2xl font-bold tracking-tight py-1 transition-colors ${
                   activeSection === link.id ? 'text-blue-400' : 'text-slate-300 hover:text-white'
                 }`}
               >
@@ -190,7 +190,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
               setMobileMenuOpen(false);
               onOpenResume();
             }}
-            className="w-full py-3 rounded-lg border border-white/[0.15] bg-white/[0.04] text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-lg border border-white/[0.15] bg-white/[0.04] text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2"
           >
             <FileText className="w-4 h-4 text-blue-400" />
             <span>VIEW RESUME</span>
@@ -200,7 +200,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
             href={PERSONAL_INFO.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2"
           >
             <span>LINKEDIN</span>
             <ArrowUpRight className="w-4 h-4" />

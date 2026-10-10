@@ -13,20 +13,20 @@ export function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#0B0D10] text-[#f8fafc] font-sans antialiased selection:bg-blue-500/30 selection:text-white">
+    <div className="min-h-screen bg-[#0A0C0F] text-[#F5F7FA] font-sans antialiased selection:bg-blue-600/30 selection:text-white">
       {/* Accessible skip to main content */}
       <a href="#main-content" className="sr-only sr-only-focusable">
         Skip to main content
       </a>
 
-      {/* Compact Sticky Top Navigation Header */}
+      {/* Sticky Compact Top Navigation (56-72px) */}
       <HeaderNav onOpenResume={() => setIsResumeOpen(true)} />
 
-      {/* Centered Max-Width Container (1200-1400px range) */}
+      {/* Centered Content Container (1280px-1400px) */}
       <main
         id="main-content"
         tabIndex={-1}
-        className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24 pb-16 focus:outline-none"
+        className="w-full max-w-[1360px] mx-auto px-6 sm:px-10 lg:px-16 pt-16 sm:pt-20 pb-16 focus:outline-none"
       >
         <HeroSection onOpenResume={() => setIsResumeOpen(true)} />
         <AboutSection />
@@ -37,7 +37,7 @@ export function App() {
         <Footer />
       </main>
 
-      {/* Verified Printable / Downloadable Resume Modal */}
+      {/* Verified Official Printable / Downloadable Resume Modal */}
       <ResumeModal
         isOpen={isResumeOpen}
         onClose={() => setIsResumeOpen(false)}

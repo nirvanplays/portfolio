@@ -31,32 +31,37 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 sm:py-28 border-t border-white/[0.08] space-y-12" aria-label="Contact">
+    <section id="contact" className="py-24 sm:py-36 border-t border-white/[0.08] space-y-16" aria-label="Contact">
       {/* Small Section Label */}
-      <div className="text-xs font-mono font-semibold text-blue-400 uppercase tracking-widest">
+      <span className="font-mono text-xs sm:text-sm text-blue-400 font-semibold uppercase tracking-widest block">
         CONTACT
-      </div>
+      </span>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-        {/* Left Column: Human Editorial Heading & Direct Links (7 cols) */}
-        <div className="lg:col-span-7 space-y-6">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.08]">
-            LET'S BUILD SOMETHING.
-          </h2>
+        {/* Left Column: Bold Visual Moment (7 cols) */}
+        <div className="lg:col-span-7 space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-4xl sm:text-6xl lg:text-[72px] font-extrabold text-white tracking-tight leading-[1.04]">
+              LET'S BUILD <br />
+              SOMETHING USEFUL.
+            </h2>
 
-          <p className="text-lg sm:text-xl text-slate-300 font-light max-w-xl leading-relaxed">
-            Interested in software engineering, AI/ML and technically challenging projects?
-          </p>
+            <p className="text-xl sm:text-2xl text-slate-300 font-light max-w-xl leading-relaxed">
+              Interested in software engineering, AI/ML and challenging technical projects.
+            </p>
+          </div>
 
-          <p className="text-sm sm:text-base text-slate-400 font-light max-w-lg leading-relaxed">
-            I'm currently seeking software engineering and AI/ML internship opportunities. Whether you have a project idea, question, or want to discuss a role, feel free to reach out.
-          </p>
+          <div className="space-y-2 text-base text-slate-400">
+            <p>
+              Open for full-stack engineering and AI/ML internship roles. Reach out directly via email or connect on LinkedIn.
+            </p>
+          </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-4">
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             <a
               href={`mailto:${PERSONAL_INFO.email}`}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm tracking-wide transition-all shadow-sm group"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm sm:text-base tracking-wide transition-all shadow-sm group"
             >
               <Mail className="w-4 h-4" />
               <span>EMAIL ME</span>
@@ -67,7 +72,7 @@ export const ContactSection: React.FC = () => {
               href={PERSONAL_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/[0.16] hover:border-white/[0.3] bg-white/[0.02] hover:bg-white/[0.06] text-white font-medium text-sm tracking-wide transition-all"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg border border-white/[0.18] hover:border-white/[0.35] bg-white/[0.02] hover:bg-white/[0.06] text-white font-semibold text-sm sm:text-base tracking-wide transition-all"
             >
               <span>LINKEDIN</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -75,17 +80,17 @@ export const ContactSection: React.FC = () => {
 
             <button
               onClick={handleCopyEmail}
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-white/[0.1] hover:border-white/[0.2] text-xs font-mono text-slate-300 hover:text-white transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-3.5 rounded-lg border border-white/[0.12] hover:border-white/[0.25] text-xs sm:text-sm font-mono text-slate-300 hover:text-white transition-colors cursor-pointer"
               title="Copy email to clipboard"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">COPIED</span>
+                  <Check className="w-4 h-4 text-emerald-400" />
+                  <span className="text-emerald-400 font-medium">COPIED</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-slate-400" />
+                  <Copy className="w-4 h-4 text-slate-400" />
                   <span>{PERSONAL_INFO.email}</span>
                 </>
               )}
@@ -93,15 +98,15 @@ export const ContactSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Clean, Approachable Message Form (5 cols) */}
-        <div className="lg:col-span-5 p-6 sm:p-8 rounded-xl bg-[#11141a]/60 border border-white/[0.08] space-y-5">
-          <h3 className="text-base font-bold text-white tracking-tight">
-            Send a direct message
+        {/* Right Column: Approachable Message Box (5 cols) */}
+        <div className="lg:col-span-5 p-7 sm:p-9 rounded-2xl bg-[#12151B]/80 border border-white/[0.08] space-y-6">
+          <h3 className="text-lg font-bold text-white tracking-tight">
+            Send a direct inquiry
           </h3>
 
           <form onSubmit={handleSubmit} className="space-y-4 text-sm">
             <div>
-              <label htmlFor="name" className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label htmlFor="name" className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider font-mono">
                 Your Name
               </label>
               <input
@@ -111,12 +116,12 @@ export const ContactSection: React.FC = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Alex Chen"
-                className="w-full px-3.5 py-2.5 rounded-lg bg-[#0b0d10] border border-white/[0.1] text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                className="w-full px-4 py-3 rounded-lg bg-[#0A0C0F] border border-white/[0.12] text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label htmlFor="email" className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider font-mono">
                 Your Email
               </label>
               <input
@@ -126,12 +131,12 @@ export const ContactSection: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="alex@company.com"
-                className="w-full px-3.5 py-2.5 rounded-lg bg-[#0b0d10] border border-white/[0.1] text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                className="w-full px-4 py-3 rounded-lg bg-[#0A0C0F] border border-white/[0.12] text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label htmlFor="message" className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider font-mono">
                 Message
               </label>
               <textarea
@@ -140,14 +145,14 @@ export const ContactSection: React.FC = () => {
                 rows={4}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Hi Nirvan, I reviewed your portfolio and would like to talk about..."
-                className="w-full px-3.5 py-2.5 rounded-lg bg-[#0b0d10] border border-white/[0.1] text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors resize-none"
+                placeholder="Hi Nirvan, I'm reaching out regarding a software engineering role..."
+                className="w-full px-4 py-3 rounded-lg bg-[#0A0C0F] border border-white/[0.12] text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors resize-none"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
             >
               {sent ? (
                 <>
