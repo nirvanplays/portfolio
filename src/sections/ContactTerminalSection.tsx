@@ -1,18 +1,20 @@
-import React from 'react';
+import type React from 'react';
 import { SectionHeading } from '../components/UI/SectionHeading';
 import { TerminalConsole } from '../components/TerminalConsole';
 
 export const ContactTerminalSection: React.FC = () => {
   return (
-    <section id="contact" className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
-      <SectionHeading
-        systemCode="SYS.MOD.07 // INITIATE_CONNECTION"
-        title="CONNECTION STATION & TERMINAL"
-        subtitle="Initialize direct communication channels, run terminal directives, or dispatch encrypted messages."
-        badge="SECURE_CHANNEL"
-      />
+    <section id="contact" className="section-container section-reveal" aria-label="Contact Terminal">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          systemCode="SYS.MOD.07 // INITIATE_CONNECTION"
+          title="Contact Terminal"
+          subtitle="Open a channel, run terminal commands to learn more, or dispatch a direct message."
+          className="mb-12"
+        />
 
-      <TerminalConsole />
+        <TerminalConsole />
+      </div>
     </section>
   );
 };

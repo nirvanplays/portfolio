@@ -15,165 +15,160 @@ export const SkillsConstellationSection: React.FC = () => {
   });
   const [viewMode, setViewMode] = useState<'3d' | 'grid'>('3d');
 
-  const handleCategorySelect = (category: string | null) => {
+  const handleCategorySelect = (cat: string | null) => {
     soundManager.playClick();
-    setSelectedCategory(category);
+    setSelectedCategory(cat === selectedCategory ? null : cat);
   };
 
   const handleHoverSkill = (skillName: string | null, category: string | null) => {
-    if (skillName && skillName !== hoveredSkill.name) {
-      soundManager.playHover();
-    }
+    if (skillName && skillName !== hoveredSkill.name) soundManager.playHover();
     setHoveredSkill({ name: skillName, category });
   };
 
   return (
-    <section id="skills" className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-        <SectionHeading
-          systemCode="SYS.MOD.02 // SKILLS_CONSTELLATION"
-          title="TECHNICAL CONSTELLATION & SKILLS"
-          subtitle="Explore the multi-dimensional ecosystem of programming languages, artificial intelligence frameworks, and full-stack engineering tools."
-          badge="INTERACTIVE_3D_GRAPH"
-        />
+    <section id="skills" className="section-container section-reveal" aria-label="Skills">
+      <div className="max-w-7xl mx-auto">
 
-        {/* View Mode Toggle (3D Graph vs Matrix Grid) */}
-        <div className="flex items-center gap-2 font-mono-tech text-xs bg-slate-900/80 p-1.5 rounded-lg border border-cyan-500/20 self-start md:self-end">
-          <button
-            onClick={() => {
-              soundManager.playClick();
-              setViewMode('3d');
-            }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded transition-all cursor-pointer ${
-              viewMode === '3d'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-[0_0_10px_rgba(0,240,255,0.3)]'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <Network className="w-3.5 h-3.5" />
-            <span>3D Constellation</span>
-          </button>
-          <button
-            onClick={() => {
-              soundManager.playClick();
-              setViewMode('grid');
-            }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded transition-all cursor-pointer ${
-              viewMode === 'grid'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-[0_0_10px_rgba(0,240,255,0.3)]'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <LayoutGrid className="w-3.5 h-3.5" />
-            <span>Matrix Grid</span>
-          </button>
-        </div>
-      </div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+          <SectionHeading
+            systemCode="SYS.MOD.02 // SKILLS"
+            title="Technical Constellation"
+            subtitle="Hover or select a domain to explore the technology ecosystem."
+            className="md:flex-1"
+          />
 
-      {/* Category Filter Badges */}
-      <div className="flex flex-wrap items-center gap-2 mb-8 font-mono-tech text-xs">
-        <button
-          onClick={() => handleCategorySelect(null)}
-          className={`px-3 py-1.5 rounded border transition-all cursor-pointer ${
-            selectedCategory === null
-              ? 'border-cyan-400 bg-cyan-500/20 text-cyan-200 shadow-[0_0_12px_rgba(0,240,255,0.3)] font-bold'
-              : 'border-slate-800 bg-slate-900/60 text-slate-400 hover:border-slate-600 hover:text-slate-200'
-          }`}
-        >
-          ALL ECOSYSTEMS
-        </button>
-        {SKILL_CATEGORIES.map((cat) => (
-          <button
-            key={cat.category}
-            onClick={() => handleCategorySelect(cat.category === selectedCategory ? null : cat.category)}
-            className={`px-3 py-1.5 rounded border transition-all cursor-pointer ${
-              selectedCategory === cat.category
-                ? 'border-cyan-400 bg-cyan-500/20 text-cyan-200 shadow-[0_0_12px_rgba(0,240,255,0.3)] font-bold'
-                : 'border-slate-800 bg-slate-900/60 text-slate-400 hover:border-slate-600 hover:text-slate-200'
-            }`}
-          >
-            {cat.category.toUpperCase()}
-          </button>
-        ))}
-      </div>
-
-      {viewMode === '3d' ? (
-        /* 3D Constellation Viewport */
-        <div className="relative hud-panel rounded-2xl overflow-hidden border border-cyan-500/30 p-2 sm:p-4 min-h-[520px] flex flex-col justify-between">
-          <span className="corner-bracket corner-tl !w-3 !h-3" />
-          <span className="corner-bracket corner-tr !w-3 !h-3" />
-          <span className="corner-bracket corner-bl !w-3 !h-3" />
-          <span className="corner-bracket corner-br !w-3 !h-3" />
-
-          {/* Three.js Canvas Container */}
-          <div className="w-full h-[460px] sm:h-[520px]">
-            <SkillsCanvas
-              selectedCategory={selectedCategory}
-              onHoverSkill={handleHoverSkill}
-            />
+          {/* View mode toggle */}
+          <div className="flex items-center gap-1.5 font-mono-tech text-[11px] bg-white/[0.03] p-1 rounded-lg border border-white/[0.07] self-start md:self-end flex-shrink-0">
+            <button
+              onClick={() => { soundManager.playClick(); setViewMode('3d'); }}
+              data-cursor="hover"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-all ${
+                viewMode === '3d'
+                  ? 'bg-[--accent-cyan]/12 text-[--accent-cyan] border border-[--accent-cyan]/30'
+                  : 'text-[--text-muted] hover:text-white'
+              }`}
+            >
+              <Network className="w-3.5 h-3.5" />
+              3D Graph
+            </button>
+            <button
+              onClick={() => { soundManager.playClick(); setViewMode('grid'); }}
+              data-cursor="hover"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-all ${
+                viewMode === 'grid'
+                  ? 'bg-[--accent-cyan]/12 text-[--accent-cyan] border border-[--accent-cyan]/30'
+                  : 'text-[--text-muted] hover:text-white'
+              }`}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" />
+              Grid
+            </button>
           </div>
+        </div>
 
-          {/* Floating Live Telemetry HUD Bar */}
-          <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-lg border border-cyan-500/30 bg-[#070b13]/90 backdrop-blur-md pointer-events-none">
-            <div className="flex items-center gap-3">
-              <div className="w-3 h-3 rounded-full bg-cyan-400 animate-ping" />
-              <div>
-                <span className="text-[10px] font-mono-tech text-cyan-500 block uppercase">
-                  NODE TELEMETRY INSPECTOR
-                </span>
-                <span className="text-sm font-display font-bold text-white uppercase">
-                  {hoveredSkill.name || (selectedCategory ? `FILTER: ${selectedCategory}` : 'HOVER ANY 3D NODE TO INSPECT')}
-                </span>
-              </div>
+        {/* Category filter pills */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          <button
+            onClick={() => handleCategorySelect(null)}
+            data-cursor="hover"
+            className={`skill-cat-btn font-mono-tech text-[10px] uppercase tracking-[0.12em] px-3 py-1.5 rounded-full border transition-all ${
+              selectedCategory === null
+                ? 'border-[--accent-cyan]/50 bg-[--accent-cyan]/10 text-[--accent-cyan] font-bold'
+                : 'border-white/[0.1] bg-white/[0.03] text-[--text-muted] hover:text-white hover:border-white/[0.2]'
+            }`}
+          >
+            All
+          </button>
+          {SKILL_CATEGORIES.map((cat) => (
+            <button
+              key={cat.category}
+              onClick={() => handleCategorySelect(cat.category)}
+              data-cursor="hover"
+              className={`skill-cat-btn font-mono-tech text-[10px] uppercase tracking-[0.12em] px-3 py-1.5 rounded-full border transition-all ${
+                selectedCategory === cat.category
+                  ? 'border-[--accent-cyan]/50 bg-[--accent-cyan]/10 text-[--accent-cyan] font-bold'
+                  : 'border-white/[0.1] bg-white/[0.03] text-[--text-muted] hover:text-white hover:border-white/[0.2]'
+              }`}
+            >
+              {cat.category}
+            </button>
+          ))}
+        </div>
+
+        {viewMode === '3d' ? (
+          /* 3D Constellation */
+          <div className="relative hud-panel rounded-2xl overflow-hidden border border-white/[0.07]">
+            <span className="corner-bracket corner-tl !w-3 !h-3" />
+            <span className="corner-bracket corner-tr !w-3 !h-3" />
+            <span className="corner-bracket corner-bl !w-3 !h-3" />
+            <span className="corner-bracket corner-br !w-3 !h-3" />
+
+            {/* Canvas */}
+            <div className="w-full h-[480px] sm:h-[560px]">
+              <SkillsCanvas
+                selectedCategory={selectedCategory}
+                onHoverSkill={handleHoverSkill}
+              />
             </div>
 
-            <div className="text-xs font-mono-tech text-slate-400">
-              {hoveredSkill.category ? (
-                <span className="text-cyan-300 font-bold uppercase">
-                  [CATEGORY: {hoveredSkill.category}]
+            {/* Live HUD readout at bottom */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center justify-between bg-gradient-to-t from-[--bg-void]/90 via-[--bg-void]/50 to-transparent">
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[--accent-cyan] animate-ping flex-shrink-0" />
+                <div className="font-mono-tech text-[11px]">
+                  <span className="text-[--accent-cyan]/60 block text-[9px] uppercase tracking-widest">
+                    NODE INSPECTOR
+                  </span>
+                  <span className="text-white font-bold">
+                    {hoveredSkill.name || (selectedCategory ? `Domain: ${selectedCategory}` : 'Move cursor over any node')}
+                  </span>
+                </div>
+              </div>
+              {hoveredSkill.category && (
+                <span className="font-mono-tech text-[10px] text-[--accent-cyan]/70 uppercase tracking-wider">
+                  [{hoveredSkill.category}]
                 </span>
-              ) : (
-                <span>DRAG / MOVE CURSOR TO ROTATE CONSTELLATION</span>
               )}
             </div>
           </div>
-        </div>
-      ) : (
-        /* Accessible Matrix Grid View */
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SKILL_CATEGORIES.map((cat) => {
-            const isMatch = !selectedCategory || selectedCategory === cat.category;
-            if (!isMatch) return null;
-
-            return (
+        ) : (
+          /* Matrix Grid View */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {SKILL_CATEGORIES.filter(cat =>
+              !selectedCategory || cat.category === selectedCategory
+            ).map((cat) => (
               <div
                 key={cat.category}
-                className="hud-panel rounded-xl p-6 space-y-4 border border-cyan-500/20 hover:border-cyan-400/50 transition-all group"
+                className="glass-card rounded-xl p-5 space-y-4 hover:border-[--accent-cyan]/20 transition-all duration-300 group"
+                data-cursor="hover"
               >
                 <span className="corner-bracket corner-tl !w-2 !h-2" />
                 <span className="corner-bracket corner-br !w-2 !h-2" />
 
-                <div className="flex items-center justify-between border-b border-cyan-500/20 pb-3">
-                  <h3 className="font-display font-bold text-lg text-white group-hover:text-cyan-300 transition-colors uppercase">
+                <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
+                  <h3 className="font-display font-bold text-white text-sm uppercase group-hover:text-[--accent-cyan] transition-colors">
                     {cat.category}
                   </h3>
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: cat.color }} />
+                  <div
+                    className="w-2 h-2 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: cat.color }}
+                  />
                 </div>
 
-                <p className="text-xs text-slate-400 font-sans-clean leading-relaxed">
+                <p className="text-[11px] text-[--text-muted] font-sans-clean leading-relaxed">
                   {cat.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2 pt-2">
+                <div className="flex flex-wrap gap-1.5">
                   {cat.skills.map((skill) => (
-                    <TechBadge key={skill} label={skill} variant="cyan" />
+                    <TechBadge key={skill} label={skill} variant="cyan" size="sm" />
                   ))}
                 </div>
               </div>
-            );
-          })}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   );
 };

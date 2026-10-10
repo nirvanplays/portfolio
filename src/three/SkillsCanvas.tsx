@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import type React from 'react';
 import * as THREE from 'three';
 import { SKILL_CATEGORIES } from '../data/portfolioData';
 
@@ -34,12 +35,14 @@ export const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
+    const isMobile = window.innerWidth < 768;
+
     // SCENE SETUP
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x05070b, 0.04);
+    scene.fog = new THREE.FogExp2(0x03050a, 0.035);
 
     const camera = new THREE.PerspectiveCamera(
-      50,
+      48,
       container.clientWidth / container.clientHeight,
       0.1,
       100
@@ -48,11 +51,13 @@ export const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true,
+      antialias: !isMobile,
       powerPreference: 'high-performance',
     });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
     container.appendChild(renderer.domElement);
 
     // ROOT NODE GRAPH
@@ -73,13 +78,12 @@ export const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       const clusterAngle = categoryAngles[cat.category];
       const clusterRadius = 4.2;
       const clusterCenterX = Math.cos(clusterAngle) * clusterRadius;
-      const clusterCenterY = Math.sin(clusterAngle) * (clusterRadius * 0.75);
+      const clusterCenterY = Math.sin(clusterAngle) * (clusterRadius * 0.72);
       const clusterCenterZ = (Math.random() - 0.5) * 1.5;
 
       const catColor = new THREE.Color(cat.color);
 
       cat.skills.forEach((skillName) => {
-        // Offset each skill inside its cluster
         const offsetAngle = Math.random() * Math.PI * 2;
         const offsetDist = 0.5 + Math.random() * 1.2;
         const pos = new THREE.Vector3(
@@ -101,94 +105,63 @@ export const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       });
     });
 
-    // BUILD CONNECTIONS (Intra-cluster lines + some inter-cluster cross links)
+    // BUILD INTERCONNECTING NETWORK LINES (Within clusters and bridging cross-domain)
     const linePairs: [number, number][] = [];
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const sameCategory = nodes[i].category === nodes[j].category;
-        const dist = nodes[i].basePosition.distanceTo(nodes[j].basePosition);
-
-        if (sameCategory && dist < 2.2) {
+    nodes.forEach((n1, i) => {
+      nodes.forEach((n2, j) => {
+        if (i >= j) return;
+        const dist = n1.basePosition.distanceTo(n2.basePosition);
+        if (n1.category === n2.category && dist < 2.0) {
           linePairs.push([i, j]);
-          nodes[i].connections.push(j);
-          nodes[j].connections.push(i);
-        } else if (!sameCategory && dist < 3.2 && Math.random() > 0.82) {
-          // Cross-domain connection
+        } else if (n1.category !== n2.category && dist < 2.8 && Math.random() > 0.82) {
           linePairs.push([i, j]);
-          nodes[i].connections.push(j);
-          nodes[j].connections.push(i);
         }
-      }
-    }
+      });
+    });
 
-    // SPHERICAL NODE MESHES
-    const nodeGeometry = new THREE.SphereGeometry(0.12, 16, 16);
+    // CREATE INSTANCED OR INDIVIDUAL NODE MESHES
+    const nodeGeometry = new THREE.SphereGeometry(0.18, 16, 16);
     const nodeMeshes: THREE.Mesh[] = [];
 
-    nodes.forEach((node) => {
+    nodes.forEach((node, idx) => {
       const mat = new THREE.MeshStandardMaterial({
         color: node.color,
         emissive: node.color,
-        emissiveIntensity: 0.8,
-        roughness: 0.2,
-        metalness: 0.8,
+        emissiveIntensity: 0.9,
+        roughness: 0.15,
+        metalness: 0.85,
+        transparent: true,
+        opacity: 0.95,
       });
       const mesh = new THREE.Mesh(nodeGeometry, mat);
       mesh.position.copy(node.position);
-      mesh.userData = { nodeIndex: node.meshIndex };
+      mesh.userData = { nodeIndex: idx, name: node.name, category: node.category };
       graphGroup.add(mesh);
       nodeMeshes.push(mesh);
     });
 
-    // LINES GEOMETRY
+    // CREATE NETWORK LINE GEOMETRY
     const linePositions = new Float32Array(linePairs.length * 2 * 3);
-    const lineColors = new Float32Array(linePairs.length * 2 * 3);
-
-    for (let k = 0; k < linePairs.length; k++) {
-      const [n1, n2] = linePairs[k];
-      const p1 = nodes[n1].position;
-      const p2 = nodes[n2].position;
-      const c1 = nodes[n1].color;
-      const c2 = nodes[n2].color;
-
-      linePositions[k * 6] = p1.x;
-      linePositions[k * 6 + 1] = p1.y;
-      linePositions[k * 6 + 2] = p1.z;
-      linePositions[k * 6 + 3] = p2.x;
-      linePositions[k * 6 + 4] = p2.y;
-      linePositions[k * 6 + 5] = p2.z;
-
-      lineColors[k * 6] = c1.r;
-      lineColors[k * 6 + 1] = c1.g;
-      lineColors[k * 6 + 2] = c1.b;
-      lineColors[k * 6 + 3] = c2.r;
-      lineColors[k * 6 + 4] = c2.g;
-      lineColors[k * 6 + 5] = c2.b;
-    }
-
     const lineGeometry = new THREE.BufferGeometry();
     lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-    lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-
     const lineMaterial = new THREE.LineBasicMaterial({
-      vertexColors: true,
+      color: 0x00d4ff,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.22,
       blending: THREE.AdditiveBlending,
     });
+    const networkLines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    graphGroup.add(networkLines);
 
-    const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
-    graphGroup.add(lineSegments);
-
-    // AMBIENT & LIGHTS
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    // LIGHTING
+    const ambientLight = new THREE.AmbientLight(0x060e1e, 2.5);
     scene.add(ambientLight);
 
-    const pointLight = new THREE.PointLight(0x00f0ff, 2.5, 20);
+    const pointLight = new THREE.PointLight(0x00d4ff, 8, 20);
     pointLight.position.set(0, 0, 6);
     scene.add(pointLight);
 
-    // RAYCASTER FOR MOUSE INTERACTION
+    // RAYCASTING & MOUSE INTERACTION
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2(-999, -999);
     let hoveredMeshIndex: number | null = null;
@@ -198,27 +171,33 @@ export const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
     };
+    container.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    container.addEventListener('mousemove', handleMouseMove);
-
-    // RESIZE
-    const handleResize = () => {
+    // RESIZE OBSERVER
+    const resizeObserver = new ResizeObserver(() => {
       if (!container) return;
       const width = container.clientWidth;
       const height = container.clientHeight;
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
-    };
+    });
+    resizeObserver.observe(container);
 
-    window.addEventListener('resize', handleResize);
+    // INTERSECTION OBSERVER FOR PERFORMANCE CULLING
+    let isVisible = true;
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { isVisible = e.isIntersecting; });
+    }, { threshold: 0.05 });
+    visibilityObserver.observe(container);
 
-    // ANIMATION
+    // ANIMATION LOOP
     let animId: number;
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
+      if (document.hidden || !isVisible) return;
       const elapsedTime = clock.getElapsedTime();
 
       // Gentle floating motion
@@ -236,17 +215,17 @@ export const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
         const isCatMatch = !activeCategory || node.category === activeCategory;
         const isHovered = hoveredMeshIndex === idx;
 
-        const scale = isHovered ? 1.6 : isCatMatch ? 1.0 : 0.6;
+        const scale = isHovered ? 1.6 : isCatMatch ? 1.0 : 0.55;
         mesh.scale.setScalar(scale);
 
         const mat = mesh.material as THREE.MeshStandardMaterial;
         mat.emissiveIntensity = isHovered ? 2.5 : isCatMatch ? 0.9 : 0.2;
-        mat.opacity = isCatMatch ? 1.0 : 0.25;
+        mat.opacity = isCatMatch ? 0.95 : 0.22;
         mat.transparent = true;
       });
 
       // Update line segment positions
-      const posAttr = lineGeometry.attributes.position as THREE.BufferAttribute;
+      const posAttr = lineGeometry.attributes['position'] as THREE.BufferAttribute;
       for (let k = 0; k < linePairs.length; k++) {
         const [n1, n2] = linePairs[k];
         const p1 = nodes[n1].position;
@@ -287,7 +266,8 @@ export const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     return () => {
       cancelAnimationFrame(animId);
       container.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
+      visibilityObserver.disconnect();
 
       nodeGeometry.dispose();
       lineGeometry.dispose();

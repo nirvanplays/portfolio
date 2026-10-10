@@ -1,96 +1,176 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type React from 'react';
+
+type CursorState = 'default' | 'hover' | 'click' | 'text' | 'project';
 
 export const CustomCursor: React.FC = () => {
   const [enabled, setEnabled] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [clicked, setClicked] = useState(false);
+  const [cursorState, setCursorState] = useState<CursorState>('default');
 
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
 
-  const mousePos = useRef({ x: -100, y: -100 });
-  const ringPos = useRef({ x: -100, y: -100 });
+  const stateRef = useRef<CursorState>('default');
 
   useEffect(() => {
-    // Only enable on non-touch devices
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    // Disable on touch devices
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return;
 
     setEnabled(true);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current.x = e.clientX;
-      mousePos.current.y = e.clientY;
+    const mouse = { x: -200, y: -200 };
+    const ring = { x: -200, y: -200 };
+    const ringTarget = { x: -200, y: -200 };
+    let rafId: number;
 
+    const getTargetState = (el: Element | null): CursorState => {
+      if (!el) return 'default';
+      const elem = el as HTMLElement;
+      // Check closest interactive ancestor
+      if (elem.closest('[data-cursor="project"]')) return 'project';
+      if (elem.closest('[data-cursor="text"]')) return 'text';
+      if (elem.closest('button, a, [role="button"]')) return 'hover';
+      if (elem.closest('input, textarea')) return 'text';
+      return 'default';
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      ringTarget.x = e.clientX;
+      ringTarget.y = e.clientY;
+
+      // Immediate dot snap
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+        dotRef.current.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0)`;
       }
 
-      // Check if target is interactive
-      const target = e.target as HTMLElement | null;
-      if (target) {
-        const isInteractive =
-          target.closest('button') !== null ||
-          target.closest('a') !== null ||
-          target.closest('.cursor-pointer') !== null ||
-          target.tagName === 'INPUT' ||
-          target.tagName === 'TEXTAREA';
-        setHovered(isInteractive);
+      const newState = getTargetState(e.target as Element);
+      if (newState !== stateRef.current) {
+        stateRef.current = newState;
+        setCursorState(newState);
       }
     };
 
-    const handleMouseDown = () => setClicked(true);
-    const handleMouseUp = () => setClicked(false);
+    const onMouseDown = () => {
+      stateRef.current = 'click';
+      setCursorState('click');
+    };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
+    const onMouseUp = () => {
+      stateRef.current = getTargetState(document.querySelector(':hover'));
+      setCursorState(stateRef.current);
+    };
 
-    // Smooth RAF loop for outer trailing ring
-    let rafId: number;
-    const animateRing = () => {
-      rafId = requestAnimationFrame(animateRing);
-      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.18;
-      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.18;
+    const onMouseLeave = () => {
+      if (dotRef.current) dotRef.current.style.opacity = '0';
+      if (ringRef.current) ringRef.current.style.opacity = '0';
+    };
+
+    const onMouseEnter = () => {
+      if (dotRef.current) dotRef.current.style.opacity = '1';
+      if (ringRef.current) ringRef.current.style.opacity = '1';
+    };
+
+    // RAF loop — only for the lagged ring
+    const loop = () => {
+      rafId = requestAnimationFrame(loop);
+      const lerpFactor = 0.12;
+      ring.x += (ringTarget.x - ring.x) * lerpFactor;
+      ring.y += (ringTarget.y - ring.y) * lerpFactor;
 
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0)`;
+        ringRef.current.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0)`;
       }
     };
+    rafId = requestAnimationFrame(loop);
 
-    rafId = requestAnimationFrame(animateRing);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mouseup', onMouseUp);
+    document.documentElement.addEventListener('mouseleave', onMouseLeave);
+    document.documentElement.addEventListener('mouseenter', onMouseEnter);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
       cancelAnimationFrame(rafId);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mouseup', onMouseUp);
+      document.documentElement.removeEventListener('mouseleave', onMouseLeave);
+      document.documentElement.removeEventListener('mouseenter', onMouseEnter);
     };
   }, []);
 
   if (!enabled) return null;
 
+  const isHover = cursorState === 'hover' || cursorState === 'project';
+  const isClick = cursorState === 'click';
+  const isProject = cursorState === 'project';
+  const isText = cursorState === 'text';
+
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden" aria-hidden="true">
-      {/* Inner Dot */}
+    <div className="pointer-events-none fixed inset-0 z-[9999]" aria-hidden="true">
+      {/* ── Inner dot — snaps immediately ── */}
       <div
         ref={dotRef}
-        className={`fixed top-0 left-0 -ml-1 -mt-1 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] transition-opacity duration-200 ${
-          hovered ? 'scale-150 bg-cyan-300' : 'scale-100'
-        }`}
+        className="fixed top-0 left-0 rounded-full transition-[width,height,background-color,opacity,box-shadow] duration-150 ease-out will-change-transform"
+        style={{
+          width: isText ? '2px' : isHover ? '6px' : '5px',
+          height: isText ? '16px' : isHover ? '6px' : '5px',
+          borderRadius: isText ? '1px' : '50%',
+          backgroundColor: isClick ? '#7c3aed' : isProject ? '#f0f4f8' : '#00d4ff',
+          boxShadow: isProject ? '0 0 12px rgba(240,244,248,0.8)' : '0 0 10px rgba(0,212,255,0.9)',
+          transform: 'translate3d(-200px, -200px, 0)',
+          marginLeft: isText ? '-1px' : '-2.5px',
+          marginTop: isText ? '-8px' : '-2.5px',
+        }}
       />
 
-      {/* Outer Interpolating Ring */}
+      {/* ── Lagged outer ring ── */}
       <div
         ref={ringRef}
-        className={`fixed top-0 left-0 -ml-5 -mt-5 w-10 h-10 rounded-full border transition-all duration-150 ease-out ${
-          hovered
-            ? 'scale-125 border-cyan-400 bg-cyan-500/10 shadow-[0_0_15px_rgba(0,240,255,0.3)]'
-            : clicked
-            ? 'scale-90 border-violet-400 bg-violet-500/20'
-            : 'scale-100 border-cyan-500/30'
-        }`}
+        className="fixed top-0 left-0 rounded-full border will-change-transform"
+        style={{
+          width: isClick ? '28px' : isProject ? '52px' : isHover ? '44px' : '36px',
+          height: isClick ? '28px' : isProject ? '52px' : isHover ? '44px' : '36px',
+          marginLeft: isClick ? '-14px' : isProject ? '-26px' : isHover ? '-22px' : '-18px',
+          marginTop: isClick ? '-14px' : isProject ? '-26px' : isHover ? '-22px' : '-18px',
+          borderColor: isClick
+            ? 'rgba(124, 58, 237, 0.8)'
+            : isProject
+            ? 'rgba(240, 244, 248, 0.5)'
+            : isHover
+            ? 'rgba(0, 212, 255, 0.7)'
+            : 'rgba(0, 212, 255, 0.28)',
+          backgroundColor: isProject
+            ? 'rgba(240, 244, 248, 0.04)'
+            : isHover
+            ? 'rgba(0, 212, 255, 0.04)'
+            : 'transparent',
+          boxShadow: isHover || isProject
+            ? '0 0 20px rgba(0, 212, 255, 0.15)'
+            : 'none',
+          transform: 'translate3d(-200px, -200px, 0)',
+          transition: 'width 0.25s cubic-bezier(0.16,1,0.3,1), height 0.25s cubic-bezier(0.16,1,0.3,1), margin 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease',
+        }}
       />
+
+      {/* ── "VIEW" label that appears on project hover ── */}
+      {isProject && (
+        <div
+          ref={labelRef}
+          className="fixed top-0 left-0 font-mono-tech text-[9px] tracking-widest uppercase text-white/70 pointer-events-none will-change-transform"
+          style={{
+            transform: 'translate3d(-200px, -200px, 0)',
+            marginLeft: '-12px',
+            marginTop: '26px',
+          }}
+        >
+          VIEW
+        </div>
+      )}
     </div>
   );
 };

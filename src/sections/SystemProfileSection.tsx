@@ -1,150 +1,142 @@
 import type React from 'react';
-import { User, GraduationCap, Cpu, Compass, Terminal, ShieldCheck, MapPin } from 'lucide-react';
+import { User, GraduationCap, Cpu, Terminal, ShieldCheck, MapPin, Compass } from 'lucide-react';
 import { SectionHeading } from '../components/UI/SectionHeading';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 export const SystemProfileSection: React.FC = () => {
   return (
-    <section id="system" className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
-      <SectionHeading
-        systemCode="SYS.MOD.01 // SYSTEM_PROFILE"
-        title="SYSTEM PROFILE & IDENTITY"
-        subtitle="Deconstructing academic foundations, engineering philosophy, and operational technical telemetry."
-        badge="TELEMETRY_ONLINE"
-      />
+    <section id="system" className="section-container section-reveal" aria-label="System Profile">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          systemCode="SYS.MOD.01 // IDENTITY"
+          title="System Profile"
+          subtitle="Academic standing, engineering orientation, and operational telemetry."
+          className="mb-14"
+        />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        {/* Panel 1: Primary Identity & Academic Standing (7 cols) */}
-        <div className="lg:col-span-7 hud-panel rounded-xl p-6 sm:p-8 space-y-6 flex flex-col justify-between">
-          <span className="corner-bracket corner-tl !w-2.5 !h-2.5" />
-          <span className="corner-bracket corner-tr !w-2.5 !h-2.5" />
-          <span className="corner-bracket corner-bl !w-2.5 !h-2.5" />
-          <span className="corner-bracket corner-br !w-2.5 !h-2.5" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* ── Left: Identity Panel ── */}
+          <div className="lg:col-span-7 hud-panel rounded-2xl p-8 space-y-7">
+            <span className="corner-bracket corner-tl" />
+            <span className="corner-bracket corner-tr" />
+            <span className="corner-bracket corner-bl" />
+            <span className="corner-bracket corner-br" />
 
-          {/* Identity Header */}
-          <div className="flex items-start justify-between border-b border-cyan-500/20 pb-4">
-            <div className="space-y-1">
-              <span className="text-[11px] font-mono-tech text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-cyan-400" />
-                IDENTITY TELEMETRY
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-display font-black text-white uppercase tracking-tight">
-                {PERSONAL_INFO.name}
-              </h3>
-              <p className="text-xs font-mono-tech text-slate-300">
-                {PERSONAL_INFO.title}
+            {/* Identity header */}
+            <div className="border-b border-white/[0.06] pb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 font-mono-tech text-[10px] text-[--accent-cyan]/70 tracking-widest uppercase">
+                  <User className="w-3 h-3" />
+                  <span>Identity Vector</span>
+                </div>
+                <h3 className="font-display font-black text-white uppercase leading-none" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>
+                  {PERSONAL_INFO.name}
+                </h3>
+                <p className="font-mono-tech text-[11px] text-[--text-secondary]">
+                  {PERSONAL_INFO.title}
+                </p>
+              </div>
+              <div className="flex flex-col items-start sm:items-end gap-2">
+                <span className="inline-flex items-center px-2.5 py-1 rounded-lg font-mono-tech text-xs font-bold bg-emerald-400/8 border border-emerald-400/20 text-emerald-300">
+                  CGPA {PERSONAL_INFO.education.cgpa}
+                </span>
+                <div className="flex items-center gap-1 text-[10px] font-mono-tech text-[--text-muted]">
+                  <MapPin className="w-3 h-3" />
+                  <span>Hyderabad, India</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Education block */}
+            <div className="space-y-3 p-5 rounded-xl bg-white/[0.025] border border-white/[0.05]">
+              <div className="flex items-center gap-2 text-[10px] font-mono-tech text-[--accent-cyan]/80 uppercase tracking-widest">
+                <GraduationCap className="w-3.5 h-3.5" />
+                <span>Academic Institution</span>
+              </div>
+              <div>
+                <p className="font-sans-clean font-semibold text-white text-base leading-snug">
+                  {PERSONAL_INFO.education.institution}
+                </p>
+                <p className="font-mono-tech text-[11px] text-[--accent-cyan]/80 mt-1">
+                  {PERSONAL_INFO.education.degree}
+                </p>
+                <div className="flex items-center justify-between mt-2 text-[10px] font-mono-tech text-[--text-muted]">
+                  <span>Duration: {PERSONAL_INFO.education.period}</span>
+                  <span className="text-emerald-400/80">Undergraduate Track</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Engineering mindset */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-[10px] font-mono-tech text-[--text-muted] uppercase tracking-widest">
+                <Cpu className="w-3 h-3 text-[--accent-cyan]/60" />
+                <span>Engineering Philosophy</span>
+              </div>
+              <p className="font-sans-clean text-sm text-[--text-secondary] leading-[1.7] bg-[--accent-cyan]/3 border border-[--accent-cyan]/10 rounded-xl p-4">
+                {PERSONAL_INFO.systemProfile.mindset}
               </p>
             </div>
-            <div className="text-right font-mono-tech text-xs space-y-1">
-              <span className="inline-block px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-bold">
-                CGPA: {PERSONAL_INFO.education.cgpa}
-              </span>
-              <div className="text-[10px] text-slate-400 flex items-center justify-end gap-1">
-                <MapPin className="w-3 h-3 text-cyan-400" />
-                <span>HYD, INDIA</span>
-              </div>
-            </div>
           </div>
 
-          {/* Education Breakdown */}
-          <div className="space-y-3 p-4 rounded-lg bg-slate-900/50 border border-slate-800">
-            <div className="flex items-center gap-2 text-xs font-mono-tech uppercase font-bold text-cyan-300">
-              <GraduationCap className="w-4 h-4 text-cyan-400" />
-              <span>ACADEMIC INSTITUTION & DEGREE</span>
-            </div>
-            <div className="space-y-1 text-xs">
-              <div className="text-sm font-bold text-white">
-                {PERSONAL_INFO.education.institution}
-              </div>
-              <div className="text-cyan-400 font-mono-tech">
-                {PERSONAL_INFO.education.degree}
-              </div>
-              <div className="text-slate-400 font-mono-tech text-[11px] flex items-center justify-between pt-1">
-                <span>Duration: {PERSONAL_INFO.education.period}</span>
-                <span className="text-emerald-400">Undergraduate Engineering Track</span>
-              </div>
-            </div>
-          </div>
+          {/* ── Right: Telemetry ── */}
+          <div className="lg:col-span-5 flex flex-col gap-5">
+            {/* System Telemetry */}
+            <div className="hud-panel rounded-2xl p-6 space-y-4 flex-shrink-0">
+              <span className="corner-bracket corner-tl" />
+              <span className="corner-bracket corner-br" />
 
-          {/* Technical Mindset */}
-          <div className="space-y-2">
-            <span className="text-xs font-mono-tech uppercase tracking-wider text-slate-400 flex items-center gap-2">
-              <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-              <span>TECHNICAL MINDSET & ENGINEERING PRINCIPLES</span>
-            </span>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans-clean bg-cyan-950/15 p-4 rounded-lg border border-cyan-500/20">
-              {PERSONAL_INFO.systemProfile.mindset}
-            </p>
-          </div>
-        </div>
-
-        {/* Panel 2: Telemetry Specs & Development Interests (5 cols) */}
-        <div className="lg:col-span-5 space-y-6 flex flex-col justify-between">
-          {/* System Specs Box */}
-          <div className="hud-panel rounded-xl p-6 space-y-4">
-            <span className="corner-bracket corner-tl !w-2.5 !h-2.5" />
-            <span className="corner-bracket corner-br !w-2.5 !h-2.5" />
-
-            <div className="flex items-center justify-between border-b border-cyan-500/20 pb-3">
-              <span className="text-xs font-mono-tech text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
-                <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-                ENVIRONMENT TELEMETRY
-              </span>
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            </div>
-
-            <div className="font-mono-tech text-xs space-y-2.5">
-              <div className="flex justify-between items-center py-1 border-b border-slate-800/80">
-                <span className="text-slate-400">OPERATING SYS:</span>
-                <span className="text-cyan-300 font-semibold">{PERSONAL_INFO.systemProfile.os}</span>
-              </div>
-              <div className="flex justify-between items-center py-1 border-b border-slate-800/80">
-                <span className="text-slate-400">RUNTIME ENGINE:</span>
-                <span className="text-white font-semibold">Node.js 24 + TS 6</span>
-              </div>
-              <div className="flex justify-between items-center py-1 border-b border-slate-800/80">
-                <span className="text-slate-400">GRAPHICS PIPELINE:</span>
-                <span className="text-cyan-300 font-semibold">WebGL 2.0 / Three.js</span>
-              </div>
-              <div className="flex justify-between items-center py-1 border-b border-slate-800/80">
-                <span className="text-slate-400">DATA VERIFICATION:</span>
-                <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                  <ShieldCheck className="w-3 h-3" /> VERIFIED 100%
-                </span>
-              </div>
-              <div className="flex justify-between items-center py-1">
-                <span className="text-slate-400">COORDINATES:</span>
-                <span className="text-slate-300">{PERSONAL_INFO.systemProfile.coordinates}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Development Interests */}
-          <div className="hud-panel rounded-xl p-6 space-y-4 flex-1">
-            <span className="corner-bracket corner-tl !w-2.5 !h-2.5" />
-            <span className="corner-bracket corner-br !w-2.5 !h-2.5" />
-
-            <div className="flex items-center gap-2 border-b border-cyan-500/20 pb-3">
-              <Compass className="w-3.5 h-3.5 text-cyan-400" />
-              <span className="text-xs font-mono-tech text-cyan-400 uppercase tracking-widest">
-                CORE TECHNICAL VECTORS
-              </span>
-            </div>
-
-            <div className="space-y-2">
-              {PERSONAL_INFO.systemProfile.interests.map((interest, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-3 p-2.5 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-cyan-500/30 transition-colors"
-                >
-                  <span className="text-[10px] font-mono-tech text-cyan-400 font-bold">
-                    0{idx + 1}
-                  </span>
-                  <span className="text-xs font-sans-clean font-medium text-slate-200">
-                    {interest}
-                  </span>
+              <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
+                <div className="flex items-center gap-2 text-[10px] font-mono-tech text-[--accent-cyan]/70 uppercase tracking-widest">
+                  <Terminal className="w-3 h-3" />
+                  <span>Environment</span>
                 </div>
-              ))}
+                <span className="w-1.5 h-1.5 rounded-full bg-[--accent-cyan] animate-pulse" />
+              </div>
+
+              <div className="space-y-2 font-mono-tech text-[11px]">
+                {[
+                  { label: 'RUNTIME:', value: 'Node.js 24 + TypeScript 6' },
+                  { label: 'RENDERER:', value: 'WebGL 2.0 / Three.js r186' },
+                  { label: 'FRAMEWORK:', value: 'React 19 + Vite 8' },
+                  { label: 'ANIMATION:', value: 'GSAP + Lenis Smooth Scroll' },
+                  { label: 'VERIFIED:', value: '100% Factual — 0 Invented Claims', highlight: true },
+                ].map(({ label, value, highlight }) => (
+                  <div key={label} className="flex items-center justify-between py-1.5 border-b border-white/[0.04]">
+                    <span className="text-[--text-muted]">{label}</span>
+                    <span className={highlight ? 'text-emerald-400 flex items-center gap-1' : 'text-white/80'}>
+                      {highlight && <ShieldCheck className="w-3 h-3" />}
+                      {value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Technical Focus Areas */}
+            <div className="hud-panel rounded-2xl p-6 flex-1">
+              <span className="corner-bracket corner-tl" />
+              <span className="corner-bracket corner-br" />
+
+              <div className="flex items-center gap-2 border-b border-white/[0.06] pb-3 mb-4 text-[10px] font-mono-tech text-[--accent-cyan]/70 uppercase tracking-widest">
+                <Compass className="w-3 h-3" />
+                <span>Core Interest Vectors</span>
+              </div>
+
+              <div className="space-y-2">
+                {PERSONAL_INFO.systemProfile.interests.map((interest, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 p-3 rounded-lg border border-white/[0.04] bg-white/[0.02] hover:border-[--accent-cyan]/20 hover:bg-[--accent-cyan]/4 transition-all duration-200"
+                    data-cursor="hover"
+                  >
+                    <span className="font-mono-tech text-[10px] text-[--accent-cyan]/60 w-5 flex-shrink-0">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="font-sans-clean text-sm text-[--text-secondary]">{interest}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

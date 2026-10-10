@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLenisScroll } from './hooks/useLenisScroll';
 import { CinematicLoader } from './components/CinematicLoader';
 import { CustomCursor } from './components/CustomCursor';
 import { FuturisticNavbar } from './components/FuturisticNavbar';
 import { FuturisticFooter } from './components/FuturisticFooter';
 import { ResumeModal } from './components/ResumeModal';
-import { BackgroundParticles } from './three/BackgroundParticles';
+import { TelemetryRail } from './components/UI/TelemetryRail';
+import { SectionDividerConduit } from './components/UI/SectionDividerConduit';
+import { initScrollAnimations, killScrollAnimations } from './animations/scrollAnimations';
 
 import { HeroSection } from './sections/HeroSection';
 import { SystemProfileSection } from './sections/SystemProfileSection';
@@ -20,39 +22,76 @@ export function App() {
   const [loading, setLoading] = useState(true);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
-  // Initialize Lenis smooth scroll
   useLenisScroll();
 
+  // Initialize GSAP scroll animations after boot loader completes
+  useEffect(() => {
+    if (loading) return;
+    const timeout = setTimeout(() => {
+      initScrollAnimations();
+    }, 150);
+    return () => {
+      clearTimeout(timeout);
+      killScrollAnimations();
+    };
+  }, [loading]);
+
+  // Pause animations when tab is hidden (performance optimization)
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.hidden) {
+        document.body.classList.add('tab-hidden');
+      } else {
+        document.body.classList.remove('tab-hidden');
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, []);
+
   return (
-    <div className="relative min-h-screen bg-[#05070b] text-[#f1f5f9] selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden">
-      {/* Cinematic Boot Loader */}
+    <div className="grain-overlay relative min-h-screen bg-[#03050a] text-[--text-primary] overflow-x-hidden selection:bg-[--accent-cyan]/20 selection:text-white">
+      {/* Cinematic boot sequence */}
       {loading && <CinematicLoader onComplete={() => setLoading(false)} />}
 
-      {/* Custom Cyber Cursor */}
+      {/* Bespoke interactive cursor */}
       <CustomCursor />
 
-      {/* Ambient Low-Power 3D Particles */}
-      <BackgroundParticles />
+      {/* Floating telemetry navigation rail */}
+      <TelemetryRail />
 
-      {/* Floating Futuristic HUD Navbar */}
+      {/* Floating navbar with active section tracking */}
       <FuturisticNavbar onOpenResume={() => setIsResumeOpen(true)} />
 
-      {/* Main Content Workflow */}
-      <main className="relative z-10 flex flex-col space-y-12 sm:space-y-16">
+      {/* Continuous cinematic journey main workflow */}
+      <main className="relative z-10 flex flex-col">
         <HeroSection onOpenResume={() => setIsResumeOpen(true)} />
+
+        <SectionDividerConduit sourceModule="HERO.01" targetModule="IDENTITY.02" />
         <SystemProfileSection />
+
+        <SectionDividerConduit sourceModule="IDENTITY.02" targetModule="CONSTELLATION.03" />
         <SkillsConstellationSection />
+
+        <SectionDividerConduit sourceModule="CONSTELLATION.03" targetModule="MODULES.04" />
         <ProjectsShowcaseSection />
+
+        <SectionDividerConduit sourceModule="MODULES.04" targetModule="CHRONO.05" />
         <BuildTimelineSection />
+
+        <SectionDividerConduit sourceModule="CHRONO.05" targetModule="CREDENTIALS.06" />
         <CertificationsSection />
+
+        <SectionDividerConduit sourceModule="CREDENTIALS.06" targetModule="FOCUS.07" />
         <CurrentFocusSection />
+
+        <SectionDividerConduit sourceModule="FOCUS.07" targetModule="TERMINAL.08" />
         <ContactTerminalSection />
       </main>
 
-      {/* Minimal Footer */}
       <FuturisticFooter />
 
-      {/* Verified Official Resume Modal */}
+      {/* Verified official resume modal */}
       <ResumeModal
         isOpen={isResumeOpen}
         onClose={() => setIsResumeOpen(false)}

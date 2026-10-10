@@ -1,14 +1,18 @@
-import React from 'react';
+import type React from 'react';
 import { soundManager } from '../../audio/soundEffects';
 
-interface GlowingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+interface GlowingButtonProps {
+  variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
   children: React.ReactNode;
   href?: string;
   target?: string;
   rel?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  className?: string;
+  'data-cursor'?: string;
 }
 
 export const GlowingButton: React.FC<GlowingButtonProps> = ({
@@ -21,51 +25,55 @@ export const GlowingButton: React.FC<GlowingButtonProps> = ({
   href,
   target,
   rel,
-  ...props
+  disabled,
+  ...rest
 }) => {
-  const handleMouseEnter = () => {
-    soundManager.playHover();
-  };
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+  const handleMouseEnter = () => soundManager.playHover();
+  const handleClick = () => {
     soundManager.playClick();
-    if (onClick) {
-      onClick(e as unknown as React.MouseEvent<HTMLButtonElement>);
-    }
+    onClick?.();
   };
 
-  const baseStyles =
-    'relative inline-flex items-center justify-center font-mono-tech uppercase tracking-wider font-semibold transition-all duration-300 group cursor-pointer select-none overflow-hidden';
+  const sizeStyles: Record<string, string> = {
+    sm: 'text-[10px] px-3.5 py-1.5 gap-1.5',
+    md: 'text-[11px] sm:text-xs px-5 py-2.5 gap-2',
+    lg: 'text-xs sm:text-sm px-6 py-3.5 gap-2.5',
+  };
 
-  const sizeStyles = {
-    sm: 'text-xs px-3.5 py-1.5 gap-1.5',
-    md: 'text-xs sm:text-sm px-5 py-2.5 gap-2',
-    lg: 'text-sm sm:text-base px-7 py-3.5 gap-2.5',
-  }[size];
+  const variantStyles: Record<string, string> = {
+    primary: [
+      'border border-[--accent-cyan]/40 bg-[--accent-cyan]/8',
+      'text-[--accent-cyan]',
+      'hover:border-[--accent-cyan]/70 hover:bg-[--accent-cyan]/15',
+      'hover:shadow-[0_0_24px_rgba(0,212,255,0.25)]',
+    ].join(' '),
+    secondary: [
+      'border border-[--accent-violet]/40 bg-[--accent-violet]/8',
+      'text-violet-300',
+      'hover:border-[--accent-violet]/70 hover:bg-[--accent-violet]/15',
+      'hover:shadow-[0_0_24px_rgba(124,58,237,0.25)]',
+    ].join(' '),
+    ghost: [
+      'border border-white/[0.1] bg-white/[0.03]',
+      'text-slate-300',
+      'hover:border-white/[0.2] hover:bg-white/[0.06] hover:text-white',
+    ].join(' '),
+  };
 
-  const variantStyles = {
-    primary:
-      'bg-cyan-500/10 text-cyan-400 border border-cyan-500/40 hover:bg-cyan-500/20 hover:border-cyan-400 hover:text-cyan-200 hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]',
-    secondary:
-      'bg-blue-600/10 text-blue-400 border border-blue-500/40 hover:bg-blue-600/20 hover:border-blue-400 hover:text-blue-200 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]',
-    ghost:
-      'bg-transparent text-slate-300 border border-slate-700/60 hover:border-slate-500 hover:text-white hover:bg-slate-800/40',
-    danger:
-      'bg-red-500/10 text-red-400 border border-red-500/40 hover:bg-red-500/20 hover:border-red-400 hover:text-red-200',
-  }[variant];
+  const base = [
+    'relative inline-flex items-center justify-center',
+    'font-mono-tech uppercase tracking-[0.12em] font-bold',
+    'rounded-lg transition-all duration-250 ease-out',
+    'select-none overflow-hidden',
+    'focus:outline-none focus-visible:ring-2 focus-visible:ring-[--accent-cyan]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[--bg-void]',
+    disabled ? 'opacity-40 pointer-events-none' : '',
+  ].join(' ');
 
   const content = (
     <>
-      {/* Corner Brackets */}
-      <span className="corner-bracket corner-tl opacity-75 group-hover:opacity-100 transition-opacity" />
-      <span className="corner-bracket corner-tr opacity-75 group-hover:opacity-100 transition-opacity" />
-      <span className="corner-bracket corner-bl opacity-75 group-hover:opacity-100 transition-opacity" />
-      <span className="corner-bracket corner-br opacity-75 group-hover:opacity-100 transition-opacity" />
-
-      {/* Shimmer sweep on hover */}
-      <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
-
-      {icon && <span className="relative z-10 transition-transform group-hover:scale-110">{icon}</span>}
+      {/* Shimmer sweep */}
+      <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/[0.07] to-transparent pointer-events-none" />
+      {icon && <span className="relative z-10 flex-shrink-0">{icon}</span>}
       <span className="relative z-10">{children}</span>
     </>
   );
@@ -76,9 +84,11 @@ export const GlowingButton: React.FC<GlowingButtonProps> = ({
         href={href}
         target={target}
         rel={rel || (target === '_blank' ? 'noopener noreferrer' : undefined)}
-        className={`${baseStyles} ${sizeStyles} ${variantStyles} ${className}`}
+        className={`${base} ${sizeStyles[size]} ${variantStyles[variant]} group ${className}`}
         onMouseEnter={handleMouseEnter}
         onClick={handleClick}
+        data-cursor="hover"
+        {...(rest as Record<string, unknown>)}
       >
         {content}
       </a>
@@ -87,10 +97,12 @@ export const GlowingButton: React.FC<GlowingButtonProps> = ({
 
   return (
     <button
-      className={`${baseStyles} ${sizeStyles} ${variantStyles} ${className}`}
+      className={`${base} ${sizeStyles[size]} ${variantStyles[variant]} group ${className}`}
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
-      {...props}
+      disabled={disabled}
+      data-cursor="hover"
+      {...(rest as Record<string, unknown>)}
     >
       {content}
     </button>

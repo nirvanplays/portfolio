@@ -1,5 +1,6 @@
+import { useState, useRef, useEffect } from 'react';
 import type React from 'react';
-import { ExternalLink, FileText, Compass } from 'lucide-react';
+import { ExternalLink, FileText, ChevronDown } from 'lucide-react';
 import { HeroCanvas } from '../three/HeroCanvas';
 import { GlowingButton } from '../components/UI/GlowingButton';
 import { PERSONAL_INFO } from '../data/portfolioData';
@@ -10,80 +11,130 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Track scroll to pass to Three.js canvas for scroll-reactive camera
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const height = section.clientHeight;
+      const progress = Math.min(1, window.scrollY / height);
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const scrollToProjects = () => {
     soundManager.playClick();
-    const el = document.getElementById('projects');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToNext = () => {
+    soundManager.playClick();
+    document.getElementById('system')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-      {/* 3D Three.js Interactive Core Canvas */}
-      <HeroCanvas />
+    <section
+      ref={sectionRef}
+      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
+      aria-label="Introduction"
+    >
+      {/* ── Three.js 3D Environment ── */}
+      <HeroCanvas scrollProgress={scrollProgress} interactive />
 
-      {/* Cyber Grid & Atmospheric Overlays */}
-      <div className="absolute inset-0 bg-tech-grid opacity-25 pointer-events-none" />
-      <div className="absolute inset-0 scanline-overlay pointer-events-none" />
-      <div className="absolute inset-0 bg-radial from-transparent via-[#05070b]/60 to-[#05070b] pointer-events-none" />
+      {/* ── Subtle radial vignette ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 75% 75% at 50% 50%, transparent 30%, rgba(3,5,10,0.65) 70%, rgba(3,5,10,0.95) 100%)',
+        }}
+      />
 
-      {/* Technical HUD Floating Telemetry Markers (Top/Sides) */}
-      <div className="absolute top-28 left-6 hidden lg:block font-mono-tech text-[10px] text-slate-400 space-y-1 z-10 pointer-events-none">
-        <div className="flex items-center gap-1.5 text-cyan-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-          <span>WORKSTATION // HYD.01</span>
+      {/* ── Scan-line texture ── */}
+      <div className="absolute inset-0 scanline-overlay pointer-events-none opacity-60" />
+
+      {/* ── HUD corner — left side technical metadata ── */}
+      <div className="absolute top-[88px] left-6 hidden lg:flex flex-col gap-1 font-mono-tech text-[10px] pointer-events-none z-10 select-none">
+        <div className="flex items-center gap-1.5 text-[--accent-cyan]/80">
+          <span className="w-1.5 h-1.5 rounded-full bg-[--accent-cyan] animate-pulse" />
+          <span>WORKSTATION.01 // HYDERABAD</span>
         </div>
-        <div>SYS.ARCH: AMD64 // NODE.JS</div>
-        <div>TARGET: AI & FULL-STACK</div>
+        <div className="text-[--text-muted]">ARCH: REACT + THREE.JS + GSAP</div>
+        <div className="text-[--text-muted]">TARGET: FULL STACK + AI/ML</div>
       </div>
 
-      <div className="absolute top-28 right-6 hidden lg:block font-mono-tech text-[10px] text-slate-400 space-y-1 text-right z-10 pointer-events-none">
-        <div className="text-cyan-400">COORD: {PERSONAL_INFO.systemProfile.coordinates}</div>
-        <div>STATUS: ACTIVE UNDERGRADUATE</div>
-        <div className="text-emerald-400 font-bold">CGPA: {PERSONAL_INFO.education.cgpa} // GRIET</div>
+      {/* ── HUD corner — right side coordinates ── */}
+      <div className="absolute top-[88px] right-6 hidden lg:flex flex-col gap-1 font-mono-tech text-[10px] pointer-events-none z-10 text-right select-none">
+        <div className="text-[--accent-cyan]/80">{PERSONAL_INFO.systemProfile.coordinates}</div>
+        <div className="text-[--text-muted]">STATUS: UNDERGRADUATE ACTIVE</div>
+        <div className="text-emerald-400/90 font-bold">
+          CGPA {PERSONAL_INFO.education.cgpa} · GRIET
+        </div>
       </div>
 
-      {/* Central Foreground Content */}
-      <div className="relative z-10 max-w-5xl mx-auto text-center space-y-6 sm:space-y-8 mt-4">
-        {/* System Pill Tag */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 backdrop-blur-md font-mono-tech text-xs text-cyan-300">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-          <span className="tracking-widest uppercase text-[11px] sm:text-xs">
-            PORTFOLIO // ADVANCED ENGINEERING WORKSTATION
+      {/* ── Central foreground content ── */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center pt-24 pb-20 sm:pt-32 sm:pb-24">
+
+        {/* Status badge */}
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[--accent-cyan]/20 bg-[--accent-cyan]/5 backdrop-blur-sm font-mono-tech text-[10px] text-[--accent-cyan]/80 tracking-[0.18em] uppercase mb-10">
+          <span className="w-1.5 h-1.5 rounded-full bg-[--accent-cyan] animate-pulse flex-shrink-0" />
+          Portfolio · Engineering Workstation · 2026
+        </div>
+
+        {/* Primary Name — the most important element */}
+        <h1
+          className="font-display font-black uppercase text-white leading-[0.9] tracking-[-0.03em] mb-6 glow-text-white"
+          style={{ fontSize: 'clamp(2.8rem, 9vw, 7.5rem)' }}
+        >
+          {/* Split for individual line styling */}
+          <span className="block">Koppela</span>
+          <span
+            className="block glow-text-cyan"
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #a5f3fc 40%, #00d4ff 70%, #7c3aed 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            Nirvan Reddy
           </span>
-        </div>
+        </h1>
 
-        {/* Hero Name with Holographic Gradient */}
-        <div className="space-y-3">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black tracking-tight text-white uppercase select-none glow-cyan">
-            {PERSONAL_INFO.name}
-          </h1>
-
-          {/* Subtitle / Headline */}
-          <p className="text-lg sm:text-2xl md:text-3xl font-display font-medium text-transparent bg-clip-text bg-gradient-to-r from-slate-200 via-cyan-200 to-blue-300 max-w-4xl mx-auto leading-tight">
-            "{PERSONAL_INFO.headline}"
-          </p>
-        </div>
-
-        {/* Small Supporting Text */}
-        <p className="text-xs sm:text-sm md:text-base font-mono-tech text-cyan-400/90 tracking-wide max-w-2xl mx-auto uppercase">
-          {PERSONAL_INFO.title}
+        {/* Headline — secondary hierarchy */}
+        <p
+          className="font-sans-clean font-light text-[--text-secondary] leading-[1.55] mb-4 max-w-2xl"
+          style={{ fontSize: 'clamp(1rem, 2.2vw, 1.35rem)' }}
+        >
+          {PERSONAL_INFO.headline}
         </p>
 
-        {/* Interactive Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-4 pt-4 sm:pt-6">
-          {/* Explore Projects Button */}
+        {/* Role chips */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-10 font-mono-tech text-[10px] tracking-widest text-[--text-muted] uppercase">
+          <span>Computer Science Engineering</span>
+          <span className="w-1 h-1 rounded-full bg-[--text-muted]/40" />
+          <span>Full Stack Developer</span>
+          <span className="w-1 h-1 rounded-full bg-[--text-muted]/40" />
+          <span>AI / ML Enthusiast</span>
+        </div>
+
+        {/* CTAs */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <GlowingButton
             variant="primary"
             size="lg"
-            icon={<Compass className="w-4 h-4" />}
             onClick={scrollToProjects}
           >
             Explore Projects
           </GlowingButton>
 
-          {/* View Resume Button */}
           <GlowingButton
-            variant="secondary"
+            variant="ghost"
             size="lg"
             icon={<FileText className="w-4 h-4" />}
             onClick={onOpenResume}
@@ -91,33 +142,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
             View Resume
           </GlowingButton>
 
-          {/* LinkedIn Button */}
           <GlowingButton
             variant="ghost"
             size="lg"
             icon={<ExternalLink className="w-4 h-4" />}
             href={PERSONAL_INFO.linkedin}
             target="_blank"
-            rel="noopener noreferrer"
           >
             LinkedIn
           </GlowingButton>
         </div>
 
-        {/* Subtle Scroll to Explore Indicator */}
-        <div className="pt-12 sm:pt-16 flex flex-col items-center justify-center space-y-2 select-none">
-          <button
-            onClick={scrollToProjects}
-            className="group flex flex-col items-center gap-1.5 text-slate-400 hover:text-cyan-300 transition-colors font-mono-tech text-[11px] tracking-widest uppercase cursor-pointer"
-            aria-label="Scroll to explore"
-          >
-            <span>SCROLL TO EXPLORE</span>
-            <div className="w-5 h-8 rounded-full border border-cyan-500/40 flex items-start justify-center p-1 group-hover:border-cyan-400 transition-colors">
-              <div className="w-1 h-2 rounded-full bg-cyan-400 animate-bounce" />
-            </div>
-          </button>
-        </div>
+        {/* Scroll prompt */}
+        <button
+          onClick={scrollToNext}
+          className="mt-20 flex flex-col items-center gap-2 text-[--text-muted] hover:text-[--accent-cyan] transition-colors duration-300 group"
+          aria-label="Scroll to explore"
+          data-cursor="hover"
+        >
+          <span className="font-mono-tech text-[9px] tracking-[0.25em] uppercase">Scroll</span>
+          <ChevronDown className="w-4 h-4 animate-bounce opacity-70" />
+        </button>
       </div>
+
+      {/* ── Bottom fade ── */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, transparent, rgba(3,5,10,0.95))',
+        }}
+      />
     </section>
   );
 };

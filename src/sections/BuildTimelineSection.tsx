@@ -19,7 +19,7 @@ export const BuildTimelineSection: React.FC = () => {
   };
 
   return (
-    <section id="timeline" className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
+    <section id="timeline" className="section-container section-reveal" aria-label="Timeline">
       <SectionHeading
         systemCode="SYS.MOD.04 // BUILD_TIMELINE"
         title="EXPERIENCE & BUILD TIMELINE"
@@ -36,7 +36,7 @@ export const BuildTimelineSection: React.FC = () => {
           <div
             key={item.id}
             onMouseEnter={() => soundManager.playHover()}
-            className="relative group transition-all duration-300"
+            className="relative group transition-all duration-300 timeline-item-reveal"
           >
             {/* Timeline Glowing Node Dot */}
             <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-[#05070b] border-2 border-cyan-400 flex items-center justify-center group-hover:scale-125 group-hover:shadow-[0_0_15px_#00f0ff] transition-all">
