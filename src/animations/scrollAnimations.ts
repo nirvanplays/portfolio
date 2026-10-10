@@ -4,6 +4,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export function initScrollAnimations(): void {
+  // Prevent duplicate triggers if called multiple times
+  killScrollAnimations();
+
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
@@ -11,11 +14,11 @@ export function initScrollAnimations(): void {
   gsap.utils.toArray<HTMLElement>('.section-reveal').forEach((el) => {
     gsap.fromTo(
       el,
-      { opacity: 0, y: 40 },
+      { opacity: 0, y: 35 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.9,
+        duration: 0.85,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: el,
@@ -33,7 +36,7 @@ export function initScrollAnimations(): void {
     projectCards.forEach((card) => {
       gsap.fromTo(
         card,
-        { opacity: 0, y: 60, scale: 0.97 },
+        { opacity: 0, y: 50, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
@@ -53,18 +56,17 @@ export function initScrollAnimations(): void {
   // Timeline item stagger
   const timelineItems = gsap.utils.toArray<HTMLElement>('.timeline-item-reveal');
   if (timelineItems.length) {
-    timelineItems.forEach((_item, _i) => {
+    timelineItems.forEach((item) => {
       gsap.fromTo(
-        _item,
-        { opacity: 0, x: -40 },
+        item,
+        { opacity: 0, x: -35 },
         {
           opacity: 1,
           x: 0,
           duration: 0.6,
-          delay: 0,
           ease: 'power2.out',
           scrollTrigger: {
-            trigger: _item,
+            trigger: item,
             start: 'top 85%',
             toggleActions: 'play none none none',
           },
@@ -85,7 +87,7 @@ export function initScrollAnimations(): void {
           opacity: 1,
           y: 0,
           duration: 0.45,
-          stagger: 0.05,
+          stagger: 0.04,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: skillSection,
@@ -103,12 +105,12 @@ export function initScrollAnimations(): void {
     certCards.forEach((card) => {
       gsap.fromTo(
         card,
-        { opacity: 0, y: 30, scale: 0.96 },
+        { opacity: 0, y: 25, scale: 0.97 },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.65,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: card,
@@ -119,6 +121,9 @@ export function initScrollAnimations(): void {
       );
     });
   }
+
+  // Refresh ScrollTrigger to calculate exact trigger positions
+  ScrollTrigger.refresh();
 }
 
 export function killScrollAnimations(): void {

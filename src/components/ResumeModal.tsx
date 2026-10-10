@@ -13,11 +13,16 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
   useEffect(() => {
     if (!isOpen) return;
 
+    document.body.style.overflow = 'hidden';
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -29,6 +34,9 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="resume-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-xl overflow-y-auto"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -39,7 +47,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
         <div className="flex items-center justify-between px-6 py-3 border-b border-cyan-500/20 bg-slate-900/80">
           <div className="flex items-center gap-2 font-mono-tech text-xs text-cyan-400">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-bold uppercase tracking-wider">OFFICIAL RESUME VERIFICATION</span>
+            <h2 id="resume-modal-title" className="font-bold uppercase tracking-wider">OFFICIAL RESUME VERIFICATION</h2>
           </div>
           <div className="flex items-center gap-2">
             <button

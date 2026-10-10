@@ -64,6 +64,21 @@ export const FuturisticNavbar: React.FC<FuturisticNavbarProps> = ({ onOpenResume
     };
   }, []);
 
+  // Lock body scroll and handle Escape key when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setMobileMenuOpen(false);
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [mobileMenuOpen]);
+
   // Move the active indicator underline
   useEffect(() => {
     const activeEl = navItemRefs.current[activeSection];
@@ -215,7 +230,9 @@ export const FuturisticNavbar: React.FC<FuturisticNavbarProps> = ({ onOpenResume
             <button
               onClick={() => { soundManager.playClick(); setMobileMenuOpen(!mobileMenuOpen); }}
               className="p-2 text-[--text-secondary] hover:text-white"
-              aria-label="Toggle Menu"
+              aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation-drawer"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -230,6 +247,10 @@ export const FuturisticNavbar: React.FC<FuturisticNavbarProps> = ({ onOpenResume
 
       {/* ── Mobile Drawer ── */}
       <div
+        id="mobile-navigation-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile Navigation Drawer"
         className={`fixed inset-0 z-30 md:hidden transition-all duration-400 ${
           mobileMenuOpen
             ? 'opacity-100 pointer-events-auto'

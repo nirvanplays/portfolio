@@ -339,6 +339,13 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
 
+    // ── PASSIVE SCROLL LISTENER (ZERO REACT RE-RENDERS) ────────────────────────
+    const handleScroll = () => {
+      const h = container.clientHeight || window.innerHeight;
+      scrollRef.current = Math.min(1, Math.max(0, window.scrollY / h));
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     // ── RESIZE OBSERVER ───────────────────────────────────────────────────────
     const resizeObserver = new ResizeObserver(() => {
       if (!container) return;
@@ -497,6 +504,7 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({
     return () => {
       cancelAnimationFrame(animFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
       container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mouseleave', handleMouseLeave);
       resizeObserver.disconnect();

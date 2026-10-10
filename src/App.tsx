@@ -51,6 +51,11 @@ export function App() {
 
   return (
     <div className="grain-overlay relative min-h-screen bg-[#03050a] text-[--text-primary] overflow-x-hidden selection:bg-[--accent-cyan]/20 selection:text-white">
+      {/* Skip to Main Content Link for Keyboard Accessibility */}
+      <a href="#main-content" className="sr-only sr-only-focusable">
+        Skip to main content
+      </a>
+
       {/* Cinematic boot sequence */}
       {loading && <CinematicLoader onComplete={() => setLoading(false)} />}
 
@@ -64,7 +69,7 @@ export function App() {
       <FuturisticNavbar onOpenResume={() => setIsResumeOpen(true)} />
 
       {/* Continuous cinematic journey main workflow */}
-      <main className="relative z-10 flex flex-col">
+      <main id="main-content" tabIndex={-1} className="relative z-10 flex flex-col focus:outline-none">
         <HeroSection onOpenResume={() => setIsResumeOpen(true)} />
 
         <SectionDividerConduit sourceModule="HERO.01" targetModule="IDENTITY.02" />

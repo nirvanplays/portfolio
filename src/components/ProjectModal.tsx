@@ -19,6 +19,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
   useEffect(() => {
     if (!project) return;
 
+    document.body.style.overflow = 'hidden';
     soundManager.playActivate();
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -38,6 +39,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
     }
 
     return () => {
+      document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [project]);
@@ -63,6 +65,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
   return (
     <div
       ref={modalRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-xl overflow-y-auto"
       onClick={(e) => {
         if (e.target === modalRef.current) handleClose();
@@ -106,7 +111,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               <span className="inline-block text-xs font-mono-tech uppercase tracking-widest text-cyan-400">
                 {project.category}
               </span>
-              <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-white uppercase tracking-tight">
+              <h2 id="project-modal-title" className="text-2xl sm:text-3xl font-display font-extrabold text-white uppercase tracking-tight">
                 {project.title}
               </h2>
               <p className="text-sm text-slate-300 font-sans-clean leading-relaxed">

@@ -227,6 +227,7 @@ export const TerminalConsole: React.FC = () => {
             <span className="text-cyan-400 font-bold text-xs select-none">&gt;</span>
             <input
               type="text"
+              aria-label="Terminal command input"
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               placeholder='Type "help" or "initiate_connection()"...'
@@ -299,6 +300,7 @@ export const TerminalConsole: React.FC = () => {
               <input
                 type="text"
                 required
+                aria-label="Your Name or Callsign"
                 value={senderName}
                 onChange={(e) => setSenderName(e.target.value)}
                 placeholder="YOUR NAME / CALLSIGN"
@@ -310,6 +312,7 @@ export const TerminalConsole: React.FC = () => {
               <input
                 type="email"
                 required
+                aria-label="Your Email Address"
                 value={senderEmail}
                 onChange={(e) => setSenderEmail(e.target.value)}
                 placeholder="YOUR EMAIL COORDINATES"
@@ -321,6 +324,7 @@ export const TerminalConsole: React.FC = () => {
               <textarea
                 required
                 rows={3}
+                aria-label="Transmission Message"
                 value={messageContent}
                 onChange={(e) => setMessageContent(e.target.value)}
                 placeholder="TRANSMISSION MESSAGE..."

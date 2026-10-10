@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type React from 'react';
 import gsap from 'gsap';
 import { soundManager } from '../audio/soundEffects';
 
@@ -69,7 +70,10 @@ export const CinematicLoader: React.FC<CinematicLoaderProps> = ({ onComplete }) 
   }, []);
 
   return (
-    <div className="loader-container fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#05070b] text-cyan-400 font-mono-tech select-none overflow-hidden px-4">
+    <div
+      className="loader-container fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#03050a] text-cyan-400 font-mono-tech select-none overflow-hidden px-4"
+      aria-label="System Boot Sequence"
+    >
       {/* Background Cyber Grid */}
       <div className="absolute inset-0 bg-tech-grid opacity-30 pointer-events-none" />
       <div className="absolute inset-0 scanline-overlay pointer-events-none" />
@@ -91,7 +95,10 @@ export const CinematicLoader: React.FC<CinematicLoaderProps> = ({ onComplete }) 
         </div>
 
         {/* Animated Terminal Logs */}
-        <div className="space-y-1.5 min-h-[96px] text-xs font-mono-tech text-slate-300 mb-6">
+        <div
+          className="space-y-1.5 min-h-[96px] text-xs font-mono-tech text-slate-300 mb-6"
+          aria-live="polite"
+        >
           {BOOT_LOGS.slice(0, logIndex + 1).map((log, idx) => (
             <div key={idx} className="flex items-start gap-2">
               <span className="text-cyan-500 font-bold select-none">&gt;&gt;</span>
@@ -103,7 +110,14 @@ export const CinematicLoader: React.FC<CinematicLoaderProps> = ({ onComplete }) 
         </div>
 
         {/* Progress Bar Container */}
-        <div className="space-y-2 mb-6">
+        <div
+          className="space-y-2 mb-6"
+          role="progressbar"
+          aria-valuenow={progress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="System Boot Progress"
+        >
           <div className="flex justify-between text-[11px] text-slate-400 font-mono-tech">
             <span>CORE_INITIALIZATION_VECTOR</span>
             <span className="text-cyan-300">{progress} / 100</span>
@@ -123,7 +137,8 @@ export const CinematicLoader: React.FC<CinematicLoaderProps> = ({ onComplete }) 
           </span>
           <button
             onClick={finishLoading}
-            className="text-xs uppercase tracking-wider text-cyan-400 hover:text-white px-3 py-1 border border-cyan-500/30 hover:border-cyan-400 rounded bg-cyan-950/40 transition-colors ml-auto cursor-pointer"
+            data-cursor="hover"
+            className="text-xs uppercase tracking-wider text-cyan-400 hover:text-white px-3 py-1 border border-cyan-500/30 hover:border-cyan-400 rounded bg-cyan-950/40 transition-colors ml-auto cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400"
           >
             SKIP SEQUENCE &rarr;
           </button>

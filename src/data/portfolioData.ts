@@ -18,7 +18,7 @@ export const PERSONAL_INFO = {
   systemProfile: {
     os: 'Windows 64-bit Architecture',
     terminal: 'PowerShell / Node.js Runtime',
-    coordinates: '17.3850° N, 78.4867° E [HYD-IN]',
+    coordinates: '17.5376° N, 78.3842° E [HYD-IN]',
     mindset: 'First-principles systems engineering, robust architectural separation, low-latency API design, and mathematical intuition in ML models.',
     currentExploration: 'High-throughput full-stack architectures, real-time computer vision kinematics, and WebGL graphics computation.',
     interests: ['Artificial Intelligence & Neural Nets', 'Full Stack Architecture', 'Computer Vision & Kinematics', 'Interactive 3D Web Graphics', 'Algorithmic Problem Solving'],

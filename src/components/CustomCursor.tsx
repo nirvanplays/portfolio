@@ -28,7 +28,6 @@ export const CustomCursor: React.FC = () => {
     const getTargetState = (el: Element | null): CursorState => {
       if (!el) return 'default';
       const elem = el as HTMLElement;
-      // Check closest interactive ancestor
       if (elem.closest('[data-cursor="project"]')) return 'project';
       if (elem.closest('[data-cursor="text"]')) return 'text';
       if (elem.closest('button, a, [role="button"]')) return 'hover';
@@ -45,6 +44,11 @@ export const CustomCursor: React.FC = () => {
       // Immediate dot snap
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0)`;
+      }
+
+      // Synchronize label position if hovering over project
+      if (labelRef.current) {
+        labelRef.current.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0)`;
       }
 
       const newState = getTargetState(e.target as Element);
@@ -67,17 +71,19 @@ export const CustomCursor: React.FC = () => {
     const onMouseLeave = () => {
       if (dotRef.current) dotRef.current.style.opacity = '0';
       if (ringRef.current) ringRef.current.style.opacity = '0';
+      if (labelRef.current) labelRef.current.style.opacity = '0';
     };
 
     const onMouseEnter = () => {
       if (dotRef.current) dotRef.current.style.opacity = '1';
       if (ringRef.current) ringRef.current.style.opacity = '1';
+      if (labelRef.current) labelRef.current.style.opacity = '1';
     };
 
-    // RAF loop — only for the lagged ring
+    // Smooth RAF loop for the lagged ring
     const loop = () => {
       rafId = requestAnimationFrame(loop);
-      const lerpFactor = 0.12;
+      const lerpFactor = 0.14;
       ring.x += (ringTarget.x - ring.x) * lerpFactor;
       ring.y += (ringTarget.y - ring.y) * lerpFactor;
 
@@ -157,18 +163,18 @@ export const CustomCursor: React.FC = () => {
         }}
       />
 
-      {/* ── "VIEW" label that appears on project hover ── */}
+      {/* ── "VIEW" label that follows cursor on project cards ── */}
       {isProject && (
         <div
           ref={labelRef}
-          className="fixed top-0 left-0 font-mono-tech text-[9px] tracking-widest uppercase text-white/70 pointer-events-none will-change-transform"
+          className="fixed top-0 left-0 font-mono-tech text-[9px] tracking-widest uppercase text-white/80 pointer-events-none will-change-transform select-none"
           style={{
             transform: 'translate3d(-200px, -200px, 0)',
-            marginLeft: '-12px',
-            marginTop: '26px',
+            marginLeft: '-14px',
+            marginTop: '32px',
           }}
         >
-          VIEW
+          INSPECT
         </div>
       )}
     </div>

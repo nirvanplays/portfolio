@@ -1,4 +1,3 @@
-import { useState, useRef, useEffect } from 'react';
 import type React from 'react';
 import { ExternalLink, FileText, ChevronDown } from 'lucide-react';
 import { HeroCanvas } from '../three/HeroCanvas';
@@ -11,23 +10,6 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Track scroll to pass to Three.js canvas for scroll-reactive camera
-  useEffect(() => {
-    const handleScroll = () => {
-      const section = sectionRef.current;
-      if (!section) return;
-      const height = section.clientHeight;
-      const progress = Math.min(1, window.scrollY / height);
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const scrollToProjects = () => {
     soundManager.playClick();
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
@@ -40,12 +22,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
 
   return (
     <section
-      ref={sectionRef}
+      id="hero"
       className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
       aria-label="Introduction"
     >
-      {/* ── Three.js 3D Environment ── */}
-      <HeroCanvas scrollProgress={scrollProgress} interactive />
+      {/* ── Three.js 3D Environment (Autonomous passive scroll tracking) ── */}
+      <HeroCanvas interactive />
 
       {/* ── Subtle radial vignette ── */}
       <div
