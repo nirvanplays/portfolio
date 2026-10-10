@@ -1,38 +1,36 @@
 import type React from 'react';
 import { ArrowUp } from 'lucide-react';
-import { soundManager } from '../audio/soundEffects';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
-    soundManager.playClick();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer className="border-t border-white/[0.08] py-12 px-6 sm:px-8 max-w-7xl mx-auto w-full font-mono-tech text-xs text-slate-400 select-none">
+    <footer className="border-t border-slate-200 bg-white py-12 px-6 sm:px-8 max-w-6xl mx-auto w-full text-sm text-slate-500">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
         {/* Left: Identity */}
-        <div className="flex items-center gap-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-[--accent-cyan]" />
-          <span className="font-sans-clean font-bold text-white text-sm">
-            KOPPELA NIRVAN REDDY
-          </span>
-          <span className="text-slate-400">•</span>
-          <span>HYDERABAD, INDIA</span>
+        <div className="space-y-1 text-center sm:text-left">
+          <div className="font-bold text-slate-900 text-base">
+            Nirvan Reddy
+          </div>
+          <div className="text-xs text-slate-500">
+            Computer Science Engineering · Full Stack • AI/ML
+          </div>
         </div>
 
-        {/* Center: System notice */}
-        <div className="text-[11px] text-slate-400">
-          DESIGNED & ENGINEERED // 2026
+        {/* Center: Copyright */}
+        <div className="text-xs text-slate-400">
+          © 2026 Koppela Nirvan Reddy. All rights reserved.
         </div>
 
         {/* Right: Scroll to top */}
         <button
           onClick={scrollToTop}
-          className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
           aria-label="Back to Top"
         >
-          <span>TOP</span>
+          <span>Back to Top</span>
           <ArrowUp className="w-3.5 h-3.5" />
         </button>
       </div>

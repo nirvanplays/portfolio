@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import type React from 'react';
-import { ExternalLink, Copy, Check, Send } from 'lucide-react';
+import { Mail, ExternalLink, Copy, Check, Send } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
-import { soundManager } from '../audio/soundEffects';
 
 export const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -11,16 +10,14 @@ export const ContactSection: React.FC = () => {
   const [message, setMessage] = useState('');
   const [sent, setSent] = useState(false);
 
-  const handleCopy = () => {
-    soundManager.playClick();
+  const handleCopyEmail = () => {
     navigator.clipboard.writeText(PERSONAL_INFO.email);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    soundManager.playActivate();
     const subject = encodeURIComponent(`Portfolio Inquiry from ${senderName}`);
     const body = encodeURIComponent(
       `Name: ${senderName}\nEmail: ${senderEmail}\n\nMessage:\n${message}`
@@ -32,139 +29,143 @@ export const ContactSection: React.FC = () => {
       setSenderName('');
       setSenderEmail('');
       setMessage('');
-    }, 4000);
+    }, 3000);
   };
 
   return (
-    <section id="contact" className="section-container" aria-label="Contact">
-      <div className="border-t border-white/[0.1] pt-16 sm:pt-24 space-y-16">
-        {/* Section Header */}
-        <div className="flex items-center gap-3 font-mono-tech text-xs text-slate-400 uppercase tracking-widest">
-          <span className="text-[--accent-cyan]">06</span>
-          <span className="w-8 h-px bg-white/[0.2]" />
-          <span>CONTACT & INQUIRIES</span>
-        </div>
-
-        {/* Large Statement */}
-        <div className="space-y-4 max-w-4xl">
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-sans-clean font-bold tracking-tight text-white uppercase leading-[1.05]">
-            Let's Connect.
+    <section id="contact" className="section-container border-t border-slate-100" aria-label="Contact">
+      <div className="space-y-12">
+        {/* Section Heading & Statement */}
+        <div className="space-y-3 max-w-2xl">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Let's build something useful.
           </h2>
-          <p className="text-base sm:text-lg text-slate-300 font-light leading-relaxed max-w-2xl">
-            Open to conversations regarding full-stack software engineering opportunities, applied AI/ML systems research, and technical collaboration.
+          <div className="w-12 h-1 bg-blue-600 rounded-full" />
+          <p className="text-base sm:text-lg text-slate-600 pt-1 leading-relaxed">
+            I'm interested in software engineering, AI/ML and challenging technical projects.
           </p>
         </div>
 
-        {/* Contact Grid: Direct Channels (Left) & Quick Dispatch (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-6 border-t border-white/[0.08]">
-          {/* Left Column: Direct Links */}
-          <div className="lg:col-span-5 space-y-6">
-            <span className="font-mono-tech text-xs text-[--accent-cyan] uppercase tracking-widest block">
-              // DIRECT CHANNELS
-            </span>
+        {/* Contact Layout Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+          {/* Left Column: Direct Links & Action Cards (5 cols) */}
+          <div className="md:col-span-5 space-y-4">
+            {/* Primary Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href={`mailto:${PERSONAL_INFO.email}`}
+                className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm shadow-xs transition-colors"
+              >
+                <Mail className="w-4 h-4" />
+                <span>Email Me</span>
+              </a>
 
-            {/* Email Box */}
-            <div className="p-5 rounded-xl border border-white/[0.08] bg-white/[0.02] flex items-center justify-between gap-4">
-              <div className="space-y-1 truncate">
-                <span className="font-mono-tech text-[10px] text-slate-400 uppercase tracking-wider block">
-                  PRIMARY EMAIL
+              <a
+                href={PERSONAL_INFO.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg border border-slate-300 hover:border-slate-400 bg-white text-slate-700 hover:text-slate-900 font-medium text-sm shadow-2xs transition-colors"
+              >
+                <span>LinkedIn</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+              </a>
+            </div>
+
+            {/* Email Address Card with Copy Button */}
+            <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/60 flex items-center justify-between gap-3">
+              <div className="truncate">
+                <span className="block text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+                  Direct Email
                 </span>
                 <a
                   href={`mailto:${PERSONAL_INFO.email}`}
-                  className="font-mono-tech text-sm text-white hover:text-[--accent-cyan] transition-colors truncate block"
+                  className="text-sm font-medium text-slate-800 hover:text-blue-600 transition-colors truncate block"
                 >
                   {PERSONAL_INFO.email}
                 </a>
               </div>
               <button
-                onClick={handleCopy}
-                className="p-2.5 rounded-lg border border-white/[0.12] bg-white/[0.03] text-slate-300 hover:text-white hover:border-[--accent-cyan] transition-colors cursor-pointer flex-shrink-0"
-                aria-label="Copy Email"
+                onClick={handleCopyEmail}
+                className="p-2 rounded-lg border border-slate-200 bg-white text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-all cursor-pointer shadow-2xs flex-shrink-0"
+                aria-label="Copy Email Address"
                 title="Copy Email"
               >
-                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
 
-            {/* LinkedIn Card */}
-            <a
-              href={PERSONAL_INFO.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-5 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:border-[--accent-cyan]/40 hover:bg-white/[0.04] transition-all flex items-center justify-between group"
-            >
-              <div className="space-y-1">
-                <span className="font-mono-tech text-[10px] text-slate-400 uppercase tracking-wider block">
-                  PROFESSIONAL NETWORK
-                </span>
-                <span className="font-mono-tech text-sm text-white group-hover:text-[--accent-cyan] transition-colors font-medium">
-                  linkedin.com/in/nirvanreddy
-                </span>
+            {/* Academic & Geographic Base */}
+            <div className="p-4 rounded-xl border border-slate-200 bg-white text-xs text-slate-600 space-y-1">
+              <div>
+                <span className="font-semibold text-slate-800">Location:</span> Hyderabad, Telangana, India
               </div>
-              <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-[--accent-cyan] transition-colors" />
-            </a>
-
-            {/* Location & Academic Base */}
-            <div className="font-mono-tech text-xs text-slate-400 space-y-1.5 pt-2">
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>LOCATION: Hyderabad, Telangana, India</span>
+              <div>
+                <span className="font-semibold text-slate-800">Academic Standing:</span> GRIET (2024–2028) · CGPA 8.01
               </div>
-              <div>ACADEMIC: GRIET (2024–2028) · CGPA: 8.01</div>
             </div>
           </div>
 
-          {/* Right Column: Quick Message Form */}
-          <div className="lg:col-span-7 editorial-panel rounded-xl p-6 sm:p-8 space-y-6">
-            <span className="font-mono-tech text-xs text-[--accent-cyan] uppercase tracking-widest block">
-              // SEND DIRECT INQUIRY
-            </span>
+          {/* Right Column: Direct Message Form (7 cols) */}
+          <div className="md:col-span-7 p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-2xs space-y-5">
+            <h3 className="text-base font-semibold text-slate-900">
+              Send a Message
+            </h3>
 
-            <form onSubmit={handleSendMessage} className="space-y-4 font-mono-tech">
+            <form onSubmit={handleSendMessage} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
+                <div className="space-y-1">
+                  <label htmlFor="name" className="block text-xs font-medium text-slate-700">
+                    Your Name
+                  </label>
                   <input
+                    id="name"
                     type="text"
                     required
-                    aria-label="Your Name"
                     value={senderName}
                     onChange={(e) => setSenderName(e.target.value)}
-                    placeholder="Your Name"
-                    className="w-full text-xs px-4 py-3 rounded-lg bg-white/[0.03] border border-white/[0.1] focus:border-[--accent-cyan] text-white placeholder-slate-400 focus:outline-none"
+                    placeholder="Jane Doe"
+                    className="w-full text-sm px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-slate-900 placeholder:text-slate-400"
                   />
                 </div>
-                <div>
+
+                <div className="space-y-1">
+                  <label htmlFor="email" className="block text-xs font-medium text-slate-700">
+                    Your Email
+                  </label>
                   <input
+                    id="email"
                     type="email"
                     required
-                    aria-label="Your Email"
                     value={senderEmail}
                     onChange={(e) => setSenderEmail(e.target.value)}
-                    placeholder="Your Email Address"
-                    className="w-full text-xs px-4 py-3 rounded-lg bg-white/[0.03] border border-white/[0.1] focus:border-[--accent-cyan] text-white placeholder-slate-400 focus:outline-none"
+                    placeholder="jane@example.com"
+                    className="w-full text-sm px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-slate-900 placeholder:text-slate-400"
                   />
                 </div>
               </div>
 
-              <div>
+              <div className="space-y-1">
+                <label htmlFor="message" className="block text-xs font-medium text-slate-700">
+                  Message
+                </label>
                 <textarea
+                  id="message"
                   required
                   rows={4}
-                  aria-label="Your Message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Project inquiry or message..."
-                  className="w-full text-xs px-4 py-3 rounded-lg bg-white/[0.03] border border-white/[0.1] focus:border-[--accent-cyan] text-white placeholder-slate-400 focus:outline-none resize-none"
+                  placeholder="Tell me about your role or project..."
+                  className="w-full text-sm px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-slate-900 placeholder:text-slate-400 resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full sm:w-auto px-8 py-3 rounded-lg bg-white text-[#090a0d] hover:bg-slate-100 font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-medium text-sm transition-colors cursor-pointer shadow-xs"
               >
                 {sent ? (
                   <>
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-400" />
                     <span>Opening Mail Client...</span>
                   </>
                 ) : (
