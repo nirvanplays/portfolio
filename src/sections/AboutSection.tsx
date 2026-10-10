@@ -9,13 +9,16 @@ export const AboutSection: React.FC = () => {
         <span className="font-mono text-xs sm:text-sm text-blue-400 font-semibold uppercase tracking-widest block">
           ABOUT
         </span>
-        <h2 className="text-3xl sm:text-5xl lg:text-[52px] font-extrabold text-white tracking-tight leading-[1.12]">
+        <h2 className="text-3xl sm:text-5xl lg:text-[50px] font-extrabold text-white tracking-tight leading-[1.14]">
           I enjoy building software systems across the full stack and exploring practical applications of AI and computer vision.
         </h2>
+        <p className="text-lg sm:text-xl text-slate-400 font-light max-w-3xl leading-relaxed">
+          My projects span web applications, backend systems, computer vision and deep learning — with a focus on turning technical ideas into usable software.
+        </p>
       </div>
 
-      {/* Three Elegant Columns (Typography & Spacing Driven) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12 pt-8 border-t border-white/[0.08]">
+      {/* Three Clean Typography Columns (No generic cards) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12 pt-10 border-t border-white/[0.08]">
         {/* Column 1: EDUCATION */}
         <div className="space-y-4">
           <h3 className="font-mono text-xs sm:text-sm font-semibold text-slate-400 uppercase tracking-wider">
@@ -28,8 +31,9 @@ export const AboutSection: React.FC = () => {
             <div className="text-slate-300">
               B.Tech in Computer Science and Engineering
             </div>
-            <div className="font-mono text-sm text-slate-400 pt-1 flex items-center justify-between">
+            <div className="font-mono text-sm text-slate-400 pt-1 flex items-center gap-3">
               <span>{PERSONAL_INFO.education.period}</span>
+              <span className="text-slate-600">•</span>
               <span className="text-blue-400 font-semibold">CGPA: {PERSONAL_INFO.education.cgpa}</span>
             </div>
           </div>

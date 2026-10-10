@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import type React from 'react';
-import { ArrowRight, FileText, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 const SubtleHeroCanvas = lazy(() =>
@@ -19,19 +19,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
   return (
     <section
       id="hero"
-      className="min-h-[75vh] lg:min-h-[85vh] flex flex-col justify-center pt-8 pb-16 sm:py-20 select-none"
+      className="min-h-[75vh] lg:min-h-[82vh] flex flex-col justify-center pt-2 sm:pt-6 pb-12 sm:pb-16 select-none"
       aria-label="Introduction"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        {/* Left Column: Bold Editorial Composition (7 cols) */}
-        <div className="lg:col-span-7 space-y-7 sm:space-y-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        {/* Left Column: Direct Editorial Hierarchy (7 cols) */}
+        <div className="lg:col-span-7 space-y-6 sm:space-y-7">
           {/* Eyebrow Label (14-16px) */}
-          <div className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-blue-400 tracking-widest uppercase font-semibold">
-            <span>COMPUTER SCIENCE ENGINEERING</span>
+          <div className="font-mono text-xs sm:text-sm text-blue-400 font-semibold tracking-widest uppercase">
+            COMPUTER SCIENCE ENGINEERING
           </div>
 
           {/* Large Heading & Statement */}
-          <div className="space-y-4 sm:space-y-5">
+          <div className="space-y-3 sm:space-y-4">
             <h1 className="text-5xl sm:text-7xl lg:text-[88px] font-extrabold text-white tracking-tight leading-[1.04]">
               Hi, I'm Nirvan.
             </h1>
@@ -47,11 +47,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
             <span className="text-white font-medium">
               Gokaraju Rangaraju Institute of Engineering and Technology
             </span>
-            , focused on full-stack development, AI/ML and computer vision.
+            , focused on software engineering, AI/ML and computer vision.
           </p>
 
-          {/* Direct Actions */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          {/* CTAs */}
+          <div className="flex flex-wrap items-center gap-4 pt-1">
             <button
               onClick={scrollToWork}
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm tracking-wide transition-all shadow-sm cursor-pointer group"
@@ -62,39 +62,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
 
             <button
               onClick={onOpenResume}
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg border border-white/[0.18] hover:border-white/[0.35] bg-white/[0.02] hover:bg-white/[0.06] text-white font-semibold text-sm tracking-wide transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-7 py-3.5 rounded-lg border border-white/[0.18] hover:border-white/[0.35] bg-white/[0.02] hover:bg-white/[0.06] text-white font-semibold text-sm tracking-wide transition-all cursor-pointer"
             >
-              <FileText className="w-4 h-4 text-blue-400" />
-              <span>DOWNLOAD RESUME</span>
+              <span>RESUME</span>
+              <ArrowUpRight className="w-4 h-4 text-blue-400" />
             </button>
-
-            <a
-              href={PERSONAL_INFO.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-3.5 text-slate-400 hover:text-white font-medium text-sm transition-colors"
-            >
-              <span>LINKEDIN</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
           </div>
 
-          {/* Clean Academic Metadata (12-14px) */}
-          <div className="pt-6 border-t border-white/[0.08] flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm text-slate-400 font-mono">
+          {/* Factual Academic Metadata (12-14px) */}
+          <div className="pt-4 border-t border-white/[0.08] flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm text-slate-400 font-mono">
             <span>Hyderabad, India</span>
             <span className="text-slate-600">•</span>
             <span>B.Tech CSE · 2024–2028</span>
             <span className="text-slate-600">•</span>
-            <span className="text-white font-medium">CGPA 8.01</span>
+            <span className="text-white font-medium">CGPA: {PERSONAL_INFO.education.cgpa}</span>
           </div>
         </div>
 
-        {/* Right Column: Refined Computational Structure (5 cols) */}
-        <div className="lg:col-span-5 flex items-center justify-center relative min-h-[340px] sm:min-h-[440px]">
-          <div className="w-full h-full max-w-[460px] aspect-square relative flex items-center justify-center">
-            {/* Subtle radial glow */}
+        {/* Right Column: Engineering System Visual (5 cols) */}
+        <div className="lg:col-span-5 flex items-center justify-center relative min-h-[320px] sm:min-h-[400px]">
+          <div className="w-full h-full max-w-[440px] aspect-square relative flex items-center justify-center">
+            {/* Subtle glow */}
             <div className="absolute inset-0 bg-radial from-blue-600/10 via-transparent to-transparent rounded-full blur-3xl pointer-events-none" />
-            <Suspense fallback={<div className="w-full h-full min-h-[340px]" />}>
+            <Suspense fallback={<div className="w-full h-full min-h-[320px]" />}>
               <SubtleHeroCanvas />
             </Suspense>
           </div>

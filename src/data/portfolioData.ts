@@ -78,6 +78,7 @@ export const PROJECTS: Project[] = [
     analyticsNote:
       'Built an end-to-end data analytics pipeline using SQL, Advanced Excel, and Power BI for administrative campus reporting.',
     status: 'Completed Prototype',
+    timeline: 'Jan 2026 – Present',
   },
   {
     id: 'physiosis-gait-analysis',
@@ -129,6 +130,7 @@ export const PROJECTS: Project[] = [
       'Integrated real-time threshold scoring to detect anomalies and serve corrective recommendations via FastAPI.',
     ],
     status: 'AI Research Prototype',
+    timeline: 'Oct 2025 – Dec 2025',
   },
   {
     id: 'smart-study-planner',
@@ -180,6 +182,7 @@ export const PROJECTS: Project[] = [
       'Delivered presentation and live prototype walkthrough to evaluators at GDG TechSprint Hackathon.',
     ],
     status: 'GDG Hackathon 2025 Prototype',
+    timeline: 'Jan 2025',
   },
   {
     id: 'pneumonia-detection-deep-learning',
@@ -231,6 +234,7 @@ export const PROJECTS: Project[] = [
       'Exported model inference pipelines for repeatable test radiograph evaluation.',
     ],
     status: 'Academic Project',
+    timeline: 'Academic Project',
   },
 ];
 
@@ -296,28 +300,22 @@ export const CERTIFICATIONS: Certification[] = [
   {
     id: 'cert-ml-ds',
     name: 'Machine Learning & Data Science Certification',
-    category: 'AI & Data Science',
   },
   {
     id: 'cert-openshift',
     name: 'Red Hat Academy – OpenShift Administration',
-    issuer: 'Red Hat Academy',
-    category: 'Cloud & Container Systems',
   },
   {
     id: 'cert-python',
     name: 'Python Programming Certification',
-    category: 'Core Languages & Algorithms',
   },
   {
     id: 'cert-sql-dbms',
     name: 'SQL & Database Management',
-    category: 'Databases & Query Systems',
   },
   {
     id: 'cert-powerbi',
     name: 'Power BI for Data Visualization',
-    category: 'Data Analytics & Business Intelligence',
   },
 ];
 

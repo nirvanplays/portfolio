@@ -11,6 +11,7 @@ import { ResumeModal } from './components/ResumeModal';
 
 export function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
+  const [highlightedSkills, setHighlightedSkills] = useState<string[]>([]);
 
   return (
     <div className="min-h-screen bg-[#0A0C0F] text-[#F5F7FA] font-sans antialiased selection:bg-blue-600/30 selection:text-white">
@@ -30,8 +31,8 @@ export function App() {
       >
         <HeroSection onOpenResume={() => setIsResumeOpen(true)} />
         <AboutSection />
-        <WorkSection />
-        <SkillsSection />
+        <WorkSection onHoverSkills={setHighlightedSkills} />
+        <SkillsSection highlightedSkills={highlightedSkills} />
         <EducationSection />
         <ContactSection />
         <Footer />

@@ -19,10 +19,16 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress(Math.min(100, Math.max(0, (window.scrollY / totalHeight) * 100)));
+      }
 
       const scrollPosition = window.scrollY + 250;
       for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
@@ -95,7 +101,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
           </a>
 
           {/* Center: Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-1 sm:gap-2" aria-label="Main Navigation">
+          <nav className="hidden md:flex items-center gap-1 sm:gap-2 relative" aria-label="Main Navigation">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -103,13 +109,16 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
                   key={link.id}
                   href={`#${link.id}`}
                   onClick={(e) => handleNavClick(e, link.id)}
-                  className={`px-3 py-1.5 rounded-md text-xs font-semibold tracking-wider uppercase transition-colors ${
+                  className={`relative px-3.5 py-2 rounded-md text-xs font-semibold tracking-wider uppercase transition-colors ${
                     isActive
                       ? 'text-white bg-white/[0.08]'
                       : 'text-slate-300 hover:text-white hover:bg-white/[0.04]'
                   }`}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  {isActive && (
+                    <span className="absolute bottom-1 left-3 right-3 h-[2px] bg-blue-500 rounded-full" />
+                  )}
                 </a>
               );
             })}
@@ -154,6 +163,13 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
             </button>
           </div>
         </div>
+
+        {/* Subtle Horizontal Scroll Indicator along bottom of Header */}
+        <div
+          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-500 transition-all duration-150 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+          aria-hidden="true"
+        />
       </header>
 
       {/* Mobile Drawer Menu */}
@@ -174,11 +190,14 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ onOpenResume }) => {
                 key={link.id}
                 href={`#${link.id}`}
                 onClick={(e) => handleNavClick(e, link.id)}
-                className={`text-2xl font-bold tracking-tight py-1 transition-colors ${
+                className={`text-2xl font-bold tracking-tight py-1 transition-colors flex items-center justify-between ${
                   activeSection === link.id ? 'text-blue-400' : 'text-slate-300 hover:text-white'
                 }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {activeSection === link.id && (
+                  <span className="w-2 h-2 rounded-full bg-blue-400" />
+                )}
               </a>
             ))}
           </div>

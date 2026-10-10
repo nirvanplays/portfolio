@@ -18,6 +18,7 @@ export interface Project {
   keyModules: KeyModule[];
   implementation: string[];
   status: string;
+  timeline?: string;
   analyticsNote?: string;
   githubUrl?: string;
 }
@@ -31,7 +32,7 @@ export interface Certification {
   id: string;
   name: string;
   issuer?: string;
-  category: string;
+  category?: string;
 }
 
 export interface EducationMilestone {
