@@ -1,5 +1,6 @@
 import type React from 'react';
 import { ArrowUp } from 'lucide-react';
+import { PERSONAL_INFO } from '../data/portfolioData';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -7,32 +8,28 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="border-t border-slate-200 bg-white py-12 px-6 sm:px-8 max-w-6xl mx-auto w-full text-sm text-slate-500">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-        {/* Left: Identity */}
-        <div className="space-y-1 text-center sm:text-left">
-          <div className="font-bold text-slate-900 text-base">
-            Nirvan Reddy
+    <footer className="pt-16 pb-8 border-t border-white/[0.08] select-none text-xs font-mono text-slate-400">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="font-bold text-white tracking-wider">
+            {PERSONAL_INFO.name}
           </div>
-          <div className="text-xs text-slate-500">
-            Computer Science Engineering · Full Stack • AI/ML
+          <div>
+            B.Tech CSE · Full Stack · AI/ML
           </div>
         </div>
 
-        {/* Center: Copyright */}
-        <div className="text-xs text-slate-400">
-          © 2026 Koppela Nirvan Reddy. All rights reserved.
+        <div className="flex items-center gap-6">
+          <span>2026</span>
+          <button
+            onClick={scrollToTop}
+            className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors cursor-pointer"
+            aria-label="Back to Top"
+          >
+            <span>TOP</span>
+            <ArrowUp className="w-3.5 h-3.5" />
+          </button>
         </div>
-
-        {/* Right: Scroll to top */}
-        <button
-          onClick={scrollToTop}
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
-          aria-label="Back to Top"
-        >
-          <span>Back to Top</span>
-          <ArrowUp className="w-3.5 h-3.5" />
-        </button>
       </div>
     </footer>
   );
