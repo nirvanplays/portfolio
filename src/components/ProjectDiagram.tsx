@@ -5,187 +5,200 @@ interface ProjectDiagramProps {
 }
 
 export const ProjectDiagram: React.FC<ProjectDiagramProps> = ({ type }) => {
-  // ── 1. SMART CAMPUS: Campus Data Topology Diagram ──
+  // ── 1. SMART CAMPUS: Clean Technical System Architecture ──
   if (type === 'campus') {
     return (
-      <div className="w-full h-full min-h-[260px] sm:min-h-[340px] flex items-center justify-center p-6 bg-[#08090d] rounded-lg border border-white/[0.06] relative overflow-hidden select-none">
-        {/* Subtle grid background */}
-        <div className="absolute inset-0 bg-grid-faint opacity-40 pointer-events-none" />
+      <div className="w-full h-full min-h-[260px] sm:min-h-[340px] flex items-center justify-center p-6 bg-[#0a0c12] rounded-lg border border-white/[0.08] relative overflow-hidden select-none">
+        <svg viewBox="0 0 400 280" className="w-full h-full max-w-[400px]" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Subtle bounding grid */}
+          <line x1="40" y1="140" x2="360" y2="140" stroke="rgba(255,255,255,0.05)" strokeWidth="1" strokeDasharray="4 4" />
+          <line x1="200" y1="30" x2="200" y2="250" stroke="rgba(255,255,255,0.05)" strokeWidth="1" strokeDasharray="4 4" />
 
-        <svg viewBox="0 0 400 300" className="w-full h-full max-w-[420px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Background concentric network rings */}
-          <circle cx="200" cy="150" r="110" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-          <circle cx="200" cy="150" r="70" stroke="rgba(0,229,255,0.12)" />
+          {/* Bus Interconnect Conduits */}
+          <path d="M 110 75 L 170 140" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
+          <path d="M 290 75 L 230 140" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
+          <path d="M 110 205 L 170 140" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
+          <path d="M 290 205 L 230 140" stroke="rgba(56,189,248,0.4)" strokeWidth="1" />
 
-          {/* Connected Pathway Lines from Satellites to Mainframe */}
-          <line x1="200" y1="150" x2="100" y2="70" stroke="rgba(0,229,255,0.3)" strokeWidth="1.5" />
-          <line x1="200" y1="150" x2="300" y2="70" stroke="rgba(0,229,255,0.3)" strokeWidth="1.5" />
-          <line x1="200" y1="150" x2="90" y2="220" stroke="rgba(0,229,255,0.3)" strokeWidth="1.5" />
-          <line x1="200" y1="150" x2="310" y2="220" stroke="rgba(0,229,255,0.3)" strokeWidth="1.5" />
+          {/* Central Core: REST API & MongoDB Cluster */}
+          <rect x="160" y="115" width="80" height="50" rx="4" fill="#111520" stroke="#38bdf8" strokeWidth="1.2" />
+          <text x="200" y="137" textAnchor="middle" fill="#ffffff" fontSize="9" fontFamily="JetBrains Mono" fontWeight="600">CORE SERVER</text>
+          <text x="200" y="152" textAnchor="middle" fill="#64748b" fontSize="7.5" fontFamily="JetBrains Mono">REST / MONGO</text>
 
-          {/* Central Mainframe Hub */}
-          <rect x="165" y="120" width="70" height="60" rx="6" fill="#0f172a" stroke="#00e5ff" strokeWidth="1.5" />
-          <text x="200" y="145" textAnchor="middle" fill="#00e5ff" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">CENTRAL</text>
-          <text x="200" y="162" textAnchor="middle" fill="#94a3b8" fontSize="8" fontFamily="JetBrains Mono">REST / MONGO</text>
+          {/* Module 1: Student Registry */}
+          <rect x="50" y="55" width="85" height="40" rx="3" fill="#0d1017" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          <text x="92" y="74" textAnchor="middle" fill="#f1f5f9" fontSize="8" fontFamily="JetBrains Mono" fontWeight="600">STUDENT MGMT</text>
+          <text x="92" y="87" textAnchor="middle" fill="#64748b" fontSize="7" fontFamily="JetBrains Mono">RBAC MODULE</text>
 
-          {/* Node 1: Student Management */}
-          <circle cx="100" cy="70" r="28" fill="#0e131f" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-          <text x="100" y="68" textAnchor="middle" fill="#ffffff" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">STUDENT</text>
-          <text x="100" y="80" textAnchor="middle" fill="#94a3b8" fontSize="7" fontFamily="JetBrains Mono">MODULE</text>
+          {/* Module 2: Leave Workflow */}
+          <rect x="265" y="55" width="85" height="40" rx="3" fill="#0d1017" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          <text x="307" y="74" textAnchor="middle" fill="#f1f5f9" fontSize="8" fontFamily="JetBrains Mono" fontWeight="600">LEAVE PORTAL</text>
+          <text x="307" y="87" textAnchor="middle" fill="#64748b" fontSize="7" fontFamily="JetBrains Mono">APPROVAL FLOW</text>
 
-          {/* Node 2: Leave Management */}
-          <circle cx="300" cy="70" r="28" fill="#0e131f" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-          <text x="300" y="68" textAnchor="middle" fill="#ffffff" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">LEAVE</text>
-          <text x="300" y="80" textAnchor="middle" fill="#94a3b8" fontSize="7" fontFamily="JetBrains Mono">WORKFLOW</text>
+          {/* Module 3: Campus Voting */}
+          <rect x="50" y="185" width="85" height="40" rx="3" fill="#0d1017" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          <text x="92" y="204" textAnchor="middle" fill="#f1f5f9" fontSize="8" fontFamily="JetBrains Mono" fontWeight="600">CAMPUS VOTING</text>
+          <text x="92" y="217" textAnchor="middle" fill="#64748b" fontSize="7" fontFamily="JetBrains Mono">JWT AUTH</text>
 
-          {/* Node 3: Campus Voting */}
-          <circle cx="90" cy="220" r="28" fill="#0e131f" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-          <text x="90" y="218" textAnchor="middle" fill="#ffffff" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">VOTING</text>
-          <text x="90" y="230" textAnchor="middle" fill="#94a3b8" fontSize="7" fontFamily="JetBrains Mono">SECURE JWT</text>
+          {/* Module 4: Power BI Analytics Pipeline */}
+          <rect x="265" y="185" width="85" height="40" rx="3" fill="#0d1017" stroke="rgba(56,189,248,0.3)" strokeWidth="1" />
+          <text x="307" y="204" textAnchor="middle" fill="#f1f5f9" fontSize="8" fontFamily="JetBrains Mono" fontWeight="600">ANALYTICS</text>
+          <text x="307" y="217" textAnchor="middle" fill="#38bdf8" fontSize="7" fontFamily="JetBrains Mono">SQL + POWER BI</text>
 
-          {/* Node 4: Power BI Analytics Pipeline */}
-          <circle cx="310" cy="220" r="28" fill="#0e131f" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-          <text x="310" y="218" textAnchor="middle" fill="#ffffff" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">ANALYTICS</text>
-          <text x="310" y="230" textAnchor="middle" fill="#38bdf8" fontSize="7" fontFamily="JetBrains Mono">SQL / BI</text>
-
-          {/* Traveling Data Packet Indicators */}
-          <circle cx="150" cy="110" r="3.5" fill="#00e5ff" className="animate-ping" />
-          <circle cx="255" cy="185" r="3.5" fill="#00e5ff" className="animate-ping" />
+          {/* Data Transfer Indicator Points */}
+          <circle cx="140" cy="108" r="2.5" fill="#38bdf8" />
+          <circle cx="260" cy="172" r="2.5" fill="#38bdf8" />
         </svg>
 
         <div className="absolute bottom-3 left-4 font-mono-tech text-[10px] text-slate-400">
-          CAMPUS ARCHITECTURE // REST API + JWT + MONGODB
+          SYS // DISTRIBUTED INSTITUTIONAL TOPOLOGY
         </div>
       </div>
     );
   }
 
-  // ── 2. PHYSIOSIS: Biomechanical Gait Kinematics ──
+  // ── 2. PHYSIOSIS: Kinematic Joint Coordinate Frame ──
   if (type === 'physiosis') {
     return (
-      <div className="w-full h-full min-h-[260px] sm:min-h-[340px] flex items-center justify-center p-6 bg-[#08090d] rounded-lg border border-white/[0.06] relative overflow-hidden select-none">
-        <div className="absolute inset-0 bg-grid-faint opacity-40 pointer-events-none" />
+      <div className="w-full h-full min-h-[260px] sm:min-h-[340px] flex items-center justify-center p-6 bg-[#0a0c12] rounded-lg border border-white/[0.08] relative overflow-hidden select-none">
+        <svg viewBox="0 0 400 280" className="w-full h-full max-w-[400px]" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Ground Contact Reference Line */}
+          <line x1="60" y1="245" x2="340" y2="245" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          <text x="345" y="248" fill="#64748b" fontSize="7" fontFamily="JetBrains Mono">Z=0</text>
 
-        <svg viewBox="0 0 400 300" className="w-full h-full max-w-[420px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Ground locomotion line */}
-          <line x1="60" y1="260" x2="340" y2="260" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+          {/* Kinematic Skeleton Vectors */}
+          {/* Head */}
+          <circle cx="200" cy="45" r="14" stroke="#ffffff" strokeWidth="1.2" fill="#0d1017" />
+          <circle cx="200" cy="45" r="2" fill="#38bdf8" />
 
-          {/* Head & Spine */}
-          <circle cx="200" cy="50" r="16" stroke="#00e5ff" strokeWidth="1.5" fill="#0a101d" />
-          <line x1="200" y1="66" x2="200" y2="150" stroke="#00e5ff" strokeWidth="2" />
+          {/* Spine */}
+          <line x1="200" y1="59" x2="200" y2="135" stroke="#ffffff" strokeWidth="1.2" />
 
-          {/* Shoulders & Arms */}
-          <line x1="160" y1="95" x2="240" y2="95" stroke="#38bdf8" strokeWidth="2" />
-          <line x1="160" y1="95" x2="140" y2="140" stroke="#38bdf8" strokeWidth="1.5" />
-          <line x1="140" y1="140" x2="130" y2="185" stroke="#38bdf8" strokeWidth="1.5" />
-          <line x1="240" y1="95" x2="260" y2="140" stroke="#38bdf8" strokeWidth="1.5" />
-          <line x1="260" y1="140" x2="270" y2="185" stroke="#38bdf8" strokeWidth="1.5" />
+          {/* Shoulder Girdle */}
+          <line x1="165" y1="80" x2="235" y2="80" stroke="#94a3b8" strokeWidth="1" />
+          <circle cx="165" cy="80" r="3" fill="#ffffff" />
+          <circle cx="235" cy="80" r="3" fill="#ffffff" />
 
-          {/* Pelvis & Gait Locomotion Legs (Left stance, Right swing) */}
-          <line x1="175" y1="150" x2="225" y2="150" stroke="#00e5ff" strokeWidth="2" />
+          {/* Arms (Counter-swing) */}
+          <line x1="165" y1="80" x2="145" y2="120" stroke="#64748b" strokeWidth="1" />
+          <line x1="145" y1="120" x2="135" y2="160" stroke="#64748b" strokeWidth="1" />
+          <line x1="235" y1="80" x2="255" y2="120" stroke="#64748b" strokeWidth="1" />
+          <line x1="255" y1="120" x2="265" y2="160" stroke="#64748b" strokeWidth="1" />
 
-          {/* Left Leg */}
-          <line x1="180" y1="150" x2="170" y2="205" stroke="#00e5ff" strokeWidth="2" />
-          <line x1="170" y1="205" x2="165" y2="260" stroke="#00e5ff" strokeWidth="2" />
+          {/* Pelvis */}
+          <line x1="180" y1="135" x2="220" y2="135" stroke="#ffffff" strokeWidth="1.2" />
 
-          {/* Right Leg in Gait Cycle */}
-          <line x1="220" y1="150" x2="245" y2="195" stroke="#6366f1" strokeWidth="2" />
-          <line x1="245" y1="195" x2="230" y2="250" stroke="#6366f1" strokeWidth="2" />
+          {/* Stance Leg (Left) */}
+          <line x1="180" y1="135" x2="175" y2="190" stroke="#38bdf8" strokeWidth="1.4" />
+          <line x1="175" y1="190" x2="170" y2="245" stroke="#38bdf8" strokeWidth="1.4" />
+          <circle cx="180" cy="135" r="3" fill="#ffffff" />
+          <circle cx="175" cy="190" r="3.5" fill="#38bdf8" />
+          <circle cx="170" cy="245" r="3" fill="#ffffff" />
 
-          {/* Joint Keypoint Markers */}
-          <circle cx="170" cy="205" r="4" fill="#00e5ff" />
-          <circle cx="245" cy="195" r="4" fill="#6366f1" />
-          <circle cx="165" cy="260" r="4" fill="#00e5ff" />
-          <circle cx="230" cy="250" r="4" fill="#6366f1" />
+          {/* Swing Leg (Right) */}
+          <line x1="220" y1="135" x2="240" y2="185" stroke="#94a3b8" strokeWidth="1" strokeDasharray="2 2" />
+          <line x1="240" y1="185" x2="230" y2="235" stroke="#94a3b8" strokeWidth="1" strokeDasharray="2 2" />
+          <circle cx="220" cy="135" r="3" fill="#ffffff" />
+          <circle cx="240" cy="185" r="3" fill="#94a3b8" />
+          <circle cx="230" cy="235" r="3" fill="#94a3b8" />
 
-          {/* Knee Joint Angle Measurement Arc */}
-          <path d="M 160 195 A 15 15 0 0 1 185 200" stroke="#00e5ff" strokeWidth="1.5" fill="none" strokeDasharray="2 2" />
-          <text x="120" y="205" fill="#00e5ff" fontSize="9" fontFamily="JetBrains Mono">θ = 142°</text>
+          {/* Joint Angle Telemetry Box */}
+          <rect x="70" y="175" width="80" height="30" rx="3" fill="#0d1017" stroke="rgba(56,189,248,0.3)" strokeWidth="1" />
+          <text x="110" y="188" textAnchor="middle" fill="#64748b" fontSize="7" fontFamily="JetBrains Mono">L-KNEE ANGLE</text>
+          <text x="110" y="199" textAnchor="middle" fill="#38bdf8" fontSize="8.5" fontFamily="JetBrains Mono" fontWeight="600">θ = 142.4°</text>
 
-          <path d="M 235 185 A 15 15 0 0 1 255 200" stroke="#6366f1" strokeWidth="1.5" fill="none" strokeDasharray="2 2" />
-          <text x="260" y="200" fill="#a5b4fc" fontSize="9" fontFamily="JetBrains Mono">θ = 118°</text>
+          {/* Coordinate Crosshairs */}
+          <line x1="175" y1="180" x2="175" y2="200" stroke="#38bdf8" strokeWidth="0.8" />
+          <line x1="165" y1="190" x2="185" y2="190" stroke="#38bdf8" strokeWidth="0.8" />
         </svg>
 
         <div className="absolute bottom-3 left-4 font-mono-tech text-[10px] text-slate-400">
-          KINEMATIC POSE ANALYSIS // MEDIAPIPE + OPENCV + FASTAPI
+          KINEMATICS // 33-POINT POSE LANDMARK EXTRACTION
         </div>
       </div>
     );
   }
 
-  // ── 3. SMART STUDY PLANNER: Adaptive Scheduling & Time Grids ──
+  // ── 3. SMART STUDY PLANNER: Adaptive Chrono-Schedule Grid ──
   if (type === 'planner') {
     return (
-      <div className="w-full h-full min-h-[260px] sm:min-h-[340px] flex items-center justify-center p-6 bg-[#08090d] rounded-lg border border-white/[0.06] relative overflow-hidden select-none">
-        <div className="absolute inset-0 bg-grid-faint opacity-40 pointer-events-none" />
-
-        <svg viewBox="0 0 400 300" className="w-full h-full max-w-[420px]" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div className="w-full h-full min-h-[260px] sm:min-h-[340px] flex items-center justify-center p-6 bg-[#0a0c12] rounded-lg border border-white/[0.08] relative overflow-hidden select-none">
+        <svg viewBox="0 0 400 280" className="w-full h-full max-w-[400px]" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Time axis */}
-          <line x1="50" y1="220" x2="350" y2="220" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-          <text x="50" y="240" fill="#64748b" fontSize="8" fontFamily="JetBrains Mono">08:00</text>
-          <text x="150" y="240" fill="#64748b" fontSize="8" fontFamily="JetBrains Mono">12:00</text>
-          <text x="250" y="240" fill="#64748b" fontSize="8" fontFamily="JetBrains Mono">16:00</text>
-          <text x="330" y="240" fill="#64748b" fontSize="8" fontFamily="JetBrains Mono">20:00</text>
+          <line x1="50" y1="190" x2="350" y2="190" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          <text x="50" y="208" fill="#64748b" fontSize="7.5" fontFamily="JetBrains Mono">08:00</text>
+          <text x="130" y="208" fill="#64748b" fontSize="7.5" fontFamily="JetBrains Mono">11:00</text>
+          <text x="210" y="208" fill="#64748b" fontSize="7.5" fontFamily="JetBrains Mono">14:00</text>
+          <text x="290" y="208" fill="#64748b" fontSize="7.5" fontFamily="JetBrains Mono">17:00</text>
 
-          {/* Adaptive Study Session Blocks */}
-          <rect x="60" y="140" width="75" height="60" rx="4" fill="rgba(0,229,255,0.12)" stroke="#00e5ff" strokeWidth="1.5" />
-          <text x="97" y="165" textAnchor="middle" fill="#00e5ff" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">BLOCK A</text>
-          <text x="97" y="180" textAnchor="middle" fill="#94a3b8" fontSize="7" fontFamily="JetBrains Mono">DEEP FOCUS</text>
+          {/* Focus Load Curve */}
+          <path d="M 50 140 C 90 90, 120 70, 160 110 S 240 60, 290 120 S 330 140, 350 150" stroke="rgba(56,189,248,0.4)" strokeWidth="1.2" fill="none" />
 
-          <rect x="155" y="120" width="90" height="80" rx="4" fill="rgba(99,102,241,0.12)" stroke="#6366f1" strokeWidth="1.5" />
-          <text x="200" y="155" textAnchor="middle" fill="#a5b4fc" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">BLOCK B</text>
-          <text x="200" y="170" textAnchor="middle" fill="#94a3b8" fontSize="7" fontFamily="JetBrains Mono">DSA SPRINT</text>
+          {/* Planned Session Intervals */}
+          <rect x="60" y="115" width="70" height="60" rx="3" fill="#0d1017" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+          <text x="95" y="140" textAnchor="middle" fill="#ffffff" fontSize="8" fontFamily="JetBrains Mono" fontWeight="600">DEEP WORK</text>
+          <text x="95" y="154" textAnchor="middle" fill="#64748b" fontSize="7" fontFamily="JetBrains Mono">DSA INTERVAL</text>
 
-          <rect x="265" y="150" width="70" height="50" rx="4" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" strokeWidth="1.5" />
-          <text x="300" y="175" textAnchor="middle" fill="#38bdf8" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">BLOCK C</text>
-          <text x="300" y="190" textAnchor="middle" fill="#94a3b8" fontSize="7" fontFamily="JetBrains Mono">REVIEW</text>
+          <rect x="150" y="95" width="90" height="80" rx="3" fill="#0e131d" stroke="#38bdf8" strokeWidth="1.2" />
+          <text x="195" y="130" textAnchor="middle" fill="#ffffff" fontSize="8.5" fontFamily="JetBrains Mono" fontWeight="600">AI / ML SPRINT</text>
+          <text x="195" y="145" textAnchor="middle" fill="#38bdf8" fontSize="7" fontFamily="JetBrains Mono">ADAPTIVE PRIORITY</text>
 
-          {/* Productivity Waveform */}
-          <path d="M 50 90 Q 100 40, 160 80 T 260 50 T 350 90" stroke="rgba(0,229,255,0.4)" strokeWidth="2" fill="none" />
-          <circle cx="160" cy="80" r="4" fill="#00e5ff" />
-          <circle cx="260" cy="50" r="4" fill="#6366f1" />
+          <rect x="260" y="130" width="75" height="45" rx="3" fill="#0d1017" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+          <text x="297" y="152" textAnchor="middle" fill="#ffffff" fontSize="8" fontFamily="JetBrains Mono" fontWeight="600">REVISION</text>
+          <text x="297" y="164" textAnchor="middle" fill="#64748b" fontSize="7" fontFamily="JetBrains Mono">TRACKED</text>
+
+          {/* State Sync Pip */}
+          <circle cx="195" cy="80" r="3" fill="#38bdf8" />
+          <line x1="195" y1="83" x2="195" y2="95" stroke="#38bdf8" strokeWidth="1" strokeDasharray="2 2" />
         </svg>
 
         <div className="absolute bottom-3 left-4 font-mono-tech text-[10px] text-slate-400">
-          ADAPTIVE SCHEDULING ENGINE // FIREBASE + FIRESTORE
+          SCHEDULING // CLOUD FIRESTORE REAL-TIME LISTENER
         </div>
       </div>
     );
   }
 
-  // ── 4. PNEUMONIA DETECTION: Medical Radiograph Convolutional Slices ──
+  // ── 4. PNEUMONIA DETECTION: Convolutional Neural Network Workflow ──
   return (
-    <div className="w-full h-full min-h-[260px] sm:min-h-[340px] flex items-center justify-center p-6 bg-[#08090d] rounded-lg border border-white/[0.06] relative overflow-hidden select-none">
-      <div className="absolute inset-0 bg-grid-faint opacity-40 pointer-events-none" />
+    <div className="w-full h-full min-h-[260px] sm:min-h-[340px] flex items-center justify-center p-6 bg-[#0a0c12] rounded-lg border border-white/[0.08] relative overflow-hidden select-none">
+      <svg viewBox="0 0 400 280" className="w-full h-full max-w-[400px]" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Layer 1: Input Radiograph Frame */}
+        <rect x="45" y="60" width="80" height="120" rx="3" fill="#0d1017" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+        <text x="85" y="50" textAnchor="middle" fill="#64748b" fontSize="7.5" fontFamily="JetBrains Mono">CHEST X-RAY</text>
 
-      <svg viewBox="0 0 400 300" className="w-full h-full max-w-[420px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Layer 1: Raw Radiograph Frame */}
-        <rect x="60" y="50" width="120" height="150" rx="4" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-        <text x="120" y="40" textAnchor="middle" fill="#94a3b8" fontSize="8" fontFamily="JetBrains Mono">INPUT X-RAY</text>
+        {/* Minimal Thoracic Radiographic Symmetry */}
+        <ellipse cx="72" cy="120" rx="14" ry="28" stroke="rgba(255,255,255,0.2)" strokeWidth="1" fill="none" />
+        <ellipse cx="98" cy="120" rx="14" ry="28" stroke="rgba(255,255,255,0.2)" strokeWidth="1" fill="none" />
 
-        {/* Anatomical thoracic silhouette abstraction */}
-        <ellipse cx="100" cy="125" rx="20" ry="35" stroke="rgba(0,229,255,0.4)" strokeWidth="1.5" fill="none" />
-        <ellipse cx="140" cy="125" rx="20" ry="35" stroke="rgba(0,229,255,0.4)" strokeWidth="1.5" fill="none" />
+        {/* Feature Inspection ROI Box */}
+        <rect x="62" y="105" width="22" height="26" stroke="#38bdf8" strokeWidth="1" strokeDasharray="2 2" fill="none" />
 
-        {/* Convolutional Feature Map Extraction Pipeline */}
-        <path d="M 190 125 L 230 125" stroke="#38bdf8" strokeWidth="1.5" strokeDasharray="3 3" />
+        {/* Pipeline Arrow */}
+        <line x1="135" y1="120" x2="165" y2="120" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
 
-        {/* Layer 2: Feature Map Conv2D Layers */}
-        <rect x="235" y="70" width="55" height="110" rx="3" fill="rgba(99,102,241,0.15)" stroke="#6366f1" strokeWidth="1.5" />
-        <rect x="245" y="60" width="55" height="110" rx="3" fill="rgba(0,229,255,0.15)" stroke="#00e5ff" strokeWidth="1.5" />
+        {/* Layer 2: Convolutional Feature Maps */}
+        <rect x="175" y="75" width="45" height="90" rx="2" fill="#0d1017" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+        <rect x="183" y="67" width="45" height="90" rx="2" fill="#111624" stroke="#38bdf8" strokeWidth="1" />
+        <text x="205" y="57" textAnchor="middle" fill="#64748b" fontSize="7.5" fontFamily="JetBrains Mono">CONV2D</text>
 
-        {/* Layer 3: Binary Classification Dense Layer */}
-        <path d="M 310 115 L 340 115" stroke="#38bdf8" strokeWidth="1.5" />
-        <circle cx="355" cy="115" r="14" fill="#0f172a" stroke="#10b981" strokeWidth="2" />
-        <text x="355" y="119" textAnchor="middle" fill="#10b981" fontSize="8" fontFamily="JetBrains Mono" fontWeight="bold">SIG</text>
+        {/* Pipeline Arrow */}
+        <line x1="238" y1="112" x2="268" y2="112" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
 
-        {/* Diagnostic Bounding Box */}
-        <rect x="85" y="105" width="30" height="35" stroke="#f43f5e" strokeWidth="1.5" strokeDasharray="2 2" fill="none" />
-        <text x="100" y="100" textAnchor="middle" fill="#f43f5e" fontSize="7" fontFamily="JetBrains Mono">ROI</text>
+        {/* Layer 3: Dense Latent Representation */}
+        <rect x="275" y="80" width="30" height="65" rx="2" fill="#0d1017" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+        <text x="290" y="70" textAnchor="middle" fill="#64748b" fontSize="7.5" fontFamily="JetBrains Mono">EFFICIENTNET</text>
+
+        {/* Pipeline Arrow */}
+        <line x1="315" y1="112" x2="335" y2="112" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+
+        {/* Layer 4: Binary Classification Output Node */}
+        <circle cx="348" cy="112" r="10" fill="#0d1017" stroke="#38bdf8" strokeWidth="1.2" />
+        <text x="348" y="115" textAnchor="middle" fill="#38bdf8" fontSize="7" fontFamily="JetBrains Mono" fontWeight="600">P(x)</text>
       </svg>
 
       <div className="absolute bottom-3 left-4 font-mono-tech text-[10px] text-slate-400">
-        CONVOLUTIONAL PIPELINE // TENSORFLOW + PYTORCH + EFFICIENTNET
+        PIPELINE // TRANSFER LEARNING & CLASSIFICATION
       </div>
     </div>
   );

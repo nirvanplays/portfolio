@@ -198,7 +198,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between text-[11px] font-mono-tech text-slate-400">
             <div className="flex items-center gap-1.5 text-emerald-400">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>VERIFIED 100% FACTUAL RESUME SPECIFICATION</span>
+              <span>VERIFIED ACADEMIC & TECHNICAL CREDENTIALS</span>
             </div>
             <div>HYDERABAD, TELANGANA, INDIA</div>
           </div>

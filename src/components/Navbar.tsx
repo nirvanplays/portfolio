@@ -131,9 +131,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
                 soundManager.playClick();
                 onOpenResume();
               }}
-              className="flex items-center gap-2 px-4 py-2 rounded-md border border-white/[0.12] bg-white/[0.03] text-white hover:border-[--accent-cyan]/60 hover:text-[--accent-cyan] font-mono-tech text-xs tracking-wider transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/[0.12] bg-white/[0.03] text-white hover:border-white/[0.3] hover:bg-white/[0.06] font-mono-tech text-xs tracking-wider transition-all duration-200 cursor-pointer"
             >
-              <FileText className="w-3.5 h-3.5" />
+              <FileText className="w-3.5 h-3.5 text-slate-400" />
               <span>RESUME</span>
             </button>
           </div>
@@ -188,9 +188,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
               setMenuOpen(false);
               onOpenResume();
             }}
-            className="w-full py-3.5 rounded border border-[--accent-cyan]/40 bg-[--accent-cyan]/10 text-[--accent-cyan] font-mono-tech text-xs uppercase tracking-wider font-bold flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-lg border border-white/[0.15] bg-white/[0.05] text-white font-mono-tech text-xs uppercase tracking-wider font-bold flex items-center justify-center gap-2 cursor-pointer"
           >
-            <FileText className="w-4 h-4" />
+            <FileText className="w-4 h-4 text-slate-400" />
             VIEW RESUME
           </button>
           <div className="text-center font-mono-tech text-[10px] text-slate-400">

@@ -7,10 +7,10 @@
     --bg-card: rgba(14, 16, 22, 0.7);
     --border-subtle: rgba(255, 255, 255, 0.08);
     --border-hover: rgba(255, 255, 255, 0.2);
-    --border-cyan: rgba(0, 229, 255, 0.25);
-    --accent-cyan: #00e5ff;
+    --border-cyan: rgba(56, 189, 248, 0.25);
+    --accent-cyan: #38bdf8;
     --accent-blue: #3b82f6;
-    --accent-violet: #6366f1;
+    --accent-violet: #818cf8;
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
@@ -154,7 +154,7 @@
 
 /* ─── ACCENT HIGHLIGHTS ──────────────────────────────────────────── */
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #00e5ff 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

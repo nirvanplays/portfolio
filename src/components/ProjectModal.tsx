@@ -193,7 +193,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/[0.08]">
             <div className="flex items-center gap-2 text-[11px] font-mono-tech text-slate-400">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>100% VERIFIED RESUME SPECIFICATION</span>
+              <span>VERIFIED ARCHITECTURAL SPECIFICATION</span>
             </div>
 
             <button
