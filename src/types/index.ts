@@ -1,3 +1,8 @@
+export interface KeyModule {
+  name: string;
+  description: string;
+}
+
 export interface Project {
   id: string;
   number: string;
@@ -7,9 +12,10 @@ export interface Project {
   techStack: string[];
   visualType: 'campus' | 'physiosis' | 'planner' | 'pneumonia';
   overview: string;
-  whatIBuilt: string[];
-  howItWorks: string;
-  challenge: string;
+  whatItDoes: string[];
+  technology: string[];
+  architecture: string;
+  keyModules: KeyModule[];
   implementation: string[];
   status: string;
   analyticsNote?: string;
