@@ -3,44 +3,38 @@ import { SKILL_CATEGORIES } from '../data/portfolioData';
 
 export const SkillsSection: React.FC = () => {
   return (
-    <section id="skills" className="space-y-8 pt-8 border-t border-white/[0.08]" aria-label="Technical Stack">
+    <section id="skills" className="py-16 sm:py-24 border-t border-white/[0.08] space-y-12" aria-label="Skills">
       {/* Section Header */}
-      <div className="flex items-center gap-3 font-mono text-xs text-slate-400 uppercase tracking-widest">
-        <span className="text-blue-400">02</span>
-        <span className="w-8 h-px bg-white/[0.2]" />
-        <span>TECHNICAL STACK</span>
-      </div>
-
-      <div className="space-y-2">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-          Engineering Matrix & Competencies.
+      <div className="space-y-3">
+        <div className="text-xs font-mono font-semibold text-blue-400 uppercase tracking-widest">
+          TECHNICAL SKILLS
+        </div>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Technologies & Competencies.
         </h2>
-        <p className="text-sm text-slate-400 font-light">
-          Tools, languages, and systems I use to design and deploy software.
+        <p className="text-base text-slate-400 font-light max-w-xl">
+          Core languages, frameworks, libraries, and systems I use to build full-stack web platforms and applied AI models.
         </p>
       </div>
 
-      {/* Elegant Typographic Matrix */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+      {/* Clean 3-Column Scannable Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {SKILL_CATEGORIES.map((cat) => (
           <div
             key={cat.category}
-            className="editorial-card rounded-xl p-5 space-y-3 hover:border-white/[0.18] transition-colors"
+            className="p-6 rounded-xl bg-[#11141a]/60 border border-white/[0.08] space-y-3.5 hover:border-white/[0.18] transition-colors"
           >
-            <div className="flex items-center justify-between border-b border-white/[0.06] pb-2">
-              <span className="font-mono text-xs font-bold text-white tracking-wider">
-                {cat.category}
-              </span>
-              <span className="font-mono text-[10px] text-slate-400">
-                {cat.skills.length} MODULES
-              </span>
-            </div>
+            {/* Category Header */}
+            <h3 className="text-xs font-mono font-bold tracking-wider text-slate-200 uppercase">
+              {cat.category}
+            </h3>
 
-            <div className="flex flex-wrap gap-1.5">
+            {/* Clean Technology Chips */}
+            <div className="flex flex-wrap gap-2">
               {cat.skills.map((skill) => (
                 <span
                   key={skill}
-                  className="font-mono text-xs px-2.5 py-1 rounded bg-white/[0.02] border border-white/[0.08] text-slate-300 hover:text-white hover:border-blue-400/50 hover:bg-white/[0.04] transition-all cursor-default"
+                  className="text-xs font-medium px-2.5 py-1 rounded bg-white/[0.03] border border-white/[0.06] text-slate-300 hover:text-white hover:border-white/[0.2] transition-colors"
                 >
                   {skill}
                 </span>

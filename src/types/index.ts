@@ -19,6 +19,7 @@ export interface Project {
   implementation: string[];
   status: string;
   analyticsNote?: string;
+  githubUrl?: string;
 }
 
 export interface SkillCategory {

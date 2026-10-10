@@ -1,4 +1,4 @@
-import type React from 'react';
+import { Users, FileCheck, Calendar, Clock, Sparkles } from 'lucide-react';
 
 interface ProjectMockupProps {
   type: 'campus' | 'physiosis' | 'planner' | 'pneumonia';
@@ -8,142 +8,134 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
   switch (type) {
     case 'campus':
       return (
-        <div className="w-full h-full min-h-[300px] p-5 bg-[#12151c] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none font-sans">
-          {/* Top Window Bar with Role Identity */}
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
-            <div className="flex items-center gap-2">
+        <div className="w-full h-full min-h-[320px] p-5 sm:p-6 bg-[#11141a] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none shadow-xl">
+          {/* Top Window Header */}
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3.5">
+            <div className="flex items-center gap-2.5">
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-slate-700" />
                 <span className="w-2.5 h-2.5 rounded-full bg-slate-700" />
                 <span className="w-2.5 h-2.5 rounded-full bg-slate-700" />
               </div>
-              <span className="text-[11px] font-mono text-slate-300 font-semibold pl-2">
-                GRIET Campus Portal // v1.2
+              <span className="text-xs font-semibold text-slate-200 pl-1.5">
+                Campus Portal
               </span>
             </div>
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold">
-                ROLE: ADMIN
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                JWT VALID
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                Administrator
               </span>
             </div>
           </div>
 
-          {/* Sub Navigation Tabs */}
-          <div className="flex items-center gap-3 sm:gap-4 border-b border-white/[0.06] py-2 text-[10px] font-mono text-slate-400 overflow-x-auto whitespace-nowrap scrollbar-none">
-            <span className="text-white font-semibold border-b border-blue-400 pb-1 flex-shrink-0">
-              [ Students (2,480) ]
+          {/* Clean App Navigation */}
+          <div className="flex items-center gap-4 border-b border-white/[0.06] py-2.5 text-xs text-slate-400">
+            <span className="text-white font-medium border-b-2 border-blue-500 pb-1.5 -mb-2.5">
+              Student Directory
             </span>
-            <span className="hover:text-slate-200 cursor-default flex-shrink-0">
-              [ Leaves (14 Pending) ]
+            <span className="hover:text-slate-200 cursor-default">
+              Leave Requests (14)
             </span>
-            <span className="hover:text-slate-200 cursor-default flex-shrink-0">
-              [ Elections (Live) ]
+            <span className="hover:text-slate-200 cursor-default">
+              Campus Elections
             </span>
-            <span className="hover:text-slate-200 cursor-default flex-shrink-0">
-              [ Power BI Analytics ]
+            <span className="hover:text-slate-200 cursor-default hidden sm:inline">
+              Reports
             </span>
           </div>
 
-          {/* Rich Modular Content View */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-auto py-2">
-            {/* Student Records Summary */}
-            <div className="p-3 bg-[#0a0c10] rounded-lg border border-white/[0.06] space-y-2">
-              <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
-                <span>STUDENT ROSTER</span>
-                <span className="text-blue-400">ID: #24-CSE</span>
+          {/* Main Content: Student Records Table & Quick Workflow */}
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3.5 my-auto py-3">
+            {/* Student Records Table (7 cols) */}
+            <div className="sm:col-span-7 p-3.5 bg-[#0b0d12] rounded-lg border border-white/[0.06] space-y-2.5">
+              <div className="flex items-center justify-between text-xs text-slate-400">
+                <span className="font-medium text-slate-300 flex items-center gap-1.5">
+                  <Users className="w-3.5 h-3.5 text-blue-400" />
+                  Recent Enrollments
+                </span>
+                <span className="text-[11px]">2,480 Active</span>
               </div>
-              <div className="text-xs font-semibold text-white">B.Tech CSE Registry</div>
-              <div className="space-y-1 text-[10px] font-mono text-slate-400">
-                <div className="flex justify-between">
-                  <span>Enrolled:</span>
-                  <span className="text-slate-200">2,480 Active</span>
+
+              <div className="space-y-1.5 text-xs">
+                <div className="flex items-center justify-between p-2 rounded bg-white/[0.02] border border-white/[0.04]">
+                  <div>
+                    <span className="font-medium text-white block">Aditya Varma</span>
+                    <span className="text-[10px] text-slate-400">B.Tech CSE · Roll #24-012</span>
+                  </div>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium">
+                    Enrolled
+                  </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Verification:</span>
-                  <span className="text-emerald-400">Synchronized</span>
+
+                <div className="flex items-center justify-between p-2 rounded bg-white/[0.02] border border-white/[0.04]">
+                  <div>
+                    <span className="font-medium text-white block">Sneha Patel</span>
+                    <span className="text-[10px] text-slate-400">B.Tech CSE · Roll #24-089</span>
+                  </div>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium">
+                    Enrolled
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Leave Workflow Card */}
-            <div className="p-3 bg-[#0a0c10] rounded-lg border border-white/[0.06] space-y-2">
-              <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
-                <span>LEAVE ROUTING</span>
-                <span className="text-emerald-400">#L-842</span>
+            {/* Leave Action Card (5 cols) */}
+            <div className="sm:col-span-5 p-3.5 bg-[#0b0d12] rounded-lg border border-white/[0.06] flex flex-col justify-between space-y-2">
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-xs font-medium text-slate-300">
+                  <FileCheck className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Leave Workflow</span>
+                </div>
+                <div className="text-[11px] text-slate-400">
+                  Medical Petition #842
+                </div>
               </div>
-              <div className="text-xs font-semibold text-white">Medical Petition</div>
-              <div className="space-y-1 text-[10px] font-mono text-slate-400">
+
+              <div className="p-2 rounded bg-white/[0.02] border border-white/[0.04] text-[11px] text-slate-300">
                 <div className="flex justify-between">
                   <span>Duration:</span>
-                  <span className="text-slate-200">2 Days</span>
+                  <span className="text-white font-medium">2 Days</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between pt-1">
                   <span>Status:</span>
-                  <span className="text-emerald-400 font-semibold">Faculty Approved</span>
+                  <span className="text-emerald-400 font-medium">Approved</span>
                 </div>
               </div>
-            </div>
 
-            {/* Campus Election Ballot */}
-            <div className="p-3 bg-[#0a0c10] rounded-lg border border-white/[0.06] space-y-2">
-              <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
-                <span>VOTING MODULE</span>
-                <span className="text-blue-400">LIVE</span>
-              </div>
-              <div className="text-xs font-semibold text-white">Council Ballot #04</div>
-              <div className="space-y-1 text-[10px] font-mono text-slate-400">
-                <div className="flex justify-between">
-                  <span>Turnout:</span>
-                  <span className="text-slate-200 font-semibold">84.2%</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Audit Hash:</span>
-                  <span className="text-blue-400 font-mono text-[9px]">sha256:7f83b...</span>
-                </div>
+              <div className="pt-1 flex gap-1.5">
+                <button className="w-full py-1 rounded bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-medium transition-colors">
+                  View Petition
+                </button>
               </div>
             </div>
           </div>
 
-          {/* Telemetry Footer */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5 gap-1.5">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
-              <span className="truncate">MongoDB ReplicaSet: Synced · Express REST API: 200 OK</span>
-            </div>
-            <span className="text-[9px] text-slate-500 uppercase font-semibold flex-shrink-0">
-              [ SYSTEM INTERFACE MOCKUP ]
-            </span>
+          {/* Bottom Clean Footer */}
+          <div className="flex items-center justify-between text-xs text-slate-400 border-t border-white/[0.08] pt-3">
+            <span>React.js Frontend · Express REST API · MongoDB</span>
+            <span className="text-[11px] text-slate-400">Full-Stack Application</span>
           </div>
         </div>
       );
 
     case 'physiosis':
       return (
-        <div className="w-full h-full min-h-[300px] p-5 bg-[#12151c] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none font-sans">
-          {/* Top Video Header */}
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+        <div className="w-full h-full min-h-[320px] p-5 sm:p-6 bg-[#11141a] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none shadow-xl">
+          {/* Top Window Header */}
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3.5">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-              <span className="text-[11px] font-mono text-slate-200 font-semibold uppercase">
-                VIDEO FEED // 30 FPS // KINEMATICS
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
+              <span className="text-xs font-semibold text-white">
+                Physiosis Gait Analysis Feed
               </span>
             </div>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold">
-              MediaPipe Pose · 33 Keypoints
+            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              MediaPipe Pose Tracking
             </span>
           </div>
 
-          {/* Skeletal Pose Telemetry Viewport */}
-          <div className="relative h-36 my-auto flex items-center justify-center">
-            {/* Camera crosshairs background */}
-            <div className="absolute inset-0 border border-dashed border-white/[0.08] rounded flex items-center justify-center pointer-events-none">
-              <div className="w-4 h-4 border-t border-b border-blue-500/40" />
-              <div className="h-4 w-4 border-l border-r border-blue-500/40" />
-            </div>
-
+          {/* Center: Kinematic Skeletal Pose Viewport */}
+          <div className="relative h-40 my-auto flex items-center justify-center bg-[#0b0d12] rounded-lg border border-white/[0.06] overflow-hidden">
             <svg
               className="w-full h-full max-h-36 text-slate-500"
               viewBox="0 0 240 130"
@@ -152,94 +144,97 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
               strokeWidth="1.5"
             >
               {/* Torso & Head */}
-              <circle cx="120" cy="20" r="10" stroke="#3b82f6" strokeWidth="2" fill="#1e293b" />
-              <line x1="120" y1="30" x2="120" y2="75" stroke="#64748b" strokeWidth="2" />
+              <circle cx="120" cy="20" r="9" stroke="#3b82f6" strokeWidth="2" fill="#1e293b" />
+              <line x1="120" y1="29" x2="120" y2="72" stroke="#64748b" strokeWidth="2" />
               {/* Shoulders & Arms */}
-              <line x1="90" y1="42" x2="150" y2="42" stroke="#64748b" strokeWidth="2" />
-              <line x1="90" y1="42" x2="75" y2="72" stroke="#475569" />
-              <line x1="150" y1="42" x2="165" y2="72" stroke="#475569" />
-              {/* Hips & Lower Kinematic Extremities */}
-              <line x1="120" y1="75" x2="100" y2="102" stroke="#3b82f6" strokeWidth="2" />
-              <line x1="100" y1="102" x2="90" y2="125" stroke="#3b82f6" strokeWidth="2" />
-              <line x1="120" y1="75" x2="140" y2="102" stroke="#3b82f6" strokeWidth="2" />
-              <line x1="140" y1="102" x2="155" y2="125" stroke="#3b82f6" strokeWidth="2" />
-              {/* Keypoint Joint Nodes */}
-              <circle cx="100" cy="102" r="3.5" fill="#60a5fa" />
-              <circle cx="140" cy="102" r="3.5" fill="#60a5fa" />
-              <circle cx="90" cy="125" r="3" fill="#38bdf8" />
-              <circle cx="155" cy="125" r="3" fill="#38bdf8" />
+              <line x1="95" y1="40" x2="145" y2="40" stroke="#64748b" strokeWidth="2" />
+              <line x1="95" y1="40" x2="80" y2="68" stroke="#475569" />
+              <line x1="145" y1="40" x2="160" y2="68" stroke="#475569" />
+              {/* Hips & Legs */}
+              <line x1="120" y1="72" x2="102" y2="98" stroke="#3b82f6" strokeWidth="2" />
+              <line x1="102" y1="98" x2="92" y2="122" stroke="#3b82f6" strokeWidth="2" />
+              <line x1="120" y1="72" x2="138" y2="98" stroke="#3b82f6" strokeWidth="2" />
+              <line x1="138" y1="98" x2="150" y2="122" stroke="#3b82f6" strokeWidth="2" />
+              {/* Keypoint Joints */}
+              <circle cx="102" cy="98" r="3" fill="#60a5fa" />
+              <circle cx="138" cy="98" r="3" fill="#60a5fa" />
+              <circle cx="92" cy="122" r="2.5" fill="#38bdf8" />
+              <circle cx="150" cy="122" r="2.5" fill="#38bdf8" />
             </svg>
 
-            {/* Readout Callouts */}
-            <div className="absolute top-1 left-2 px-2.5 py-1 rounded bg-[#0a0c10]/90 border border-white/[0.1] text-[10px] font-mono text-slate-300">
-              Knee Flexion: <span className="font-bold text-blue-400">142.4°</span> (Normal)
+            {/* Readout Badges */}
+            <div className="absolute top-2 left-3 px-2 py-1 rounded bg-[#0b0d12]/90 border border-white/[0.1] text-[11px] text-slate-300">
+              Knee Flexion: <span className="font-semibold text-blue-400">142.4°</span>
             </div>
-            <div className="absolute bottom-1 right-2 px-2.5 py-1 rounded bg-[#0a0c10]/90 border border-white/[0.1] text-[10px] font-mono text-slate-300">
-              Gait Cycle: <span className="font-bold text-emerald-400">Stance Phase (62%)</span>
+            <div className="absolute top-2 right-3 px-2 py-1 rounded bg-[#0b0d12]/90 border border-white/[0.1] text-[11px] text-slate-300">
+              Hip Angle: <span className="font-semibold text-blue-400">168.1°</span>
             </div>
-            <div className="absolute top-1 right-2 px-2.5 py-1 rounded bg-[#0a0c10]/90 border border-white/[0.1] text-[10px] font-mono text-slate-300">
-              Hip Vector: <span className="font-bold text-blue-400">168.1°</span>
+            <div className="absolute bottom-2 right-3 px-2 py-1 rounded bg-[#0b0d12]/90 border border-white/[0.1] text-[11px] text-slate-300">
+              Gait Phase: <span className="font-semibold text-emerald-400">Stance Phase</span>
             </div>
           </div>
 
-          {/* Telemetry Footer */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5 gap-1.5">
-            <span className="truncate">FastAPI Ingestion (18ms) · OpenCV v4.8 Spatial Filter</span>
-            <span className="text-[9px] text-slate-500 uppercase font-semibold flex-shrink-0">
-              [ CV TELEMETRY MOCKUP ]
-            </span>
+          {/* Bottom Clean Footer */}
+          <div className="flex items-center justify-between text-xs text-slate-400 border-t border-white/[0.08] pt-3">
+            <span>Python · OpenCV · MediaPipe · FastAPI</span>
+            <span className="text-[11px] text-slate-400">Computer Vision Pipeline</span>
           </div>
         </div>
       );
 
     case 'planner':
       return (
-        <div className="w-full h-full min-h-[300px] p-5 bg-[#12151c] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none font-sans">
+        <div className="w-full h-full min-h-[320px] p-5 sm:p-6 bg-[#11141a] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none shadow-xl">
           {/* Top Window Header */}
-          <div className="flex flex-wrap items-center justify-between border-b border-white/[0.08] pb-3 gap-2">
-            <span className="text-[11px] font-mono text-slate-200 font-semibold uppercase">
-              STUDY INTELLIGENCE // ADAPTIVE TIMETABLE
-            </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold">
-              Cloud Firestore Synced
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3.5">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-blue-400" />
+              <span className="text-xs font-semibold text-white">
+                Smart Study Planner & Schedule
+              </span>
+            </div>
+            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              Firebase Firestore
             </span>
           </div>
 
-          {/* Timetable Session Blocks & Productivity Bar */}
-          <div className="space-y-2.5 my-auto py-2">
-            <div className="flex items-center justify-between p-2.5 bg-[#0a0c10] rounded-lg border border-white/[0.06]">
+          {/* Timetable Session Blocks & Progress */}
+          <div className="space-y-2.5 my-auto py-3">
+            <div className="p-3 bg-[#0b0d12] rounded-lg border border-white/[0.06] flex items-center justify-between">
               <div className="space-y-0.5">
                 <div className="text-xs font-semibold text-white">
-                  09:00 - 10:30 · Data Structures: Dynamic Programming & Trees
+                  Data Structures: Trees & Dynamic Programming
                 </div>
-                <div className="text-[10px] font-mono text-slate-400">
-                  Adaptive Focus Session · 90 min
+                <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
+                  <Clock className="w-3 h-3 text-slate-500" />
+                  <span>09:00 - 10:30 · 90 min Focus Interval</span>
                 </div>
               </div>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex-shrink-0">
+              <span className="text-[10px] font-medium px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 Completed
               </span>
             </div>
 
-            <div className="flex items-center justify-between p-2.5 bg-[#0a0c10] rounded-lg border border-white/[0.06]">
+            <div className="p-3 bg-[#0b0d12] rounded-lg border border-white/[0.06] flex items-center justify-between">
               <div className="space-y-0.5">
                 <div className="text-xs font-semibold text-white">
-                  11:00 - 12:30 · Computer Vision: OpenCV Spatial Convolution
+                  Computer Vision: Spatial Filters & Feature Extraction
                 </div>
-                <div className="text-[10px] font-mono text-slate-400">
-                  Active Deep Work Block · 60 min · Focus Interval
+                <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
+                  <Clock className="w-3 h-3 text-slate-500" />
+                  <span>11:00 - 12:30 · Active Block</span>
                 </div>
               </div>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 animate-pulse flex-shrink-0">
+              <span className="text-[10px] font-medium px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 animate-pulse">
                 In Progress
               </span>
             </div>
 
-            {/* Daily Productivity Score Progress Bar */}
-            <div className="p-2 bg-[#0a0c10] rounded-lg border border-white/[0.06] space-y-1">
-              <div className="flex justify-between text-[10px] font-mono text-slate-300">
-                <span>Daily Focus Completion Target</span>
-                <span className="text-emerald-400 font-bold">78% (3.5 hrs)</span>
+            {/* Daily Productivity Completion Bar */}
+            <div className="p-3 bg-[#0b0d12] rounded-lg border border-white/[0.06] space-y-1.5">
+              <div className="flex justify-between text-xs text-slate-300">
+                <span className="font-medium">Daily Target Progress</span>
+                <span className="text-emerald-400 font-semibold">78% Completed</span>
               </div>
               <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                 <div className="bg-emerald-500 h-full w-[78%]" />
@@ -247,62 +242,61 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
             </div>
           </div>
 
-          {/* Telemetry Footer */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5 gap-1.5">
-            <span className="truncate">Presented @ GDG on Campus TechSprint Hackathon 2025</span>
-            <span className="text-[9px] text-slate-500 uppercase font-semibold flex-shrink-0">
-              [ PRODUCT MOCKUP ]
-            </span>
+          {/* Bottom Clean Footer */}
+          <div className="flex items-center justify-between text-xs text-slate-400 border-t border-white/[0.08] pt-3">
+            <span>TechSprint Hackathon Prototype</span>
+            <span className="text-[11px] text-slate-400">Productivity System</span>
           </div>
         </div>
       );
 
     case 'pneumonia':
       return (
-        <div className="w-full h-full min-h-[300px] p-5 bg-[#12151c] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none font-sans">
+        <div className="w-full h-full min-h-[320px] p-5 sm:p-6 bg-[#11141a] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none shadow-xl">
           {/* Top Window Header */}
-          <div className="flex flex-wrap items-center justify-between border-b border-white/[0.08] pb-3 gap-2">
-            <span className="text-[11px] font-mono text-slate-200 font-semibold uppercase">
-              DEEP LEARNING // CONVNET INFERENCE WORKFLOW
-            </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold">
-              EfficientNet · Transfer Learning
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3.5">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-blue-400" />
+              <span className="text-xs font-semibold text-white">
+                Deep Learning Model Inference Pipeline
+              </span>
+            </div>
+            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              EfficientNet Backbone
             </span>
           </div>
 
-          {/* ML Pipeline Stages Representation */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 my-auto py-2">
-            <div className="p-2.5 bg-[#0a0c10] rounded-lg border border-white/[0.06] text-center space-y-1">
-              <div className="text-[10px] font-mono text-blue-400 uppercase font-bold">Stage 01</div>
-              <div className="text-xs font-bold text-white">Chest X-Ray</div>
-              <div className="text-[9px] font-mono text-slate-400">OpenCV Preprocess (224×224)</div>
+          {/* 3 Pipeline Stages */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-auto py-3">
+            <div className="p-3 bg-[#0b0d12] rounded-lg border border-white/[0.06] text-center space-y-1">
+              <div className="text-[10px] font-semibold text-blue-400 uppercase">Stage 01</div>
+              <div className="text-xs font-bold text-white">Chest Radiograph</div>
+              <div className="text-[11px] text-slate-400">OpenCV Preprocessing (224×224)</div>
             </div>
 
-            <div className="p-2.5 bg-[#0a0c10] rounded-lg border border-blue-500/40 bg-blue-500/5 text-center space-y-1">
-              <div className="text-[10px] font-mono text-blue-400 uppercase font-bold">Stage 02</div>
-              <div className="text-xs font-bold text-white">Conv Backbone</div>
-              <div className="text-[9px] font-mono text-slate-400">EfficientNet Features</div>
+            <div className="p-3 bg-[#0b0d12] rounded-lg border border-blue-500/30 bg-blue-500/5 text-center space-y-1">
+              <div className="text-[10px] font-semibold text-blue-400 uppercase">Stage 02</div>
+              <div className="text-xs font-bold text-white">Feature Extractor</div>
+              <div className="text-[11px] text-slate-400">EfficientNet Convolutional Weights</div>
             </div>
 
-            <div className="p-2.5 bg-[#0a0c10] rounded-lg border border-white/[0.06] text-center space-y-1">
-              <div className="text-[10px] font-mono text-blue-400 uppercase font-bold">Stage 03</div>
+            <div className="p-3 bg-[#0b0d12] rounded-lg border border-white/[0.06] text-center space-y-1">
+              <div className="text-[10px] font-semibold text-blue-400 uppercase">Stage 03</div>
               <div className="text-xs font-bold text-white">Classifier Head</div>
-              <div className="text-[9px] font-mono text-slate-400">Binary Output Probability</div>
+              <div className="text-[11px] text-slate-400">Binary Output Probability</div>
             </div>
           </div>
 
-          {/* Loss Convergence & Frameworks Telemetry */}
-          <div className="p-2 bg-[#0a0c10] rounded-lg border border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[10px] font-mono text-slate-300">
-            <span>Loss Function: Binary Cross-Entropy</span>
-            <span className="text-blue-400 font-semibold">PyTorch & TensorFlow Dual Validation</span>
+          {/* Framework Validation Note */}
+          <div className="p-2.5 bg-[#0b0d12] rounded-lg border border-white/[0.06] flex items-center justify-between text-xs text-slate-300">
+            <span>Validation Frameworks:</span>
+            <span className="text-blue-400 font-medium">PyTorch & TensorFlow Benchmarking</span>
           </div>
 
-          {/* Telemetry Footer */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5 gap-1.5">
-            <span className="truncate">Academic Deep Learning Benchmark Build</span>
-            <span className="text-[9px] text-slate-500 uppercase font-semibold flex-shrink-0">
-              [ ML PIPELINE MOCKUP ]
-            </span>
+          {/* Bottom Clean Footer */}
+          <div className="flex items-center justify-between text-xs text-slate-400 border-t border-white/[0.08] pt-3">
+            <span>Python · PyTorch · TensorFlow · OpenCV</span>
+            <span className="text-[11px] text-slate-400">Deep Learning Project</span>
           </div>
         </div>
       );
