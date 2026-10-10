@@ -8,7 +8,7 @@ export const EducationSection: React.FC = () => {
       {/* Section Header */}
       <div className="space-y-3">
         <div className="flex items-center gap-3 font-mono text-xs text-slate-400 uppercase tracking-widest">
-          <span className="text-blue-400">04</span>
+          <span className="text-blue-400">03</span>
           <span className="w-8 h-px bg-white/[0.2]" />
           <span>EDUCATION & CREDENTIALS</span>
         </div>

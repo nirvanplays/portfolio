@@ -21,9 +21,9 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
                 GRIET Campus Portal // v1.2
               </span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
               <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold">
-                ROLE: ADMIN (SUPERUSER)
+                ROLE: ADMIN
               </span>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                 JWT VALID
@@ -32,17 +32,17 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
           </div>
 
           {/* Sub Navigation Tabs */}
-          <div className="flex items-center gap-4 border-b border-white/[0.06] py-2 text-[10px] font-mono text-slate-400">
-            <span className="text-white font-semibold border-b border-blue-400 pb-1">
+          <div className="flex items-center gap-3 sm:gap-4 border-b border-white/[0.06] py-2 text-[10px] font-mono text-slate-400 overflow-x-auto whitespace-nowrap scrollbar-none">
+            <span className="text-white font-semibold border-b border-blue-400 pb-1 flex-shrink-0">
               [ Students (2,480) ]
             </span>
-            <span className="hover:text-slate-200 cursor-default">
+            <span className="hover:text-slate-200 cursor-default flex-shrink-0">
               [ Leaves (14 Pending) ]
             </span>
-            <span className="hover:text-slate-200 cursor-default">
+            <span className="hover:text-slate-200 cursor-default flex-shrink-0">
               [ Elections (Live) ]
             </span>
-            <span className="hover:text-slate-200 cursor-default">
+            <span className="hover:text-slate-200 cursor-default flex-shrink-0">
               [ Power BI Analytics ]
             </span>
           </div>
@@ -108,13 +108,13 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
           </div>
 
           {/* Telemetry Footer */}
-          <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5 gap-1.5">
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span>MongoDB ReplicaSet: Synced · Express REST API: 200 OK</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
+              <span className="truncate">MongoDB ReplicaSet: Synced · Express REST API: 200 OK</span>
             </div>
-            <span className="text-[9px] text-slate-400 uppercase font-semibold">
-              [ SYSTEM INTERFACE MOCKUP · FULL STACK ]
+            <span className="text-[9px] text-slate-500 uppercase font-semibold flex-shrink-0">
+              [ SYSTEM INTERFACE MOCKUP ]
             </span>
           </div>
         </div>
@@ -183,10 +183,10 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
           </div>
 
           {/* Telemetry Footer */}
-          <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5">
-            <span>FastAPI Ingestion (18ms) · OpenCV v4.8 Spatial Filter</span>
-            <span className="text-[9px] text-slate-400 uppercase font-semibold">
-              [ COMPUTER VISION TELEMETRY MOCKUP ]
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5 gap-1.5">
+            <span className="truncate">FastAPI Ingestion (18ms) · OpenCV v4.8 Spatial Filter</span>
+            <span className="text-[9px] text-slate-500 uppercase font-semibold flex-shrink-0">
+              [ CV TELEMETRY MOCKUP ]
             </span>
           </div>
         </div>
@@ -196,7 +196,7 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
       return (
         <div className="w-full h-full min-h-[300px] p-5 bg-[#12151c] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none font-sans">
           {/* Top Window Header */}
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+          <div className="flex flex-wrap items-center justify-between border-b border-white/[0.08] pb-3 gap-2">
             <span className="text-[11px] font-mono text-slate-200 font-semibold uppercase">
               STUDY INTELLIGENCE // ADAPTIVE TIMETABLE
             </span>
@@ -216,7 +216,7 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
                   Adaptive Focus Session · 90 min
                 </div>
               </div>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex-shrink-0">
                 Completed
               </span>
             </div>
@@ -230,7 +230,7 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
                   Active Deep Work Block · 60 min · Focus Interval
                 </div>
               </div>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 animate-pulse">
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 animate-pulse flex-shrink-0">
                 In Progress
               </span>
             </div>
@@ -248,10 +248,10 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
           </div>
 
           {/* Telemetry Footer */}
-          <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5">
-            <span>Presented @ GDG on Campus TechSprint Hackathon 2025</span>
-            <span className="text-[9px] text-slate-400 uppercase font-semibold">
-              [ PRODUCT INTERFACE MOCKUP ]
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5 gap-1.5">
+            <span className="truncate">Presented @ GDG on Campus TechSprint Hackathon 2025</span>
+            <span className="text-[9px] text-slate-500 uppercase font-semibold flex-shrink-0">
+              [ PRODUCT MOCKUP ]
             </span>
           </div>
         </div>
@@ -261,7 +261,7 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
       return (
         <div className="w-full h-full min-h-[300px] p-5 bg-[#12151c] border border-white/[0.08] rounded-xl flex flex-col justify-between select-none font-sans">
           {/* Top Window Header */}
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+          <div className="flex flex-wrap items-center justify-between border-b border-white/[0.08] pb-3 gap-2">
             <span className="text-[11px] font-mono text-slate-200 font-semibold uppercase">
               DEEP LEARNING // CONVNET INFERENCE WORKFLOW
             </span>
@@ -271,7 +271,7 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
           </div>
 
           {/* ML Pipeline Stages Representation */}
-          <div className="grid grid-cols-3 gap-2 my-auto py-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 my-auto py-2">
             <div className="p-2.5 bg-[#0a0c10] rounded-lg border border-white/[0.06] text-center space-y-1">
               <div className="text-[10px] font-mono text-blue-400 uppercase font-bold">Stage 01</div>
               <div className="text-xs font-bold text-white">Chest X-Ray</div>
@@ -292,16 +292,16 @@ export const ProjectMockup: React.FC<ProjectMockupProps> = ({ type }) => {
           </div>
 
           {/* Loss Convergence & Frameworks Telemetry */}
-          <div className="p-2 bg-[#0a0c10] rounded-lg border border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-slate-300">
+          <div className="p-2 bg-[#0a0c10] rounded-lg border border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[10px] font-mono text-slate-300">
             <span>Loss Function: Binary Cross-Entropy</span>
             <span className="text-blue-400 font-semibold">PyTorch & TensorFlow Dual Validation</span>
           </div>
 
           {/* Telemetry Footer */}
-          <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5">
-            <span>Academic Deep Learning Benchmark Build</span>
-            <span className="text-[9px] text-slate-400 uppercase font-semibold">
-              [ ML PIPELINE MOCKUP · ACADEMIC ]
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/[0.08] pt-2.5 gap-1.5">
+            <span className="truncate">Academic Deep Learning Benchmark Build</span>
+            <span className="text-[9px] text-slate-500 uppercase font-semibold flex-shrink-0">
+              [ ML PIPELINE MOCKUP ]
             </span>
           </div>
         </div>

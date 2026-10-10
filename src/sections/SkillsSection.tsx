@@ -6,7 +6,7 @@ export const SkillsSection: React.FC = () => {
     <section id="skills" className="space-y-8 pt-8 border-t border-white/[0.08]" aria-label="Technical Stack">
       {/* Section Header */}
       <div className="flex items-center gap-3 font-mono text-xs text-slate-400 uppercase tracking-widest">
-        <span className="text-blue-400">03</span>
+        <span className="text-blue-400">02</span>
         <span className="w-8 h-px bg-white/[0.2]" />
         <span>TECHNICAL STACK</span>
       </div>

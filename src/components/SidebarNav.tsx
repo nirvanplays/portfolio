@@ -8,19 +8,24 @@ interface SidebarNavProps {
 }
 
 const NAV_ITEMS = [
-  { id: 'about', num: '01', label: 'ABOUT' },
-  { id: 'work', num: '02', label: 'WORK' },
-  { id: 'skills', num: '03', label: 'SKILLS' },
-  { id: 'education', num: '04', label: 'EDUCATION' },
+  { id: 'work', num: '01', label: 'WORK' },
+  { id: 'skills', num: '02', label: 'SKILLS' },
+  { id: 'education', num: '03', label: 'EDUCATION' },
+  { id: 'about', num: '04', label: 'ABOUT' },
   { id: 'contact', num: '05', label: 'CONTACT' },
 ];
 
 export const SidebarNav: React.FC<SidebarNavProps> = ({ onOpenResume }) => {
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      if (window.scrollY < 200) {
+        setActiveSection('');
+        return;
+      }
+
       const scrollPosition = window.scrollY + 250;
 
       for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
