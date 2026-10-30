@@ -4,6 +4,7 @@ import type React from 'react';
 import { ArrowRight, ArrowUpRight, Sparkles, ShieldCheck, Terminal, Award, Cpu } from 'lucide-react';
 import { Realistic3DPhotoCanvas } from '../three/Realistic3DPhotoCanvas';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { GithubIcon } from '../components/GithubIcon';
 
 interface HeroSectionProps {
   onOpenResume: () => void;
@@ -56,7 +57,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
             <span className="text-white font-semibold">
               Gokaraju Rangaraju Institute of Engineering and Technology (GRIET)
             </span>
-            , Hyderabad. Specialized in building high-throughput full-stack web applications, real-time computer vision kinematics, and deep learning neural pipelines.
+            , Hyderabad. Specialized in building high-throughput full-stack web applications, real-time computer vision kinematics with Google MediaPipe, and deep learning neural pipelines with strong Data Structures & Algorithmic foundations.
           </p>
 
           {/* Placement Quick HUD (4 scannable telemetry blocks) */}
@@ -99,10 +100,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center gap-3.5 pt-2">
             <button
               onClick={scrollToProjects}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-bold text-sm sm:text-base tracking-wide transition-all shadow-[0_0_25px_rgba(112,66,248,0.4)] cursor-pointer group hover:scale-[1.02]"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-bold text-sm sm:text-base tracking-wide transition-all shadow-[0_0_25px_rgba(112,66,248,0.4)] cursor-pointer group hover:scale-[1.02]"
             >
               <span>EXPLORE MISSIONS</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -110,17 +111,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
 
             <button
               onClick={onOpenResume}
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-xl border border-purple-500/40 hover:border-cyan-400 bg-[#0e0728]/80 hover:bg-[#150a3c] text-white font-bold text-sm sm:text-base tracking-wide transition-all shadow-sm cursor-pointer hover:scale-[1.02]"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-purple-500/40 hover:border-cyan-400 bg-[#0e0728]/80 hover:bg-[#150a3c] text-white font-bold text-sm sm:text-base tracking-wide transition-all shadow-sm cursor-pointer hover:scale-[1.02]"
             >
               <span className="text-cyan-300">PLACEMENT RESUME</span>
               <ArrowUpRight className="w-4 h-4 text-cyan-400" />
             </button>
 
             <a
+              href={PERSONAL_INFO.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border border-white/[0.12] hover:border-cyan-500/50 hover:bg-white/[0.04] text-sm font-semibold text-slate-200 hover:text-cyan-300 transition-all"
+            >
+              <GithubIcon className="w-4 h-4 text-slate-300" />
+              <span>GITHUB</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+
+            <a
               href={PERSONAL_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-5 py-4 rounded-xl border border-white/[0.12] hover:border-white/[0.3] text-sm font-semibold text-slate-300 hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-3.5 rounded-xl border border-white/[0.12] hover:border-white/[0.3] text-sm font-semibold text-slate-300 hover:text-white transition-colors"
             >
               <span>LINKEDIN</span>
               <ArrowUpRight className="w-4 h-4" />

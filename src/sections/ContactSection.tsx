@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type React from 'react';
 import { Mail, ArrowRight, ArrowUpRight, Copy, Check, Sparkles, FileText } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { GithubIcon } from '../components/GithubIcon';
 
 interface ContactSectionProps {
   onOpenResume: () => void;
@@ -40,15 +41,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
           </h2>
 
           <p className="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed">
-            Interested in high-impact software engineering roles, full-stack systems development, and applied AI/ML engineering. Open for placement drives, internships, and technical collaborations.
+            Targeting high-impact Software Engineering roles, full-stack systems engineering, and applied AI/ML pipelines. Fully prepared for technical evaluations, system design discussions, and coding interviews.
           </p>
         </div>
 
         {/* Action Row */}
-        <div className="flex flex-wrap items-center gap-4 pt-2">
+        <div className="flex flex-wrap items-center gap-3.5 pt-2">
           <a
             href={`mailto:${PERSONAL_INFO.email}`}
-            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-bold text-sm sm:text-base tracking-wide transition-all shadow-[0_0_25px_rgba(112,66,248,0.4)] group cursor-pointer hover:scale-[1.02]"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-bold text-sm sm:text-base tracking-wide transition-all shadow-[0_0_25px_rgba(112,66,248,0.4)] group cursor-pointer hover:scale-[1.02]"
           >
             <Mail className="w-4 h-4 text-cyan-200" />
             <span>DISPATCH EMAIL</span>
@@ -56,10 +57,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
           </a>
 
           <a
+            href={PERSONAL_INFO.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-purple-500/40 hover:border-cyan-400 bg-[#0e0728]/80 hover:bg-[#150a3c] text-white font-bold text-sm sm:text-base tracking-wide transition-all shadow-sm hover:scale-[1.02]"
+          >
+            <GithubIcon className="w-4 h-4 text-purple-400" />
+            <span>GITHUB (@nirvanplays)</span>
+            <ArrowUpRight className="w-4 h-4 text-cyan-400" />
+          </a>
+
+          <a
             href={PERSONAL_INFO.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-4 rounded-xl border border-purple-500/40 hover:border-cyan-400 bg-[#0e0728]/80 hover:bg-[#150a3c] text-white font-bold text-sm sm:text-base tracking-wide transition-all shadow-sm hover:scale-[1.02]"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-white/[0.12] hover:border-cyan-400 bg-white/[0.02] hover:bg-white/[0.05] text-white font-bold text-sm tracking-wide transition-all"
           >
             <span>LINKEDIN</span>
             <ArrowUpRight className="w-4 h-4 text-cyan-400" />
@@ -67,7 +79,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
 
           <button
             onClick={onOpenResume}
-            className="inline-flex items-center gap-2 px-6 py-4 rounded-xl border border-white/[0.15] hover:border-cyan-400/60 bg-white/[0.03] hover:bg-white/[0.06] text-white font-bold text-sm tracking-wide transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border border-white/[0.15] hover:border-cyan-400/60 bg-white/[0.03] hover:bg-white/[0.06] text-white font-bold text-sm tracking-wide transition-all cursor-pointer"
           >
             <FileText className="w-4 h-4 text-purple-400" />
             <span>VIEW RESUME</span>
@@ -76,7 +88,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
 
           <button
             onClick={handleCopyEmail}
-            className="inline-flex items-center gap-2 px-5 py-4 rounded-xl border border-purple-500/30 hover:border-purple-500/60 text-xs sm:text-sm font-mono text-cyan-300 hover:text-white transition-colors cursor-pointer bg-purple-950/30"
+            className="inline-flex items-center gap-2 px-4 py-3.5 rounded-xl border border-purple-500/30 hover:border-purple-500/60 text-xs sm:text-sm font-mono text-cyan-300 hover:text-white transition-colors cursor-pointer bg-purple-950/30"
             title="Copy email to clipboard"
           >
             {copied ? (

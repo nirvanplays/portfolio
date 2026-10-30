@@ -3,6 +3,11 @@ export interface KeyModule {
   description: string;
 }
 
+export interface ProjectMetric {
+  label: string;
+  value: string;
+}
+
 export interface Project {
   id: string;
   number: string;
@@ -21,6 +26,9 @@ export interface Project {
   timeline?: string;
   analyticsNote?: string;
   githubUrl?: string;
+  liveUrl?: string;
+  metrics?: ProjectMetric[];
+  googleTech?: string[];
 }
 
 export interface SkillCategory {

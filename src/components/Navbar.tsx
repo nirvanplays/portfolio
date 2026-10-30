@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import type React from 'react';
 import { ArrowUpRight, Menu, X, Sparkles, FileText, Compass } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { GithubIcon } from './GithubIcon';
 
 interface NavbarProps {
   onOpenResume: () => void;
@@ -114,10 +115,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
           </nav>
 
           {/* Right: Actions */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5">
             <button
               onClick={onOpenResume}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white border border-purple-500/40 hover:border-cyan-400 rounded-lg bg-purple-900/30 hover:bg-purple-800/40 transition-all shadow-[0_0_15px_rgba(112,66,248,0.25)] cursor-pointer group"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white border border-purple-500/40 hover:border-cyan-400 rounded-lg bg-purple-900/30 hover:bg-purple-800/40 transition-all shadow-[0_0_15px_rgba(112,66,248,0.25)] cursor-pointer group"
             >
               <FileText className="w-3.5 h-3.5 text-cyan-400 group-hover:rotate-12 transition-transform" />
               <span>RESUME</span>
@@ -125,10 +126,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
             </button>
 
             <a
+              href={PERSONAL_INFO.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-300 hover:text-cyan-300 border border-white/[0.1] hover:border-cyan-500/40 rounded-lg bg-white/[0.02] transition-colors"
+            >
+              <GithubIcon className="w-3.5 h-3.5 text-slate-300" />
+              <span>GITHUB</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+
+            <a
               href={PERSONAL_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-cyan-300 border border-white/[0.1] hover:border-cyan-500/40 rounded-lg bg-white/[0.02] transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-300 hover:text-cyan-300 border border-white/[0.1] hover:border-cyan-500/40 rounded-lg bg-white/[0.02] transition-colors"
             >
               <span>LINKEDIN</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -196,6 +208,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
             <span>VIEW VERIFIED PLACEMENT RESUME</span>
             <ArrowUpRight className="w-4 h-4" />
           </button>
+          <a
+            href={PERSONAL_INFO.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-3 rounded-lg border border-white/[0.12] bg-white/[0.03] text-slate-200 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:border-cyan-400/40"
+          >
+            <GithubIcon className="w-4 h-4 text-cyan-400" />
+            <span>GITHUB PROFILE (@nirvanplays)</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </a>
           <a
             href={PERSONAL_INFO.linkedin}
             target="_blank"

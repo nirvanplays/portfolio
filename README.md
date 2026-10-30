@@ -11,14 +11,15 @@
 
 <br />
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnirvanplays%2Fportfolio)
+[![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-nirvan--portfolio.vercel.app-7042f8?style=for-the-badge&logo=vercel&logoColor=white)](https://nirvan-portfolio.vercel.app)
+[![GitHub Profile](https://img.shields.io/badge/GitHub-@nirvanplays-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/nirvanplays)
 
 <br />
 
 **A high-performance, immersive 3D Space Portfolio engineered with Three.js, Next.js, and TypeScript.**  
-Built for software engineering and applied AI/ML placement drives, internships, and technical evaluations.
+Built for software engineering and applied AI/ML placement drives, Google engineering evaluations, internships, and technical reviews.
 
-[Explore Missions](#-featured-missions-projects) • [Academic Credentials](#-academic-trajectory--credentials) • [Quick Start](#-quick-start)
+[Live Deployment](https://nirvan-portfolio.vercel.app) • [Explore Missions](#-featured-missions-production-deployments) • [Academic Credentials](#-candidate-overview) • [Quick Start](#-quick-start)
 
 </div>
 
@@ -32,8 +33,23 @@ Built for software engineering and applied AI/ML placement drives, internships, 
 | **Institution** | **Gokaraju Rangaraju Institute of Engineering and Technology (GRIET)**, Hyderabad |
 | **Degree & Major** | **B.Tech in Computer Science and Engineering** (2024 – 2028 Cohort) |
 | **Academic Standing** | **CGPA: 8.01 / 10.0** |
-| **Technical Focus** | **Full-Stack Systems, Computer Vision Kinematics, Applied Deep Learning** |
+| **Technical Focus** | **Full-Stack Systems, Low-Latency Web, Computer Vision Kinematics, Applied Deep Learning** |
+| **Live Portfolio** | [nirvan-portfolio.vercel.app](https://nirvan-portfolio.vercel.app) |
+| **GitHub** | [github.com/nirvanplays](https://github.com/nirvanplays) |
 | **Contact** | `nirvanreddyk@gmail.com` • [LinkedIn Profile](https://www.linkedin.com/in/nirvan-reddy-koppela-3663a832a/) |
+
+---
+
+## 🛰️ Featured Missions & Production Deployments
+
+All featured systems are production-ready with live demos, public repositories, and quantified engineering benchmarks:
+
+| Mission / System | Stack & Google Tech | Live Demo | Source Code | Key Benchmarks |
+| :--- | :--- | :--- | :--- | :--- |
+| **Smart Campus Automation** | Next.js, Node.js, Express, PostgreSQL, Prisma, Tailwind | [Live Demo ↗](https://smart-campus-automation-rho.vercel.app) | [GitHub ↗](https://github.com/nirvanplays/Smart-Campus-Automation-system) | `<85ms REST latency`, `3-Tier RBAC` |
+| **Physiosis (AI Posture & Kinematics)** | Google MediaPipe Pose, Three.js, React, WebGL | [Live Demo ↗](https://physiosis-sandy-shores.vercel.app) | [GitHub ↗](https://github.com/nirvanplays/Physiosis) | `<35ms per Frame`, `30+ FPS real-time` |
+| **Smart Study Planner (GDG TechSprint)** | React, Google Cloud Firestore, Firebase Auth, Tailwind | [Live Demo ↗](https://smart-study-planner-86f98.web.app) | [GitHub ↗](https://github.com/nirvanplays/Smart-Study-Planner) | `<400ms Sync`, `GDG Hackathon Finalist` |
+| **Pneumonia Detection from X-Rays** | TensorFlow / Keras, EfficientNet-B0, OpenCV, FastAPI | *Model Evaluator* | [GitHub ↗](https://github.com/nirvanplays/portfolio) | `94.2% test accuracy`, `Grad-CAM Heatmaps` |
 
 ---
 
@@ -63,89 +79,11 @@ Built for software engineering and applied AI/ML placement drives, internships, 
 - Interactive track playlist switcher, spinning vinyl disc animation, 4-bar dynamic audio equalizer visualizer, and volume slider popup.
 
 ### 5. 🛰️ Mission Deployments & Interactive Case Studies (`ProjectsSection.tsx`)
-- 4 real-world systems with rich UI previews, architecture badges, problem statements, and system metrics:
-  - **Smart Campus Automation System**: IoT + Full-Stack monitoring hub with edge sensor mesh and real-time alerts.
-  - **Physiosis**: Real-time AI posture analysis and physical therapy kinematics tracker built with OpenCV and MediaPipe.
-  - **Smart Study Planner**: Intelligent scheduling engine with Pomodoro cycles, workload balancing, and streak analytics.
-  - **Pneumonia Detection from Chest X-Rays**: Deep learning CNN diagnostic pipeline with Grad-CAM heatmap explainability.
-- Interactive **Case Study Modal** (`ProjectCaseStudyModal.tsx`) detailing system architecture, implementation highlights, and results.
+- Real-time telemetry, direct **LIVE DEMO ↗** and **GITHUB ↗** links on every project card.
+- Interactive **Case Study Modal** (`ProjectCaseStudyModal.tsx`) detailing system architecture, quantified benchmarks, and production telemetry.
 
-### 6. 📄 Placement Resume Modal (`ResumeModal.tsx`)
+### 6. 📄 Verified Placement Resume Modal (`ResumeModal.tsx`)
 - Built-in printable and downloadable placement resume modal displaying academic credentials, verified skills, and project summaries with a single click.
-
----
-
-## 📁 Repository File Structure
-
-```
-c:/portfolio/
-├── public/                               # Static assets served at web root
-│   ├── assets/                           # Audio playlist tracks
-│   │   ├── afterglow-vast.mp3            # Dreamy space ambient
-│   │   ├── horizon-monolith.mp3          # Cosmic synthwave
-│   │   ├── hypnotic.mp3                  # Dark phonk / slowed
-│   │   └── outlands.mp3                  # Chill lo-fi focus
-│   ├── favicon.svg                       # Space monogram favicon
-│   ├── icons.svg                         # SVG icon sprite
-│   ├── nirvan.jpg                        # User 3D plaque portrait
-│   ├── portrait.jpg                      # Secondary portrait asset
-│   ├── robots.txt                        # Search crawler instructions
-│   └── sitemap.xml                       # Search engine sitemap
-├── src/
-│   ├── animations/
-│   │   └── scrollAnimations.ts           # GSAP ScrollTrigger configuration
-│   ├── app/                              # Next.js 16 App Router configuration
-│   │   ├── globals.css                   # Global styles & Tailwind directives
-│   │   ├── layout.tsx                    # Next.js root layout with metadata
-│   │   └── page.tsx                      # Next.js page rendering root App
-│   ├── assets/                           # Bundled media imports
-│   │   ├── hero.png
-│   │   ├── nirvan.jpg
-│   │   ├── react.svg
-│   │   └── vite.svg
-│   ├── audio/
-│   │   └── soundEffects.ts               # Web Audio API sound synthesis
-│   ├── components/                       # Modular UI & interactive widgets
-│   │   ├── CursorParticles.tsx           # Neon cursor particle trail & click burst
-│   │   ├── Footer.tsx                    # Space footer & orbit-to-top trigger
-│   │   ├── MusicPlayer.tsx               # Transparent glass audio player capsule
-│   │   ├── Navbar.tsx                    # Fixed glassmorphic navigation header
-│   │   ├── ProjectCaseStudyModal.tsx     # Deep-dive system architecture modal
-│   │   ├── ProjectMockup.tsx             # Interactive project UI preview mockup
-│   │   └── ResumeModal.tsx               # Verified placement resume modal
-│   ├── data/
-│   │   └── portfolioData.ts              # Canonical candidate profile & project data
-│   ├── hooks/                            # Custom React hooks
-│   │   ├── useLenisScroll.ts             # Smooth inertial scroll integration
-│   │   ├── useMousePosition.ts           # Real-time normalized mouse kinematics
-│   │   └── useWindowSize.ts              # Viewport dimension observer
-│   ├── sections/                         # Page section components
-│   │   ├── ContactSection.tsx            # Mission Control & direct email dispatch
-│   │   ├── EducationSection.tsx          # Academic timeline & verified credentials
-│   │   ├── HeroSection.tsx               # Space hero with 3D realistic portrait
-│   │   ├── ProjectsSection.tsx           # Mission deployments & case studies
-│   │   └── SkillsSection.tsx             # Constellation skill pods & CS foundations
-│   ├── three/                            # Three.js WebGL canvas implementations
-│   │   ├── Realistic3DPhotoCanvas.tsx    # 3D interactive portrait plaque
-│   │   └── StarBackgroundCanvas.tsx      # Stardust particles & dynamic constellation
-│   ├── types/
-│   │   └── index.ts                      # Strict TypeScript data types & interfaces
-│   ├── App.css                           # App-level styling
-│   ├── App.tsx                           # Root single-page application container
-│   ├── index.css                         # Tailwind base, components, and utilities
-│   └── main.tsx                          # Vite client entry point
-├── .gitignore                            # Comprehensive git ignore rules
-├── index.html                            # Vite HTML root template
-├── next.config.mjs                       # Next.js production configuration
-├── package.json                          # Scripts & dependencies
-├── postcss.config.js                     # PostCSS plugins (Tailwind & Autoprefixer)
-├── tailwind.config.js                    # Tailwind theme extension & color tokens
-├── tsconfig.json                         # TypeScript configuration root
-├── tsconfig.app.json                     # App TypeScript compiler options
-├── tsconfig.node.json                    # Node scripts compiler options
-├── vite.config.ts                        # Vite bundler configuration & code splitting
-└── README.md                             # Project documentation
-```
 
 ---
 
@@ -155,6 +93,7 @@ c:/portfolio/
 | :--- | :--- |
 | **Frameworks** | **Next.js 16 (App Router)** & **Vite 8** (Dual Compatibility) |
 | **UI Library** | **React 19** with strict TypeScript (`verbatimModuleSyntax`) |
+| **Google Tech** | **Google MediaPipe Pose**, **Cloud Firestore**, **Firebase Auth**, **TensorFlow / Keras** |
 | **3D & Graphics** | **Three.js (WebGL)**, Canvas 2D API |
 | **Styling** | **Tailwind CSS**, Glassmorphism, CSS Backdrop Filters |
 | **Animations** | **GSAP (ScrollTrigger)**, CSS Keyframe Animations |
@@ -183,46 +122,37 @@ npm install
 
 ### 3. Run Development Server
 
-You can run the project using either Vite or Next.js:
-
 ```bash
-# Option A: Vite Development Server (Instant HMR)
-npm run dev
-
-# Option B: Next.js Development Server
+# Next.js Development Server (Recommended)
 npm run next:dev
+
+# Or Vite Development Server (Instant HMR)
+npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) (Vite) or [http://localhost:3000](http://localhost:3000) (Next.js) in your browser.
+Open [http://localhost:3000](http://localhost:3000) (Next.js) or [http://localhost:5173](http://localhost:5173) (Vite) in your browser.
 
 ### 4. Build for Production
 
 ```bash
-# Vite Production Build
-npm run build
-
 # Next.js Production Build
 npm run next:build
-```
 
-### 5. Preview Production Build
-```bash
-npm run preview
+# Vite Production Build
+npm run build
 ```
-
-The production preview will run at [http://localhost:4173](http://localhost:4173).
 
 ---
 
 ## 🎯 Verification & Quality Checklist
 
 - [x] **Placement-Ready Content**: Factual credentials, real CGPA (8.01), verified institution (GRIET), and 4 complete systems engineering projects.
+- [x] **Live Hosted Links**: Direct verified URLs for `smart-campus-automation`, `physiosis`, `smart-study-planner`, and `portfolio`.
+- [x] **Google Alignment**: Integration of Google MediaPipe Pose, Cloud Firestore, Firebase Auth, and TensorFlow models with quantified metrics.
 - [x] **3D Realistic Photo**: Interactive 3D plaque with specular light tracking and dual orbital rings.
 - [x] **Particle & Audio Atmosphere**: SparkX-inspired particle trails, click bursts, and transparent 4-track glass music player.
-- [x] **TypeScript Strictness**: Clean compilation with `tsc --noEmit` and zero type errors.
-- [x] **Performance**: Procedural stardust particles optimized with RAF loops and canvas cleanup to prevent memory leaks.
-- [x] **Responsive Layout**: Fluid experience across mobile, tablet, and ultra-wide displays.
-- [x] **Clean Repository Structure**: Canonical naming and zero redundant legacy files.
+- [x] **TypeScript Strictness**: Clean compilation with zero type errors.
+- [x] **Zero Hydration Errors**: SSR safe dynamic component loading and RAF cleanup.
 
 ---
 
