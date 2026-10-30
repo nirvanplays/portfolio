@@ -145,7 +145,7 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({ pr
             </div>
 
             <div className="lg:col-span-5 rounded-xl overflow-hidden shadow-2xl border border-white/[0.08]">
-              <ProjectMockup type={project.visualType} />
+              <ProjectMockup project={project} />
             </div>
           </div>
 

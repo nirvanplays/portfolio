@@ -38,6 +38,7 @@ export const PROJECTS: Project[] = [
     techStack: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'JWT', 'REST APIs'],
     technology: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'JWT', 'REST APIs', 'SQL', 'Power BI', 'Vercel Edge'],
     visualType: 'campus',
+    imageSrc: '/projects/smart-campus.png',
     liveUrl: 'https://smart-campus-automation-rho.vercel.app',
     githubUrl: 'https://github.com/nirvanplays/Smart-Campus-Automation-system',
     metrics: [
@@ -99,6 +100,7 @@ export const PROJECTS: Project[] = [
     techStack: ['Python', 'Google MediaPipe', 'OpenCV', 'Three.js', 'React', 'FastAPI'],
     technology: ['Python', 'Google MediaPipe Pose', 'OpenCV', 'Three.js (WebGL)', 'React 18', 'TypeScript', 'FastAPI', 'NumPy', 'Supabase'],
     visualType: 'physiosis',
+    imageSrc: '/projects/physiosis.png',
     liveUrl: 'https://physiosis-sandy-shores.vercel.app',
     githubUrl: 'https://github.com/nirvanplays/Physiosis',
     googleTech: ['Google MediaPipe Pose Vision', 'Three.js 3D Kinetic Avatar', 'Kinematic Vector Math Engine'],
@@ -159,6 +161,7 @@ export const PROJECTS: Project[] = [
     techStack: ['Google Cloud Firestore', 'Google Auth', 'Firebase Hosting', 'JavaScript', 'HTML5', 'CSS3'],
     technology: ['Google Cloud Firestore', 'Google OAuth 2.0', 'Firebase Hosting', 'Firebase Analytics', 'JavaScript ES6+', 'HTML5', 'CSS3'],
     visualType: 'planner',
+    imageSrc: '/projects/smart-study.png',
     liveUrl: 'https://smart-study-planner-86f98.web.app',
     githubUrl: 'https://github.com/nirvanplays/Smart-Study-Planner',
     googleTech: ['Google Cloud Firestore', 'Google OAuth 2.0 Auth', 'Firebase Cloud Hosting & Analytics'],
@@ -219,6 +222,7 @@ export const PROJECTS: Project[] = [
     techStack: ['TensorFlow', 'PyTorch', 'Python', 'OpenCV', 'EfficientNet', 'Grad-CAM'],
     technology: ['TensorFlow', 'PyTorch', 'Python', 'OpenCV', 'EfficientNet-B0', 'Grad-CAM', 'Scikit-learn', 'NumPy'],
     visualType: 'pneumonia',
+    imageSrc: '/projects/pneumonia.png',
     githubUrl: 'https://github.com/nirvanplays/portfolio',
     googleTech: ['TensorFlow & Keras', 'Google Colab TPU/GPU', 'EfficientNet CNN Backbone'],
     metrics: [

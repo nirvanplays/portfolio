@@ -29,6 +29,7 @@ export interface Project {
   liveUrl?: string;
   metrics?: ProjectMetric[];
   googleTech?: string[];
+  imageSrc?: string;
 }
 
 export interface SkillCategory {
